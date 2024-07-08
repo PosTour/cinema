@@ -11,6 +11,9 @@ public class Row {
     @Id
     private int id;
 
+    @Column(nullable = false)
+    private int freePlaces;
+
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
