@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.croc.team4.administration.domain.Hall;
-import ru.croc.team4.administration.domain.Movie;
 import ru.croc.team4.administration.dto.HallDto;
 import ru.croc.team4.administration.mapper.HallMapper;
 import ru.croc.team4.administration.service.HallService;

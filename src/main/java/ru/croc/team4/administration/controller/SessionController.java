@@ -38,7 +38,7 @@ public class SessionController {
                 .findByTitle(sessionDto.movie())
                 .getTitle();
 
-        var session = new Session()
+        var session = new Session();
 
         session.setMovie(sessionDto.movie());
         session.setHall(sessionDto.hall());
