@@ -38,15 +38,15 @@ public class SessionServiceImpl implements SessionService {
                         .toLocalTime()
                         .plus(movieDuration));
 
-        var session = new Session();
-
-        session.setId(UUID.randomUUID());
-        session.setMovie(sessionDto.movie());
-        session.setHall(sessionDto.hall());
-        session.setStartTime(sessionDto.startTime());
-        session.setEndTime(endTime);
-        session.setPrice(sessionDto.price());
-        session.setPrice(sessionDto.hall().getCapacity());
+        var session = new Session(
+                UUID.randomUUID()
+                ,sessionDto.movie()
+                ,sessionDto.hall()
+                ,sessionDto.startTime()
+                ,endTime
+                ,sessionDto.price()
+                ,sessionDto.hall().getCapacity()
+        );
 
         sessionRepository.save(session);
         return sessionMapper.sessionToSessionCreationDto(session);

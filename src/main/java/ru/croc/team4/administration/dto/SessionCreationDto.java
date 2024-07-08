@@ -6,7 +6,7 @@ import java.sql.Time;
 
 public record SessionCreationDto(
         String movie
-        , Hall hall
-        , Time startTime
-        , Integer price) {
+        ,Hall hall
+        ,Time startTime
+        ,Integer price) {
 }
