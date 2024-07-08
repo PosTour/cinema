@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionRepository extends JpaRepository<Session, UUID> {
-    Optional<Session> findBySessionId(UUID sessionId);
+    Optional<Session> findById(UUID sessionId);
     List<Session> findAllByMovie(String Movie);
 }
