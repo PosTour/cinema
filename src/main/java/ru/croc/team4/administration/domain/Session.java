@@ -21,8 +21,7 @@ public class Session {
     @UuidGenerator
     private UUID id;
     @JoinColumn(nullable = false)
-    @OneToOne
-    private Movie movie;
+    private String movie;
     @JoinColumn(nullable = false)
     @OneToOne
     private Hall hall;
