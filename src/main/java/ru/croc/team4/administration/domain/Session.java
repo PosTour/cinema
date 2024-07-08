@@ -1,9 +1,6 @@
 package ru.croc.team4.administration.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +10,8 @@ import org.hibernate.annotations.UuidGenerator;
 import java.sql.Time;
 import java.util.UUID;
 
-@Entity
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,8 +21,10 @@ public class Session {
     @UuidGenerator
     UUID id;
     @JoinColumn(nullable = false)
+    @OneToOne
     Movie movie;
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
+    @OneToOne
     Hall hall;
     @Column(nullable = false)
     Time startTime; //либо используем другой формат даты
@@ -35,5 +34,5 @@ public class Session {
     Integer price;
     @Column(nullable = false)
     Integer freePlaces;
-
 }
+
