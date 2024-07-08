@@ -27,4 +27,10 @@ public class Movie {
 
     @Column(length = 512)
     private String description;
+
+    public Movie(String title, Duration duration, String description) {
+        this.title = title;
+        this.duration = duration;
+        this.description = description;
+    }
 }
