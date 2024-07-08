@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface SessionMapper {
+    SessionDto sessionToSessionDto(Session session);
 
     List<SessionDto> sessionsToSessionDtos(List<Session> sessions);
 }
