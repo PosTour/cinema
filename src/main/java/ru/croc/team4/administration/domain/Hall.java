@@ -29,7 +29,7 @@ public class Hall {
     @Column(nullable = false)
     private int capacity;
 
-    @Column(nullable = false)
-    @Convert(converter = OperationParameterConverter.class)
-    private Map<Integer, Integer> seats = new HashMap<>();
+    //@Column(nullable = false)
+    //@Convert(converter = OperationParameterConverter.class)
+    //private Map<Integer, Integer> seats = new HashMap<>();
 }
