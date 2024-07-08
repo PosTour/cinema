@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public record SessionDto(
         UUID id
-        , String movie
-        , Hall hall
-        , Time startTime
-        , Integer price) {
+        ,String movie
+        ,Hall hall
+        ,Time startTime
+        ,Integer price) {
 }
