@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.UuidGenerator;
+import ru.croc.team4.administration.domain.converter.HashMapConverter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,6 @@ public class Hall {
     private int capacity;
 
     @Column(nullable = false)
-    @Convert(converter = OperationParameterConverter.class)
+    @Convert(converter = HashMapConverter.class)
     private Map<Integer, Integer> seats = new HashMap<>();
 }
