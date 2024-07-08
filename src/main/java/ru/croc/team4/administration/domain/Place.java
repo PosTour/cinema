@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class Place {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
