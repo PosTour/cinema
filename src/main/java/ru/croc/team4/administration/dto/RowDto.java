@@ -1,4 +1,6 @@
 package ru.croc.team4.administration.dto;
 
-public record RowDto() {
+import ru.croc.team4.administration.domain.Session;
+
+public record RowDto(int id, Session session) {
 }
