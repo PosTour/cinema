@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.croc.team4.administration.dto.RowDto;
 import ru.croc.team4.administration.mapper.RowMapper;
+import ru.croc.team4.administration.mapper.RowMapperImpl;
 import ru.croc.team4.administration.repository.RowRepository;
 
 @RestController
@@ -17,8 +18,8 @@ public class RowController {
     private final RowRepository rowRepository;
 
     @Autowired
-    public RowController(RowMapper rowMapper, RowRepository rowRepository) {
-        this.rowMapper = rowMapper;
+    public RowController(RowRepository rowRepository) {
+        this.rowMapper = new RowMapperImpl();
         this.rowRepository = rowRepository;
     }
 

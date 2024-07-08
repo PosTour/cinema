@@ -1,10 +1,12 @@
 package ru.croc.team4.administration.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.administration.dto.PlaceDto;
 import ru.croc.team4.administration.mapper.PlaceMapper;
+import ru.croc.team4.administration.mapper.PlaceMapperImpl;
 import ru.croc.team4.administration.repository.PlaceRepository;
 
 @RestController
@@ -14,9 +16,9 @@ public class PlaceController {
     private final PlaceMapper placeMapper;
 
     @Autowired
-    public PlaceController(PlaceRepository placeRepository, PlaceMapper placeMapper) {
+    public PlaceController(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
-        this.placeMapper = placeMapper;
+        this.placeMapper = new PlaceMapperImpl();
     }
 
     @PutMapping
