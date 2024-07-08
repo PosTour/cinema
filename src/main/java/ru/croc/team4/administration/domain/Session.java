@@ -19,20 +19,20 @@ import java.util.UUID;
 public class Session {
     @Id
     @UuidGenerator
-    UUID id;
+    private UUID id;
     @JoinColumn(nullable = false)
     @OneToOne
-    Movie movie;
+    private Movie movie;
     @JoinColumn(nullable = false)
     @OneToOne
-    Hall hall;
+    private Hall hall;
     @Column(nullable = false)
-    Time startTime; //либо используем другой формат даты
+    private Time startTime; //либо используем другой формат даты
     @Column(nullable = false)
-    Time endTime;
+    private Time endTime;
     @Column(nullable = false)
-    Integer price;
+    private Integer price;
     @Column(nullable = false)
-    Integer freePlaces;
+    private Integer freePlaces;
 }
 
