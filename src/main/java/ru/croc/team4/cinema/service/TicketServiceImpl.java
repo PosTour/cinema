@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Ticket;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
+import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.repository.TicketRepository;
 
 import java.util.List;
@@ -43,6 +44,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void deleteTicket(TicketDto ticketDto) {
-        ticketRepository.deleteTicketByTicketDto(ticketDto);
+        ticketRepository.deleteTicket(ticketDto.user().getId(), ticketDto.session().getId(), ticketDto.place().getId());
     }
 }
