@@ -2,6 +2,7 @@ package ru.croc.team4.administration.domain.converter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.croc.team4.cinema.domain.converter.HashMapConverter;
 
 import java.util.HashMap;
 import java.util.Map;
