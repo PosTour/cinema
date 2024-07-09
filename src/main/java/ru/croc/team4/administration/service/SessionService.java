@@ -1,5 +1,6 @@
 package ru.croc.team4.administration.service;
 
+import ru.croc.team4.administration.domain.Movie;
 import ru.croc.team4.administration.dto.SessionCreationDto;
 import ru.croc.team4.administration.dto.SessionDto;
 

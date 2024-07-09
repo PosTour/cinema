@@ -2,6 +2,7 @@ package ru.croc.team4.administration.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croc.team4.administration.domain.Movie;
 import ru.croc.team4.administration.domain.Session;
 import ru.croc.team4.administration.dto.SessionCreationDto;
 import ru.croc.team4.administration.dto.SessionDto;
@@ -34,7 +35,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public SessionCreationDto createSession(SessionCreationDto sessionDto) {
         var movieDuration = movieRepository
-                .findByTitle(sessionDto.movie())
+                .findByTitle(sessionDto.movie().getTitle())
                 .getDuration();
 
         var endTime = Time.valueOf(sessionDto
@@ -56,12 +57,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<SessionDto> getSessions(String movie) {
+    public List<SessionDto> getSessions(String movieName) {
+        Movie movie = movieRepository.findByTitle(movieName);
         var sessions = sessionRepository
                 .findAllByMovie(movie)
                 .stream()
                 .filter(sessionUtils::hasFreePlaces)
-                .toList();;
+                .toList();
 
         if (sessions.isEmpty()) {
             return null;
