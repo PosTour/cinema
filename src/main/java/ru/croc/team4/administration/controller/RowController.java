@@ -1,14 +1,16 @@
 package ru.croc.team4.administration.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.croc.team4.administration.domain.Row;
 import ru.croc.team4.administration.dto.RowDto;
 import ru.croc.team4.administration.mapper.RowMapper;
 import ru.croc.team4.administration.mapper.RowMapperImpl;
 import ru.croc.team4.administration.repository.RowRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/row")
@@ -23,10 +25,21 @@ public class RowController {
         this.rowRepository = rowRepository;
     }
 
-    @PutMapping()
-    public RowDto create(@RequestBody RowDto rowDto) {
+    @PostMapping()
+    public ResponseEntity<RowDto> createRow(@RequestBody RowDto rowDto) {
             var row = rowMapper.rowDtoToRow(rowDto);
             row = rowRepository.save(row);
-            return rowMapper.rowToDto(row);
+            return ResponseEntity.ok(rowMapper.rowToDto(row));
     }
+
+    //todo возможна смена на DTO, обсудить
+    @GetMapping()
+    public ResponseEntity<List<Row>> getAllRows() {
+        var rows = rowRepository.findAll();
+        return !rows.isEmpty()
+                ? new ResponseEntity<>(rows, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }
