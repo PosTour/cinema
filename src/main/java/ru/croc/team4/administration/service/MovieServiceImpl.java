@@ -15,7 +15,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 public class MovieServiceImpl implements MovieService {
 
