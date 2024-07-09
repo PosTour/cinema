@@ -32,7 +32,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieResponseDto createMovie(MovieDto movieDto) {
-        Movie movie = movieRepository.save(new Movie(movieDto.title(), movieDto.duration(), movieDto.description()));
+        Movie movie = movieMapper.movieDtoToMovie(movieDto);
         return movieMapper.movieToResponseDto(movie);
     }
 
@@ -42,15 +42,15 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Optional<MovieResponseDto> updateMovie(UUID movieId, String title, Duration duration, String description) {
+    public Optional<MovieResponseDto> updateMovie(UUID movieId, MovieDto movieDto) {
+        Movie movie = movieMapper.movieDtoToMovie(movieDto);
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
         if (movieOptional.isEmpty()) {
             return Optional.empty();
         }
-        Movie movie = movieOptional.get();
-        movie.setTitle(title);
-        movie.setDuration(duration);
-        movie.setDescription(description);
+        movieOptional.get().setTitle(movie.getTitle());
+        movieOptional.get().setDuration(movie.getDuration());
+        movieOptional.get().setDescription(movie.getDescription());
         return Optional.ofNullable(movieMapper.movieToResponseDto(movie));
     }
 

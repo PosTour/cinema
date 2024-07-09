@@ -11,11 +11,12 @@ import java.util.UUID;
 public interface MovieService {
 
     Iterable<MovieResponseDto> findAllMovies();
+
     MovieResponseDto createMovie(MovieDto movie);
 
     Optional<Movie> findMovie(UUID movieId);
 
-    Optional<MovieResponseDto> updateMovie(UUID movieId, String title, Duration duration, String description);
+    Optional<MovieResponseDto> updateMovie(UUID movieId, MovieDto movieDto);
 
     void deleteMovie(UUID movieId);
 }
