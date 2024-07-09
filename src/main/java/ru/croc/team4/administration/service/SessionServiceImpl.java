@@ -6,6 +6,7 @@ import ru.croc.team4.administration.domain.Session;
 import ru.croc.team4.administration.dto.SessionCreationDto;
 import ru.croc.team4.administration.dto.SessionDto;
 import ru.croc.team4.administration.mapper.SessionMapper;
+import ru.croc.team4.administration.mapper.SessionMapperImpl;
 import ru.croc.team4.administration.repository.MovieRepository;
 import ru.croc.team4.administration.repository.SessionRepository;
 
@@ -54,7 +55,11 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<SessionDto> getSessions(String movie) {
-        var sessions = sessionRepository.findAllByMovie(movie);
+        var sessions = sessionRepository
+                .findAllByMovie(movie)
+                .stream()
+                .filter(session -> session.getFreePlaces() != 0)
+                .toList();;
 
         if (sessions.isEmpty()) {
             return null;
