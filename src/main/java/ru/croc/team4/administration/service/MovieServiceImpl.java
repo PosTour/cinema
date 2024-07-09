@@ -1,11 +1,13 @@
 package ru.croc.team4.administration.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.administration.domain.Movie;
 import ru.croc.team4.administration.dto.MovieDto;
 import ru.croc.team4.administration.dto.MovieResponseDto;
 import ru.croc.team4.administration.mapper.MovieMapper;
+import ru.croc.team4.administration.mapper.MovieMapperImpl;
 import ru.croc.team4.administration.repository.MovieRepository;
 
 import java.time.Duration;
@@ -19,6 +21,12 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
+
+    @Autowired
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+        this.movieMapper = new MovieMapperImpl();
+    }
 
     @Override
     public Iterable<MovieResponseDto> findAllMovies() {
