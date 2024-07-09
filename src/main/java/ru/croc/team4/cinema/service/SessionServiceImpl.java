@@ -2,7 +2,6 @@ package ru.croc.team4.cinema.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.domain.Session;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionDto;
@@ -34,14 +33,16 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public SessionCreationDto createSession(SessionCreationDto sessionDto) {
-        var movieDuration = movieRepository
-                .findByTitle(sessionDto.movie().getTitle())
-                .getDuration();
+        var movie = movieRepository.findById(sessionDto.movie().getId());
+        if (movie.isEmpty()) {
+            throw new IllegalArgumentException("Movie not found");
+        }
+        var movieDuration = movie.get().getDuration();
 
         var endTime = Time.valueOf(sessionDto
-                        .startTime()
-                        .toLocalTime()
-                        .plus(movieDuration));
+                .startTime()
+                .toLocalTime()
+                .plus(movieDuration));
 
         var session = new Session(
                 UUID.randomUUID()
@@ -49,18 +50,20 @@ public class SessionServiceImpl implements SessionService {
                 ,sessionDto.hall()
                 ,sessionDto.startTime()
                 ,endTime
-                ,sessionDto.price()
-        );
+                ,sessionDto.price());
 
         sessionRepository.save(session);
         return sessionMapper.sessionToSessionCreationDto(session);
     }
 
     @Override
-    public List<SessionDto> getSessions(String movieName) {
-        Movie movie = movieRepository.findByTitle(movieName);
+    public List<SessionDto> getSessions(UUID movieId) {
+        var movie = movieRepository.findById(movieId);
+        if (movie.isEmpty()) {
+            throw new IllegalArgumentException("Movie not found");
+        }
         var sessions = sessionRepository
-                .findAllByMovie(movie)
+                .findAllByMovie(movie.get())
                 .stream()
                 .filter(sessionUtils::hasFreePlaces)
                 .toList();
@@ -89,14 +92,14 @@ public class SessionServiceImpl implements SessionService {
         return Optional.ofNullable(sessionMapper.sessionToSessionDto(sessionRepository.save(session)));
     }
 
-    @Override
-    public boolean deleteSession(UUID sessionId) {
-        var sessionExistence = sessionRepository.findById(sessionId);
-        if (sessionExistence.isEmpty()) {
-            return false;
-        }
-
-        sessionRepository.delete(sessionExistence.get());
-        return true;
-    }
+//    @Override
+//    public boolean deleteSession(UUID sessionId) {
+//        var sessionExistence = sessionRepository.findById(sessionId);
+//        if (sessionExistence.isEmpty()) {
+//            return false;
+//        }
+//
+//        sessionRepository.delete(sessionExistence.get());
+//        return true;
+//    }
 }

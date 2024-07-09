@@ -28,8 +28,8 @@ public class SessionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SessionDto>> getSessionsBy(@RequestParam(value = "movie", required = false) String movie) {
-        var sessionDtos = sessionServiceImpl.getSessions(movie);
+    public ResponseEntity<List<SessionDto>> getSessionsBy(@RequestParam(value = "getId", required = false) UUID movieId) {
+        var sessionDtos = sessionServiceImpl.getSessions(movieId);
 
         if (sessionDtos == null) {
             return ResponseEntity.notFound().build();
@@ -45,12 +45,12 @@ public class SessionController {
         return session.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping
-    public ResponseEntity<SessionDto> deleteSession(@RequestParam(value = "id", required = false) UUID id) {
-        if (sessionServiceImpl.deleteSession(id)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @DeleteMapping
+//    public ResponseEntity<SessionDto> deleteSession(@RequestParam(value = "deleteId", required = false) UUID id) {
+//        if (sessionServiceImpl.deleteSession(id)) {
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }
