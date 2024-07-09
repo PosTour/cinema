@@ -9,8 +9,10 @@ import ru.croc.team4.cinema.dto.RowDto;
 import ru.croc.team4.cinema.mapper.RowMapper;
 import ru.croc.team4.cinema.mapper.RowMapperImpl;
 import ru.croc.team4.cinema.repository.RowRepository;
+import ru.croc.team4.cinema.service.RowServiceImpl;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/row")
@@ -18,11 +20,13 @@ public class RowController {
 
     private final RowMapper rowMapper;
     private final RowRepository rowRepository;
+    private final RowServiceImpl rowService;
 
     @Autowired
-    public RowController(RowRepository rowRepository) {
+    public RowController(RowRepository rowRepository, RowServiceImpl rowService) {
         this.rowMapper = new RowMapperImpl();
         this.rowRepository = rowRepository;
+        this.rowService = rowService;
     }
 
     @PostMapping()
@@ -32,14 +36,11 @@ public class RowController {
             return ResponseEntity.ok(rowMapper.rowToDto(row));
     }
 
-    //todo возможна смена на DTO, обсудить
     @GetMapping()
-    public ResponseEntity<List<Row>> getAllRows() {
-        var rows = rowRepository.findAll();
+    public ResponseEntity<List<Row>> getAllRowsInSession(UUID sessionId) {
+        var rows = rowService.getRowsBy(sessionId);
         return !rows.isEmpty()
                 ? new ResponseEntity<>(rows, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
 }

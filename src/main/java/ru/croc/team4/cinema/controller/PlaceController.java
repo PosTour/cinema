@@ -45,7 +45,6 @@ public class PlaceController {
         return ResponseEntity.ok(placeServiceImpl.updatePlace(id));
     }
 
-    //todo возможна смена на DTO, обсудить
     @GetMapping()
     public ResponseEntity<List<PlaceDto>> getAllPlaces() {
         var places = placeMapper.placeListToPlaceDtoList(placeRepository.findAll());
