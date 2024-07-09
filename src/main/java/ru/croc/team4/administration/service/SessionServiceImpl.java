@@ -9,6 +9,7 @@ import ru.croc.team4.administration.mapper.SessionMapper;
 import ru.croc.team4.administration.mapper.SessionMapperImpl;
 import ru.croc.team4.administration.repository.MovieRepository;
 import ru.croc.team4.administration.repository.SessionRepository;
+import ru.croc.team4.administration.utils.SessionUtils;
 
 import java.sql.Time;
 import java.util.List;
@@ -20,12 +21,14 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final MovieRepository movieRepository;
     private final SessionMapper sessionMapper;
+    private final SessionUtils sessionUtils;
 
     @Autowired
-    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository) {
+    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils) {
         this.sessionRepository = sessionRepository;
         this.movieRepository = movieRepository;
         this.sessionMapper = new SessionMapperImpl();
+        this.sessionUtils = sessionUtils;
     }
 
     @Override
@@ -46,7 +49,6 @@ public class SessionServiceImpl implements SessionService {
                 ,sessionDto.startTime()
                 ,endTime
                 ,sessionDto.price()
-                ,sessionDto.hall().getCapacity()
         );
 
         sessionRepository.save(session);
@@ -58,7 +60,7 @@ public class SessionServiceImpl implements SessionService {
         var sessions = sessionRepository
                 .findAllByMovie(movie)
                 .stream()
-                .filter(session -> session.getFreePlaces() != 0)
+                .filter(sessionUtils::hasFreePlaces)
                 .toList();;
 
         if (sessions.isEmpty()) {
