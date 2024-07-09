@@ -1,5 +1,6 @@
 package ru.croc.team4.administration.service;
 
+import org.springframework.stereotype.Service;
 import ru.croc.team4.administration.domain.Hall;
 import ru.croc.team4.administration.repository.HallRepository;
 
@@ -9,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class HallServiceImpl implements HallService {
 
     private final HallRepository hallRepository;
