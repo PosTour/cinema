@@ -21,7 +21,8 @@ public class Session {
     @UuidGenerator
     private UUID id;
     @JoinColumn(nullable = false)
-    private String movie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Movie movie;
     @JoinColumn(nullable = false)
     @OneToOne
     private Hall hall;
@@ -31,7 +32,5 @@ public class Session {
     private Time endTime;
     @Column(nullable = false)
     private Integer price;
-    @Column(nullable = false)
-    private Integer freePlaces;
 }
 

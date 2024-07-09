@@ -2,6 +2,7 @@ package ru.croc.team4.administration.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croc.team4.administration.domain.Movie;
 import ru.croc.team4.administration.domain.Session;
 import ru.croc.team4.administration.dto.SessionCreationDto;
 import ru.croc.team4.administration.dto.SessionDto;
@@ -9,6 +10,7 @@ import ru.croc.team4.administration.mapper.SessionMapper;
 import ru.croc.team4.administration.mapper.SessionMapperImpl;
 import ru.croc.team4.administration.repository.MovieRepository;
 import ru.croc.team4.administration.repository.SessionRepository;
+import ru.croc.team4.administration.utils.SessionUtils;
 
 import java.sql.Time;
 import java.util.List;
@@ -20,18 +22,20 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final MovieRepository movieRepository;
     private final SessionMapper sessionMapper;
+    private final SessionUtils sessionUtils;
 
     @Autowired
-    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository) {
+    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils) {
         this.sessionRepository = sessionRepository;
         this.movieRepository = movieRepository;
         this.sessionMapper = new SessionMapperImpl();
+        this.sessionUtils = sessionUtils;
     }
 
     @Override
     public SessionCreationDto createSession(SessionCreationDto sessionDto) {
         var movieDuration = movieRepository
-                .findByTitle(sessionDto.movie())
+                .findByTitle(sessionDto.movie().getTitle())
                 .getDuration();
 
         var endTime = Time.valueOf(sessionDto
@@ -46,7 +50,6 @@ public class SessionServiceImpl implements SessionService {
                 ,sessionDto.startTime()
                 ,endTime
                 ,sessionDto.price()
-                ,sessionDto.hall().getCapacity()
         );
 
         sessionRepository.save(session);
@@ -54,8 +57,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<SessionDto> getSessions(String movie) {
-        var sessions = sessionRepository.findAllByMovie(movie);
+    public List<SessionDto> getSessions(String movieName) {
+        Movie movie = movieRepository.findByTitle(movieName);
+        var sessions = sessionRepository
+                .findAllByMovie(movie)
+                .stream()
+                .filter(sessionUtils::hasFreePlaces)
+                .toList();
 
         if (sessions.isEmpty()) {
             return null;

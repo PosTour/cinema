@@ -15,7 +15,7 @@ public interface MovieService {
 
     Optional<Movie> findMovie(UUID movieId);
 
-    void updateMovie(UUID movieId, String title, Duration duration, String description);
+    Optional<MovieResponseDto> updateMovie(UUID movieId, String title, Duration duration, String description);
 
     void deleteMovie(UUID movieId);
 }

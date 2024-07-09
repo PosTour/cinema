@@ -14,10 +14,8 @@ import ru.croc.team4.administration.service.MovieService;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController("/api/movie/{i" +
-        "" +
-        "d}")//TODO check regex for UUID
-@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/movie/{id}")//TODO check regex for UUID
 public class MovieController {
     private final MovieService movieService;
     private final MovieMapper movieMapper;
@@ -40,9 +38,9 @@ public class MovieController {
     }
 
     @PutMapping()
-    public ResponseEntity<Void> updateMovie(@PathVariable UUID id, @RequestBody MovieDto movieDto) {
-        movieService.updateMovie(id, movieDto.title(), movieDto.duration(), movieDto.description());
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable UUID id, @RequestBody MovieDto movieDto) {
+        Optional<MovieResponseDto> movie = movieService.updateMovie(id, movieDto.title(), movieDto.duration(), movieDto.description());
+        return movie.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping()

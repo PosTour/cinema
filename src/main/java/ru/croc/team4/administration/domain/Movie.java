@@ -33,4 +33,6 @@ public class Movie {
         this.duration = duration;
         this.description = description;
     }
+
+    public Movie() {}
 }
