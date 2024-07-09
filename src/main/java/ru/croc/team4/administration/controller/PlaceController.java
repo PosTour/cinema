@@ -11,6 +11,7 @@ import ru.croc.team4.administration.dto.PlaceDto;
 import ru.croc.team4.administration.mapper.PlaceMapper;
 import ru.croc.team4.administration.mapper.PlaceMapperImpl;
 import ru.croc.team4.administration.repository.PlaceRepository;
+import ru.croc.team4.administration.service.PlaceServiceImpl;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ import java.util.List;
 public class PlaceController {
     private final PlaceRepository placeRepository;
     private final PlaceMapper placeMapper;
+    private final PlaceServiceImpl placeServiceImpl;
 
     @Autowired
-    public PlaceController(PlaceRepository placeRepository) {
+    public PlaceController(PlaceRepository placeRepository, PlaceServiceImpl placeServiceImpl) {
         this.placeRepository = placeRepository;
         this.placeMapper = new PlaceMapperImpl();
+        this.placeServiceImpl = placeServiceImpl;
     }
 
     @PostMapping
@@ -33,24 +36,22 @@ public class PlaceController {
         return ResponseEntity.ok(placeMapper.placeToPlaceDto(place));
     }
 
+    public ResponseEntity<List<PlaceDto>> getPlacesInRow(@RequestBody Row row) {
+        var result = placeMapper.placeListToPlaceDtoList(placeServiceImpl.findAllInRow(row).get());
+        return ResponseEntity.ok(result);
+    }
+
     @PutMapping
-    public ResponseEntity<PlaceDto> updatePlace(@RequestParam int id) {
-        var placeExists = placeRepository.findById(id);
-        if (placeExists.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var place = placeExists.get();
-        place.setOccupied(true);
-        place = placeRepository.save(place);
-        return ResponseEntity.ok(placeMapper.placeToPlaceDto(place));
+    public ResponseEntity<Boolean> updatePlace(@RequestParam int id) {
+        return ResponseEntity.ok(placeServiceImpl.updatePlace(id));
     }
 
     //todo возможна смена на DTO, обсудить
     @GetMapping()
-    public ResponseEntity<List<Place>> getAllPlaces() {
-        var place = placeRepository.findAll();
-        return !place.isEmpty()
-                ? new ResponseEntity<>(place, HttpStatus.OK)
+    public ResponseEntity<List<PlaceDto>> getAllPlaces() {
+        var places = placeMapper.placeListToPlaceDtoList(placeRepository.findAll());
+        return !places.isEmpty()
+                ? new ResponseEntity<>(places, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
