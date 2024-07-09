@@ -1,21 +1,28 @@
 package ru.croc.team4.administration.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.administration.domain.User;
 import ru.croc.team4.administration.dto.UserDto;
 import ru.croc.team4.administration.mapper.UserMapper;
+import ru.croc.team4.administration.mapper.UserMapperImpl;
 import ru.croc.team4.administration.service.UserService;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("api/users")
-@RequiredArgsConstructor()
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+        this.userMapper = new UserMapperImpl();
+    }
 
     @GetMapping("{phone}")
     public ResponseEntity<UserDto> getUserById(@PathVariable String phone) {
