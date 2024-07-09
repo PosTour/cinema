@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.croc.team4</groupId>
-	<artifactId>administration</artifactId>
+	<artifactId>cinema</artifactId>
 	<version>latest</version>
 	<name>administration</name>
 	<description>administration service</description>
