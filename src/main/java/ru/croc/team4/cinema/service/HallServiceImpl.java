@@ -29,7 +29,6 @@ public class HallServiceImpl implements HallService {
         var hall = hallRepository.findById(id);
         if (hall.isPresent()) {
             hall.get().setName(name);
-            hall.get().setCapacity(capacity);
             hall.get().setSeats(seats);
         } else throw new NoSuchElementException("Hall isn't in db");
     }

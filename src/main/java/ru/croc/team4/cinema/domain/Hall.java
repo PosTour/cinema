@@ -28,9 +28,6 @@ public class Hall {
     private String name;
 
     @Column(nullable = false)
-    private int capacity;
-
-    @Column(nullable = false)
     @Convert(converter = HashMapConverter.class)
     private Map<Integer, Integer> seats = new HashMap<>();
 }
