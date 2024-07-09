@@ -10,9 +10,9 @@ import java.util.UUID;
 public interface SessionService {
     SessionCreationDto createSession(SessionCreationDto sessionDto);
 
-    List<SessionDto> getSessions(String movie);
+    List<SessionDto> getSessions(UUID movieId);
 
     Optional<SessionDto> updateSession(SessionDto sessionDto);
 
-    boolean deleteSession(UUID sessionId);
+//    boolean deleteSession(UUID sessionId);
 }
