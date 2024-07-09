@@ -46,7 +46,6 @@ public class SessionServiceImpl implements SessionService {
                 ,sessionDto.startTime()
                 ,endTime
                 ,sessionDto.price()
-                ,sessionDto.hall().getCapacity()
         );
 
         sessionRepository.save(session);
