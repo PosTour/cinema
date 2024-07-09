@@ -1,6 +1,8 @@
 package ru.croc.team4.cinema.service;
 
 import ru.croc.team4.cinema.dto.TicketDto;
+
+import java.util.List;
 import java.util.UUID;
 
 public interface TicketService {
@@ -8,7 +10,7 @@ public interface TicketService {
 
     TicketDto createTicket(TicketDto ticketDto);
 
-    Iterable<TicketDto> getTicketsByUserId(UUID userId);
+    List<TicketDto> getTicketsByUserId(UUID userId);
 
-    Iterable<TicketDto> getAllTickets();
+    List<TicketDto> getAllTickets();
 }

@@ -27,4 +27,12 @@ public class Ticket {
     @OneToOne
     @JoinColumn(name = "place_id")
     private Place place;
+
+    public Ticket() {}
+
+    public Ticket(User user, Session session, Place place) {
+        this.user = user;
+        this.session = session;
+        this.place = place;
+    }
 }
