@@ -44,6 +44,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void deleteTicket(TicketDto ticketDto) {
-        ticketRepository.deleteTicketByTicketDto(ticketDto);
+        ticketRepository.deleteTicket(ticketDto.user().getId(), ticketDto.session().getId(), ticketDto.place().getId());
     }
 }
