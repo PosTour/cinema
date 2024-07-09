@@ -28,11 +28,20 @@ public class Movie {
     @Column(length = 512)
     private String description;
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
     public Movie(String title, Duration duration, String description) {
         this.title = title;
         this.duration = duration;
         this.description = description;
     }
 
-    public Movie() {}
+    public Movie() {
+    }
 }
