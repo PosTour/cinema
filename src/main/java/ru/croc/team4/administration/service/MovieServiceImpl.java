@@ -1,6 +1,5 @@
 package ru.croc.team4.administration.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.administration.domain.Movie;
@@ -11,7 +10,6 @@ import ru.croc.team4.administration.mapper.MovieMapperImpl;
 import ru.croc.team4.administration.repository.MovieRepository;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,14 +42,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void updateMovie(UUID movieId, String title, Duration duration, String description) {
-        movieRepository.findById(movieId).ifPresentOrElse(movie -> {
-            movie.setTitle(title);
-            movie.setDuration(duration);
-            movie.setDescription(description);
-        }, () -> {
-            throw new NoSuchElementException("Movie not found");
-        });
+    public Optional<MovieResponseDto> updateMovie(UUID movieId, String title, Duration duration, String description) {
+        Optional<Movie> movieOptional = movieRepository.findById(movieId);
+        if (movieOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        Movie movie = movieOptional.get();
+        movie.setTitle(title);
+        movie.setDuration(duration);
+        movie.setDescription(description);
+        return Optional.ofNullable(movieMapper.movieToResponseDto(movie));
     }
 
     @Override
