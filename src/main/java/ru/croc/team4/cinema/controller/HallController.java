@@ -39,7 +39,7 @@ public class HallController {
 
     @PutMapping()
     public ResponseEntity<Void> updateHall(@PathVariable UUID id, @RequestBody HallDto hallDto) {
-        hallService.UpdateHall(id, hallDto.name(), hallDto.capacity(), hallDto.seats());
+        hallService.UpdateHall(id, hallDto.name(), hallDto.seats());
         return ResponseEntity.noContent().build();
     }
 }

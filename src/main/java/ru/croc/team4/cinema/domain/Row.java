@@ -14,8 +14,8 @@ public class Row {
     @Id
     @UuidGenerator
     private UUID id;
-    @Column
-    private int inSessionId;
+    @Column(nullable = false, length = 32)
+    private String rowNumber;
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
