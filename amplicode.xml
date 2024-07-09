@@ -12,7 +12,7 @@
     <persistence-units>
       <persistence-unit name="Default" defaultIncludeChangeLogFile="src/main/resources/db/changelog/db.changelog-master.yaml">
         <packages>
-          <package value="ru.croc.team4.administration" />
+          <package value="ru.croc.team4" />
         </packages>
       </persistence-unit>
     </persistence-units>
