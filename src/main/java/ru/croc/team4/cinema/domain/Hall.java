@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -18,6 +20,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @FieldNameConstants
+@Builder
+@AllArgsConstructor
 public class Hall {
 
     @Id
@@ -29,5 +33,9 @@ public class Hall {
 
     @Column(nullable = false)
     @Convert(converter = HashMapConverter.class)
-    private Map<Integer, Integer> seats = new HashMap<>();
+    private Map<String, String> seats = new HashMap<>();
+
+    public Hall() {
+
+    }
 }

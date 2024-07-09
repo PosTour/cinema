@@ -11,14 +11,14 @@ public class HashMapConverterTest {
 
     @Test
     public void testConvertMapToJson() {
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<String,String> map = new HashMap<>();
 
-        map.put(1, 3);
-        map.put(2, 2);
+        map.put("1", "3");
+        map.put("2", "2");
 
         HashMapConverter converter = new HashMapConverter();
         String text = converter.convertToDatabaseColumn(map);
-        Assertions.assertEquals(text, "{\"1\":3,\"2\":2}");
+        Assertions.assertEquals(text, "{\"1\":\"3\",\"2\":\"2\"}");
 
 
     }
@@ -27,15 +27,15 @@ public class HashMapConverterTest {
 
     @Test
     public void testConvertJsonToMap() {
-        String json = "{\"1\":3,\"2\":2}";
+        String json = "{\"1\":\"3\",\"2\":\"2\"}";
 
-        Map<Integer,Integer> myMap = new HashMap<>();
+        Map<String,String> myMap = new HashMap<>();
 
-        myMap.put(1, 3);
-        myMap.put(2, 2);
+        myMap.put("1", "3");
+        myMap.put("2", "2");
 
         HashMapConverter converter = new HashMapConverter();
-        Map<Integer,Integer> map = converter.convertToEntityAttribute(json);
+        Map<String,String> map = converter.convertToEntityAttribute(json);
         Assertions.assertEquals(map, myMap);
     }
 }
