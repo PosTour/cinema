@@ -14,7 +14,9 @@ import ru.croc.team4.administration.service.MovieService;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController("/api/movie/{id}")//TODO check regex for UUID
+@RestController("/api/movie/{i" +
+        "" +
+        "d}")//TODO check regex for UUID
 @RequiredArgsConstructor
 public class MovieController {
     private final MovieService movieService;
