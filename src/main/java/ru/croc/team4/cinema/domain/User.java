@@ -26,6 +26,9 @@ public class User {
     @Column(unique=true, nullable = false, length = 11)
     private String phone;
 
+    @Column(nullable = false)
+    private String chatId;
+
     public User(String phone) {
         this.phone = phone;
     }
