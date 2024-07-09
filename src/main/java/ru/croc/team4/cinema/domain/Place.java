@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -11,11 +12,12 @@ import java.util.UUID;
 @Setter
 public class Place {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
+
     private UUID id;
 
-    @Column(nullable = false)
-    private int inRowId;
+    @Column(nullable = false, length = 32)
+    private String placeNumber;
 
     @Column()
     private boolean isOccupied;

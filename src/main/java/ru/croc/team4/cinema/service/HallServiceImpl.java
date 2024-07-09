@@ -25,11 +25,10 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public void UpdateHall(UUID id, String name, int capacity, Map<Integer, Integer> seats) {
+    public void UpdateHall(UUID id, String name, Map<Integer, Integer> seats) {
         var hall = hallRepository.findById(id);
         if (hall.isPresent()) {
             hall.get().setName(name);
-            hall.get().setCapacity(capacity);
             hall.get().setSeats(seats);
         } else throw new NoSuchElementException("Hall isn't in db");
     }

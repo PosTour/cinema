@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -11,10 +12,10 @@ import java.util.UUID;
 @Setter
 public class Row {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
     private UUID id;
-    @Column
-    private int inSessionId;
+    @Column(nullable = false, length = 32)
+    private String rowNumber;
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;

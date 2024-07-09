@@ -10,5 +10,5 @@ public interface HallService {
 
     Optional<Hall> findHallById(UUID hallId);
 
-    void UpdateHall(UUID id, String name, int capacity, Map<Integer, Integer> seats);
+    void UpdateHall(UUID id, String name, Map<Integer, Integer> seats);
 }

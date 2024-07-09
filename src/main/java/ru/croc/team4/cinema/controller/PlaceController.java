@@ -12,6 +12,7 @@ import ru.croc.team4.cinema.repository.PlaceRepository;
 import ru.croc.team4.cinema.service.PlaceServiceImpl;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/place")
@@ -40,11 +41,10 @@ public class PlaceController {
     }
 
     @PutMapping
-    public ResponseEntity<Boolean> updatePlace(@RequestParam int id) {
+    public ResponseEntity<Boolean> updatePlace(@RequestParam UUID id) {
         return ResponseEntity.ok(placeServiceImpl.updatePlace(id));
     }
 
-    //todo возможна смена на DTO, обсудить
     @GetMapping()
     public ResponseEntity<List<PlaceDto>> getAllPlaces() {
         var places = placeMapper.placeListToPlaceDtoList(placeRepository.findAll());

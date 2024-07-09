@@ -20,7 +20,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Optional<Place> findById(UUID id) {
-        return placeRepository.findByPlaceId(id);
+        return placeRepository.findById(id);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public boolean updatePlace(int id) {
+    public boolean updatePlace(UUID id) {
         var placeExists = placeRepository.findById(id);
         if (placeExists.isEmpty()) {
             return false;
@@ -41,7 +41,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public int countFreeInRow(int id) {
+    public int countFreeInRow(UUID id) {
         int counter = 0;
         var row = rowRepository.findById(id).get();
         List<Place> places = placeRepository.findAllByRow(row);

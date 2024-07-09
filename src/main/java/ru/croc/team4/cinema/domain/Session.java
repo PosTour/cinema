@@ -10,7 +10,6 @@ import org.hibernate.annotations.UuidGenerator;
 import java.sql.Time;
 import java.util.UUID;
 
-
 @Entity
 @Getter
 @Setter
@@ -20,7 +19,7 @@ public class Session {
     @Id
     @UuidGenerator
     private UUID id;
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "movie_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
     @JoinColumn(nullable = false)

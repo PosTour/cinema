@@ -11,6 +11,6 @@ public interface PlaceService {
 
     Optional<Place> findById(UUID id);
     Optional<List<Place>> findAllInRow(Row row);
-    boolean updatePlace(int id);
-    int countFreeInRow(int id);
+    boolean updatePlace(UUID id);
+    int countFreeInRow(UUID id);
 }
