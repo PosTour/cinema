@@ -16,7 +16,7 @@ public class Place {
     private int inRowId;
 
     @Column()
-    private boolean occupied;
+    private boolean isOccupied;
 
     @ManyToOne
     @JoinColumn(name = "rowId", nullable = false)

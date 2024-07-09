@@ -31,7 +31,5 @@ public class Session {
     private Time endTime;
     @Column(nullable = false)
     private Integer price;
-    @Column(nullable = false)
-    private Integer freePlaces;
 }
 
