@@ -1,6 +1,8 @@
 package ru.croc.team4.cinema.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
@@ -10,6 +12,8 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class Row {
     @Id
     @UuidGenerator
@@ -19,4 +23,8 @@ public class Row {
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
+
+    public Row() {
+
+    }
 }

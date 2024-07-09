@@ -3,6 +3,8 @@ package ru.croc.team4.cinema.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class Movie {
 
     @Id
