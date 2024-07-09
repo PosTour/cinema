@@ -10,4 +10,5 @@ import java.util.Optional;
 @Mapper
 public interface HallMapper {
     HallDto hallToHallDto(Hall hall);
+    Hall hallDtoToHall(HallDto dto);
 }
