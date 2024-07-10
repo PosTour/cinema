@@ -32,7 +32,17 @@ public class testObjects {
                 .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
                 .duration(Duration.ofMinutes(136))
                 .title("Пираты карибского моря")
-                .description("Тут описание фильм, которое нам нужно")
+                .description("Тут описание фильма, которое нам нужно")
+                .build();
+        return movie;
+    }
+
+    public static Movie getMovieUpdate() {
+        Movie movie = Movie.builder()
+                .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
+                .duration(Duration.ofMinutes(130))
+                .title("Пираты карибского моря 2")
+                .description("Тут описание фильма, которое нам нужно")
                 .build();
         return movie;
     }
