@@ -36,7 +36,6 @@ public class MovieControllerTest {
         MovieMapper movieMapper = new MovieMapperImpl();
         MovieDto movieDto = movieMapper.movieToMovieDto(testObjects.getMovie());
 
-
         ObjectMapper oMapper = new ObjectMapper();
         String json = oMapper.writeValueAsString(movieDto);
         System.out.print(json);

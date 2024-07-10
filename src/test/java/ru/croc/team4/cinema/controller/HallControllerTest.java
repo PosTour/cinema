@@ -2,12 +2,20 @@ package ru.croc.team4.cinema.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.croc.team4.cinema.service.HallService;
+import ru.croc.team4.cinema.service.HallServiceImpl;
+import ru.croc.team4.cinema.testObjects;
+
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -16,22 +24,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@WebMvcTest(HallController.class)
 public class HallControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    HallServiceImpl hallService;
+
     @Test
     @DisplayName("Test get hall")
     public void getHallTest() throws Exception {
-        String id = """
-                {
-                	"serialVersionUID": "",
-                	"mostSigBits": "",
-                	"leastSigBits": "",
-                	"jla": {},
-                	"NIBBLES": ""
-                }""";
+
+        Mockito.doReturn(testObjects.getHall()).when(hallService).findHallById(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"));
+
+
+        String id = "07c9903b-f2ba-42de-84ba-21896e514f83";
+//                """
+//                {
+//                	"serialVersionUID": "",
+//                	"mostSigBits": "",
+//                	"leastSigBits": "",
+//                	"jla": {},
+//                	"NIBBLES": ""
+//                }""";
 
         mockMvc.perform(get("/api/hall/{id}", id))
                 .andExpect(status().isOk())

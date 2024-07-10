@@ -9,7 +9,7 @@ import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.service.MovieService;
 
 @RestController
-@RequestMapping("/api/movies")
+@RequestMapping("/api/movie/all")
 @RequiredArgsConstructor
 public class MoviesController {
     private final MovieService movieService;
@@ -18,9 +18,5 @@ public class MoviesController {
     public ResponseEntity<Iterable<MovieResponseDto>> getMovies() {
         Iterable<MovieResponseDto> movies = movieService.findAllMovies();
         return ResponseEntity.ok(movies);
-    }
-    @PostMapping()
-    public ResponseEntity<MovieResponseDto> createMovie(@RequestBody MovieDto movieDto) { //TODO validate??
-       return ResponseEntity.ok(movieService.createMovie(movieDto));
     }
 }
