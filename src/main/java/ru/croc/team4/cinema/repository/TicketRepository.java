@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface TicketRepository extends JpaRepository<Ticket, Integer> {
+public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     List<Ticket> getTicketsByUserId(UUID userId);
-
-    Optional<Ticket> getTicketByTicketId(UUID ticketId);
 
     Ticket getTicketByBookingCode(String bookingCode);
 
