@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.mapper.MovieMapper;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class MovieControllerTest {
 
     @Autowired
@@ -36,6 +38,7 @@ public class MovieControllerTest {
 
         ObjectMapper oMapper = new ObjectMapper();
         String json = oMapper.writeValueAsString(movieDto);
+        System.out.print(json);
 
         String id = "07c9903b-f2ba-42de-84ba-21896e514f83";
 
