@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface RowRepository extends JpaRepository<Row, Integer> {
+public interface RowRepository extends JpaRepository<Row, UUID> {
     List<Row> findAllBySession_id(UUID cinemaId);
-    Optional<Row> findById(UUID id);
 }
