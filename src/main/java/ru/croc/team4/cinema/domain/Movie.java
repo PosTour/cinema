@@ -26,7 +26,7 @@ public class Movie {
     @Column(nullable = false, length = 32)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "INTERVAL")
+    @Column(nullable = false, columnDefinition = "NUMERIC")
     private Duration duration;
 
     @Column(length = 512)

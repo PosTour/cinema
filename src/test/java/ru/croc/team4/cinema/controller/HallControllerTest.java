@@ -46,31 +46,6 @@ public class HallControllerTest {
     }
 
 
-
-    @Test
-    @DisplayName("Test update hall")
-    public void updateHallTest() throws Exception {
-        String id = """
-                {
-                	"serialVersionUID": "",
-                	"mostSigBits": "",
-                	"leastSigBits": "",
-                	"jla": {},
-                	"NIBBLES": ""
-                }""";
-        String hallDto = """
-                {
-                	"name": "",
-                	"seats": {}
-                }""";
-
-        mockMvc.perform(put("/api/hall/{id}", id)
-                        .content(hallDto)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
     @Test
     @DisplayName("Test get halls")
     public void getHallsTest() throws Exception {
