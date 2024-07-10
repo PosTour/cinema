@@ -11,8 +11,6 @@ import ru.croc.team4.cinema.mapper.MovieMapper;
 import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.MovieRepository;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,12 +21,12 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
-    private final AuditSenderService auditSenderService;
+    private final KafkaSenderService kafkaSenderService;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, AuditSenderService auditSenderService) {
+    public MovieServiceImpl(MovieRepository movieRepository, KafkaSenderService kafkaSenderService) {
         this.movieRepository = movieRepository;
-        this.auditSenderService = auditSenderService;
+        this.kafkaSenderService = kafkaSenderService;
         this.movieMapper = new MovieMapperImpl();
     }
 
@@ -42,7 +40,7 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
         AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
-        auditSenderService.sendToAudit(auditDto);
+        kafkaSenderService.sendToAudit(auditDto);
         return response;
     }
 

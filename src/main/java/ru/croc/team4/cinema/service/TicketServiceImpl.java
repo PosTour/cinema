@@ -17,10 +17,12 @@ import java.util.UUID;
 public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
+    private final KafkaSenderService kafkaSenderService;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository, KafkaSenderService kafkaSenderService) {
         this.ticketRepository = ticketRepository;
+        this.kafkaSenderService = kafkaSenderService;
         this.ticketMapper = new TicketMapperImpl();
     }
 
@@ -44,6 +46,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void deleteTicket(TicketDto ticketDto) {
+
         ticketRepository.deleteTicket(ticketDto.user().getId(), ticketDto.session().getId(), ticketDto.place().getId());
     }
 }
