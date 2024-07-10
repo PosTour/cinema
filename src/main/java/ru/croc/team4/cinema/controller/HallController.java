@@ -29,7 +29,6 @@ public class HallController {
         this.hallMapper = new HallMapperImpl();
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<HallDto> getHall(@PathVariable UUID id) {
         Optional<Hall> hall = hallService.findHallById(id);
@@ -41,8 +40,6 @@ public class HallController {
         Iterable<HallResponseDto> halls = hallService.findAllHalls();
         return ResponseEntity.ok(halls);
     }
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateHall(@PathVariable UUID id, @RequestBody HallDto hallDto) {

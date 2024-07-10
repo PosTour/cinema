@@ -25,8 +25,8 @@ public class Place {
 
     private UUID id;
 
-    @Column(nullable = false, length = 32)
-    private String placeNumber;
+    @Column(nullable = false)
+    private Integer placeNumber;
 
     @Enumerated(EnumType.ORDINAL)
     private Status status;

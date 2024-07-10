@@ -20,7 +20,7 @@ public class Row {
     @UuidGenerator
     private UUID id;
     @Column(nullable = false, length = 32)
-    private String rowNumber;
+    private Integer rowNumber;
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;

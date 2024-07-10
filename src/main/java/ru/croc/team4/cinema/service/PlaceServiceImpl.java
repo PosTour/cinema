@@ -7,6 +7,7 @@ import ru.croc.team4.cinema.domain.Row;
 import ru.croc.team4.cinema.repository.PlaceRepository;
 import ru.croc.team4.cinema.repository.RowRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,8 +25,12 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Optional<List<Place>> findAllInRow(Row row) {
-        return Optional.ofNullable(placeRepository.findAllByRow(row));
+    public List<Place> findAllByRowId(UUID rowId) {
+        Optional<Row> row = rowRepository.findById(rowId);
+        if (row.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return placeRepository.findAllByRow(row.get());
     }
 
     @Override

@@ -39,12 +39,10 @@ public class SessionServiceImpl implements SessionService {
             throw new IllegalArgumentException("Movie not found"); //TODO пересмотеть
         }
         var movieDuration = movie.get().getDuration();
-
         var endTime = Time.valueOf(sessionDto
                 .startTime()
                 .toLocalTime()
                 .plus(movieDuration));
-
         var session = new Session(
                 sessionDto.movie()
                 , sessionDto.hall()
@@ -69,7 +67,7 @@ public class SessionServiceImpl implements SessionService {
                 .toList();
 
         if (sessions.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         } else {
             return sessionMapper.sessionsToSessionDtos(sessions);
         }
@@ -87,12 +85,10 @@ public class SessionServiceImpl implements SessionService {
             return Optional.empty();
         }
         var session = sessionExistence.get();
-
         session.setMovie(sessionCreationDto.movie());
         session.setHall(sessionCreationDto.hall());
         session.setStartTime(sessionCreationDto.startTime());
         session.setPrice(sessionCreationDto.price());
-
         return Optional.ofNullable(sessionMapper.sessionToSessionResponseDto(sessionRepository.save(session)));
     }
 }
