@@ -41,8 +41,8 @@ public class MovieServiceImpl implements MovieService {
     public MovieResponseDto createMovie(MovieDto movieDto) {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
-        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
-        auditSenderService.sendToAudit(auditDto);
+//        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
+//        auditSenderService.sendToAudit(auditDto);
         return response;
     }
 
