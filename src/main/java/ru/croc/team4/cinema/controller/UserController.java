@@ -38,4 +38,13 @@ public class UserController {
     public ResponseEntity<Iterable<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Void> signUp(@RequestBody UserDto userDto) {
+        Optional<User> user = userService.getUserByPhone(userDto.phone());
+        if (user.isEmpty()) {
+            userService.createUser(userDto);
+        }
+        return ResponseEntity.ok().build();
+    }
 }
