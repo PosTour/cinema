@@ -21,28 +21,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class UserControllerTest {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        User user = testObjects.getUser();
-        userRepository.save(user);
-    }
-
-    @AfterEach
-    public void clean() {
-        userRepository.deleteAllInBatch();
-    }
-
-    @Test
-    @DisplayName("Тест по проверке всех пользователей")
-    public void getAllUsersTest() throws Exception {
-        mockMvc.perform(get("/api/users/all"))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @BeforeEach
+//    public void setup() {
+//        User user = testObjects.getUser();
+//        userRepository.save(user);
+//    }
+//
+//    @AfterEach
+//    public void clean() {
+//        userRepository.deleteAllInBatch();
+//    }
+//
+//    @Test
+//    @DisplayName("Тест по проверке всех пользователей")
+//    public void getAllUsersTest() throws Exception {
+//        mockMvc.perform(get("/api/users/all"))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//    }
 }

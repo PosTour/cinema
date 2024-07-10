@@ -1,10 +1,7 @@
 package ru.croc.team4.cinema.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "place")
 public class Place {
     @Id
@@ -30,8 +28,4 @@ public class Place {
     @ManyToOne
     @JoinColumn(name = "rowId", nullable = false)
     private Row row;
-
-    public Place() {
-
-    }
 }

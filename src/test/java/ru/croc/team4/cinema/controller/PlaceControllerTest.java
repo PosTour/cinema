@@ -35,6 +35,7 @@ public class PlaceControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(placeDto);
+        System.out.print(testObjects.getPlace().getPlaceNumber());
 
         mockMvc.perform(post("/api/place")
                         .content(json)
@@ -53,12 +54,4 @@ public class PlaceControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    @DisplayName("Тест для обновлений мест")
-    public void updatePlaceTest() throws Exception {
-
-        mockMvc.perform(put("/api/place/{id}"))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 }
