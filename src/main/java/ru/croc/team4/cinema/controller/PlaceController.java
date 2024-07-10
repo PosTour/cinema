@@ -35,8 +35,9 @@ public class PlaceController {
         return ResponseEntity.ok(placeMapper.placeToPlaceDto(place));
     }
 
-    public ResponseEntity<List<PlaceDto>> getPlacesInRow(@RequestBody Row row) {
-        var result = placeMapper.placeListToPlaceDtoList(placeServiceImpl.findAllInRow(row).get());
+    @GetMapping("/{rowId}")
+    public ResponseEntity<List<PlaceDto>> getPlacesByRowId(@PathVariable UUID rowId) {
+        var result = placeMapper.placeListToPlaceDtoList(placeServiceImpl.findAllByRowId(rowId));
         return ResponseEntity.ok(result);
     }
 

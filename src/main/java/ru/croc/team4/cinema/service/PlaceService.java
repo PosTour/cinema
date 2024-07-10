@@ -10,7 +10,10 @@ import java.util.UUID;
 public interface PlaceService {
 
     Optional<Place> findById(UUID id);
-    Optional<List<Place>> findAllInRow(Row row);
+
+    List<Place> findAllByRowId(UUID rowId);
+
     boolean updatePlace(UUID id);
+
     int countFreeInRow(UUID id);
 }
