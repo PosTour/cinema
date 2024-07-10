@@ -31,6 +31,12 @@ public class MovieController {
         return movie.map(value -> ResponseEntity.ok(movieMapper.movieToResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<MovieResponseDto>> getMovies() {
+        Iterable<MovieResponseDto> movies = movieService.findAllMovies();
+        return ResponseEntity.ok(movies);
+    }
+
     @PostMapping
     public ResponseEntity<MovieResponseDto> createMovie(@RequestBody MovieDto movieDto) {
         return ResponseEntity.ok(movieService.createMovie(movieDto));
