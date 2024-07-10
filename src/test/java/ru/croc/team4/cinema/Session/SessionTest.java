@@ -51,10 +51,10 @@ public class SessionTest {
     public void setup() {
         UUID uuid = UUID.randomUUID();
         // количество мест в ряду
-        HashMap<Integer, Integer> seats = new HashMap<>();
-        seats.put(1, 3);
-        seats.put(2, 4);
-        seats.put(3, 4);
+        HashMap<String, String> seats = new HashMap<>();
+        seats.put("1", "3");
+        seats.put("2", "4");
+        seats.put("3", "4");
 
         // создание зала
         Hall hall = new Hall();
@@ -77,7 +77,7 @@ public class SessionTest {
         session.setId(uuid);
         session.setMovie(movie);
         session.setHall(hall);
-        session.setPrice(100);
+        session.setPrice(Integer.valueOf(100));
         session.setStartTime(new Time(15, 20, 0));
         session.setEndTime(new Time(17, 0, 0));
 
@@ -89,7 +89,7 @@ public class SessionTest {
         session1.setId(uuid1);
         session1.setMovie(movie1);
         session1.setHall(hall);
-        session1.setPrice(200);
+        session1.setPrice(Integer.valueOf(200));
         session1.setStartTime(new Time(18, 40, 0));
         session1.setEndTime(new Time(20, 54, 0));
 
@@ -102,11 +102,11 @@ public class SessionTest {
             Row row = new Row();
             row.setSession(session);
             row.setRowNumber(String.valueOf(j));
-            for (int i = 0; i < session.getHall().getSeats().get(j); i++) {
+            /*for (int i = 0; i < session.getHall().getSeats().get(j); i++) {
                 place.setPlaceNumber(String.valueOf(i));
                 place.setOccupied(false);
                 place.setRow(row);
-            }
+            }*/
         }
 
         movieRepository.save(movie);

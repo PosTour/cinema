@@ -30,53 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AdministrationApplicationTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    AdministrationApplicationTests() throws JsonProcessingException {
-    }
 
     @Test
 	void contextLoads() {
 	}
-
-
-
-
-
-    @Test
-    @DisplayName("Test create ticket")
-    public void createTicketTest() throws Exception {
-
-        TicketMapper tickitMapper = new TicketMapperImpl();
-        TicketDto ticketDto = tickitMapper.ticketToTicketDto(testObjects.getTicket());
-
-        ObjectMapper oMapper = new ObjectMapper();
-        String json = oMapper.writeValueAsString(ticketDto);
-
-        mockMvc.perform(post("/api/ticket")
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("Test create movie")
-    public void createMovieTest() throws Exception {
-
-        MovieMapper movieMapper = new MovieMapperImpl();
-        MovieDto movieDto = movieMapper.movieToMovieDto(testObjects.getMovie());
-
-        ObjectMapper oMapper = new ObjectMapper();
-        String json = oMapper.writeValueAsString(movieDto);
-
-        String id = "07c9903b-f2ba-42de-84ba-21896e514f83";
-
-        mockMvc.perform(post("/api/movie/{id}", id)
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 }
