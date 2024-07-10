@@ -21,12 +21,12 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
-    private final KafkaSenderService kafkaSenderService;
+//    private final KafkaSenderService kafkaSenderService;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, KafkaSenderService kafkaSenderService) {
+    public MovieServiceImpl(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        this.kafkaSenderService = kafkaSenderService;
+//        this.kafkaSenderService = kafkaSenderService;
         this.movieMapper = new MovieMapperImpl();
     }
 
@@ -40,7 +40,7 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
         movieRepository.save(movie);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
-//        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
+        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
 //        kafkaSenderService.sendToAudit(auditDto);
         return response;
     }
@@ -61,6 +61,7 @@ public class MovieServiceImpl implements MovieService {
         movieOptional.get().setTitle(movie.getTitle());
         movieOptional.get().setDuration(movie.getDuration());
         movieOptional.get().setDescription(movie.getDescription());
+        movieRepository.save(movieOptional.get());
         return Optional.ofNullable(movieMapper.movieToResponseDto(movieOptional.get()));
     }
 

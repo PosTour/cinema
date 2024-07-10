@@ -12,6 +12,8 @@ import ru.croc.team4.cinema.dto.MovieResponseDto;
 public interface HallMapper {
     HallDto hallToHallDto(Hall hall);
 
+    HallResponseDto hallToHallResponseDto(Hall hall);
+
     Iterable<HallResponseDto> hallListToHallResponseDto(Iterable<Hall> halls);
 
     Hall hallDtoToHall(HallDto dto);

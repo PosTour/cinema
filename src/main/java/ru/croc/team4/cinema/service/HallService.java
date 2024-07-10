@@ -15,5 +15,7 @@ public interface HallService {
 
     Optional<Hall> findHallById(UUID hallId);
 
+    HallResponseDto createHall(HallDto hallDto);
+
     void UpdateHall(UUID id, String name, Map<Integer, Integer> seats);
 }
