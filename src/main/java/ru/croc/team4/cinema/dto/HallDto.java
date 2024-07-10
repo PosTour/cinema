@@ -6,11 +6,11 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Map;
 
-public record HallDto (
-        @NotBlank
-        @Size(min = 2, max = 32)
+public record HallDto(
+        @NotBlank(message = "Название зала не может быть пустым или содержать только пробелы")
+        @Size(min = 2, max = 32, message = "Название зала должно быть от 2 до 32 символов")
         String name,
-        @NotEmpty
-        @Size(min = 1)
-        Map<Integer, Integer> seats){
+        @NotEmpty(message = "Информация о местах в зале не может быть пустой")
+        @Size(min = 1, message = "В зале должно быть хотя бы одно место")
+        Map<Integer, Integer> seats) {
 }

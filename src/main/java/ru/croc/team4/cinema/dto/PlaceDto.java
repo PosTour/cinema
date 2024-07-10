@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public record PlaceDto(
         UUID id,
-        @NotBlank
-        @Min(1)
-        @Max(512)
+        @NotBlank(message = "Номер места не может быть пустым или содержать только пробелы")
+        @Min(value = 1, message = "Номер места должен быть не менее 1")
+        @Max(value = 512, message = "Номер места не может быть больше 512")
         Integer placeNumber,
         boolean occupied,
-        @NotNull
+        @NotNull(message = "Информация о ряде не может быть пустой")
         Row row) {
 }

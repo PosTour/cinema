@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public record RowDto(
         UUID id,
-        @NotBlank
-        @Min(1)
-        @Max(512)
+        @NotBlank(message = "Номер ряда не может быть пустым или содержать только пробелы")
+        @Min(value = 1, message = "Номер ряда должен быть не менее 1")
+        @Max(value = 512, message = "Номер ряда не может быть больше 512")
         Integer rowNumber,
-        @NotNull
+        @NotNull(message = "Информация о сеансе не может быть пустой")
         Session session) {
 }
