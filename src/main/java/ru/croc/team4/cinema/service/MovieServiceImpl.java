@@ -40,6 +40,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieResponseDto createMovie(MovieDto movieDto) {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
+        movieRepository.save(movie);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
         //AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
         //auditSenderService.sendToAudit(auditDto);
@@ -58,10 +59,11 @@ public class MovieServiceImpl implements MovieService {
         if (movieOptional.isEmpty()) {
             return Optional.empty();
         }
+        movieOptional.get().setId(movieId);
         movieOptional.get().setTitle(movie.getTitle());
         movieOptional.get().setDuration(movie.getDuration());
         movieOptional.get().setDescription(movie.getDescription());
-        return Optional.ofNullable(movieMapper.movieToResponseDto(movie));
+        return Optional.ofNullable(movieMapper.movieToResponseDto(movieOptional.get()));
     }
 
     @Override
