@@ -23,18 +23,15 @@ public class HallController {
 
     @Autowired
     public HallController(HallServiceImpl hallServiceImpl) {
-        this.hallService = hallServiceImpl; //???
-        this.hallMapper = new HallMapperImpl(); //???
+        this.hallService = hallServiceImpl;
+        this.hallMapper = new HallMapperImpl();
     }
 
 
     @GetMapping()
     public ResponseEntity<HallDto> getHall(@PathVariable UUID id) {
         Optional<Hall> hall = hallService.findHallById(id);
-        if (hall.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(hallMapper.hallToHallDto(hall.get()));
+        return hall.map(value -> ResponseEntity.ok(hallMapper.hallToHallDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping()
