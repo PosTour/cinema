@@ -1,3 +1,10 @@
 package ru.croc.team4.cinema.dto;
 
-public record UserDto(String phone) {}
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
+public record UserDto(
+        @NotBlank
+        @Pattern(regexp = "(^8|7|\\+7)((\\d{10})|[\\s-][(]\\d{3}[)][\\s-]\\d{3}[\\s-]\\d{2}[\\s-]\\d{2})")
+        String phone) {
+}
