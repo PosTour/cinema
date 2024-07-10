@@ -1,18 +1,20 @@
 package ru.croc.team4.cinema.service;
 
+import ru.croc.team4.cinema.domain.Session;
+import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
-import ru.croc.team4.cinema.dto.SessionDto;
+import ru.croc.team4.cinema.dto.SessionResponseDto;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionService {
-    SessionCreationDto createSession(SessionCreationDto sessionDto);
+    SessionResponseDto createSession(SessionCreationDto sessionDto);
 
-    List<SessionDto> getSessions(UUID movieId);
+    List<SessionResponseDto> getSessions(UUID movieId);
 
-    Optional<SessionDto> updateSession(SessionDto sessionDto);
+    Optional<Session> findSession(UUID sessionId);
 
-//    boolean deleteSession(UUID sessionId);
+    Optional<SessionResponseDto> updateSession(UUID sessionId, SessionCreationDto sessionCreationDto);
 }

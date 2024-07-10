@@ -12,7 +12,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Builder
-@AllArgsConstructor
 public class Session {
     @Id
     @UuidGenerator
@@ -29,5 +28,13 @@ public class Session {
     private Time endTime;
     @Column(nullable = false)
     private Integer price;
+
+    public Session(Movie movie, Hall hall, Time startTime, Time endTime, Integer price) {
+        this.movie = movie;
+        this.hall = hall;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+    }
 }
 
