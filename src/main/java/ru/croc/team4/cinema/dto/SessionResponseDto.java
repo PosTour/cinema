@@ -6,7 +6,7 @@ import ru.croc.team4.cinema.domain.Movie;
 import java.sql.Time;
 import java.util.UUID;
 
-public record SessionDto(
+public record SessionResponseDto(
         UUID id
         , Movie movie
         , Hall hall

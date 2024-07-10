@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Session;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
-import ru.croc.team4.cinema.dto.SessionDto;
+import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.mapper.SessionMapper;
 import ru.croc.team4.cinema.mapper.SessionMapperImpl;
 import ru.croc.team4.cinema.repository.MovieRepository;
@@ -12,6 +12,7 @@ import ru.croc.team4.cinema.repository.SessionRepository;
 import ru.croc.team4.cinema.utils.SessionUtils;
 
 import java.sql.Time;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,10 +33,10 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public SessionCreationDto createSession(SessionCreationDto sessionDto) {
+    public SessionResponseDto createSession(SessionCreationDto sessionDto) {
         var movie = movieRepository.findById(sessionDto.movie().getId());
         if (movie.isEmpty()) {
-            throw new IllegalArgumentException("Movie not found");
+            throw new IllegalArgumentException("Movie not found"); //TODO пересмотеть
         }
         var movieDuration = movie.get().getDuration();
 
@@ -45,22 +46,21 @@ public class SessionServiceImpl implements SessionService {
                 .plus(movieDuration));
 
         var session = new Session(
-                UUID.randomUUID()
-                ,sessionDto.movie()
-                ,sessionDto.hall()
-                ,sessionDto.startTime()
-                ,endTime
-                ,sessionDto.price());
+                sessionDto.movie()
+                , sessionDto.hall()
+                , sessionDto.startTime()
+                , endTime
+                , sessionDto.price());
 
         sessionRepository.save(session);
-        return sessionMapper.sessionToSessionCreationDto(session);
+        return sessionMapper.sessionToSessionResponseDto(session);
     }
 
     @Override
-    public List<SessionDto> getSessions(UUID movieId) {
+    public List<SessionResponseDto> getSessions(UUID movieId) {
         var movie = movieRepository.findById(movieId);
         if (movie.isEmpty()) {
-            throw new IllegalArgumentException("Movie not found");
+            return Collections.emptyList();
         }
         var sessions = sessionRepository
                 .findAllByMovie(movie.get())
@@ -76,30 +76,23 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<SessionDto> updateSession(SessionDto sessionDto) {
-        var sessionExistence = sessionRepository.findById(sessionDto.id());
+    public Optional<Session> findSession(UUID sessionId) {
+        return sessionRepository.findById(sessionId);
+    }
+
+    @Override
+    public Optional<SessionResponseDto> updateSession(UUID sessionId, SessionCreationDto sessionCreationDto) {
+        var sessionExistence = sessionRepository.findById(sessionId);
         if (sessionExistence.isEmpty()) {
             return Optional.empty();
         }
-
         var session = sessionExistence.get();
 
-        session.setMovie(sessionDto.movie());
-        session.setHall(sessionDto.hall());
-        session.setStartTime(sessionDto.startTime());
-        session.setPrice(sessionDto.price());
+        session.setMovie(sessionCreationDto.movie());
+        session.setHall(sessionCreationDto.hall());
+        session.setStartTime(sessionCreationDto.startTime());
+        session.setPrice(sessionCreationDto.price());
 
-        return Optional.ofNullable(sessionMapper.sessionToSessionDto(sessionRepository.save(session)));
+        return Optional.ofNullable(sessionMapper.sessionToSessionResponseDto(sessionRepository.save(session)));
     }
-
-//    @Override
-//    public boolean deleteSession(UUID sessionId) {
-//        var sessionExistence = sessionRepository.findById(sessionId);
-//        if (sessionExistence.isEmpty()) {
-//            return false;
-//        }
-//
-//        sessionRepository.delete(sessionExistence.get());
-//        return true;
-//    }
 }
