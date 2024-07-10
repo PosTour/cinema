@@ -1,23 +1,17 @@
 package ru.croc.team4.cinema.controller;
 
-import org.antlr.v4.runtime.misc.LogManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.repository.HallRepository;
-import ru.croc.team4.cinema.service.HallService;
-import ru.croc.team4.cinema.service.HallServiceImpl;
 import ru.croc.team4.cinema.testObjects;
 
 import java.util.UUID;

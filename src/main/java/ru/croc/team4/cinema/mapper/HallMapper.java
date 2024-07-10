@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.HallDto;
+import ru.croc.team4.cinema.dto.HallResponseDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 
 
@@ -11,7 +12,7 @@ import ru.croc.team4.cinema.dto.MovieResponseDto;
 public interface HallMapper {
     HallDto hallToHallDto(Hall hall);
 
-    Iterable<HallDto> hallListToHallDto(Iterable<Hall> halls);
+    Iterable<HallResponseDto> hallListToHallResponseDto(Iterable<Hall> halls);
 
     Hall hallDtoToHall(HallDto dto);
 }

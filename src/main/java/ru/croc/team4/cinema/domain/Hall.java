@@ -19,7 +19,7 @@ import java.util.UUID;
 @FieldNameConstants
 @Builder
 @AllArgsConstructor
-@Table(name = "hall", schema = "cinema")
+@Table(name = "hall")
 public class Hall {
 
     @Id

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.dto.HallDto;
+import ru.croc.team4.cinema.dto.HallResponseDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.mapper.HallMapper;
 import ru.croc.team4.cinema.mapper.HallMapperImpl;
@@ -31,8 +32,8 @@ public class HallServiceImpl implements HallService {
 
 
     @Override
-    public Iterable<HallDto> findAllHalls() {
-        return hallMapper.hallListToHallDto(hallRepository.findAll());
+    public Iterable<HallResponseDto> findAllHalls() {
+        return hallMapper.hallListToHallResponseDto(hallRepository.findAll());
     }
 
     @Override

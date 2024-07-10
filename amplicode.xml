@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AmplicodeDatabaseMigrationSettings" liquibaseFileType="SQL">
     <database-infos>
@@ -11,7 +12,7 @@
     <persistence-units>
       <persistence-unit name="Default" defaultIncludeChangeLogFile="src/main/resources/db/changelog/db.changelog-master.yaml">
         <packages>
-          <package value="ru.croc.team4" />
+          <package value="ru.croc.team4.cinema" />
         </packages>
       </persistence-unit>
     </persistence-units>

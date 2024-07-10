@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.dto.HallDto;
+import ru.croc.team4.cinema.dto.HallResponseDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.mapper.HallMapper;
 import ru.croc.team4.cinema.mapper.HallMapperImpl;
@@ -36,8 +37,8 @@ public class HallController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Iterable<HallDto>> getHalls() {
-        Iterable<HallDto> halls = hallService.findAllHalls();
+    public ResponseEntity<Iterable<HallResponseDto>> getHalls() {
+        Iterable<HallResponseDto> halls = hallService.findAllHalls();
         return ResponseEntity.ok(halls);
     }
 

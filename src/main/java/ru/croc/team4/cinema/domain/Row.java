@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
-@Table(name = "row", schema = "cinema")
+@Table(name = "row")
 public class Row {
     @Id
     @UuidGenerator
