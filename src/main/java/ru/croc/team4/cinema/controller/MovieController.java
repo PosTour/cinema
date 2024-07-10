@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,12 +39,12 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<MovieResponseDto> createMovie(@RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieResponseDto> createMovie(@Valid  @RequestBody MovieDto movieDto) {
         return ResponseEntity.ok(movieService.createMovie(movieDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable UUID id, @RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable UUID id, @Valid @RequestBody MovieDto movieDto) {
         Optional<MovieResponseDto> movie = movieService.updateMovie(id, movieDto);
         return movie.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

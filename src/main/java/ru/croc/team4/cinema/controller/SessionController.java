@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class SessionController {
     }
 
     @PostMapping
-    public ResponseEntity<SessionResponseDto> createSession(@RequestBody SessionCreationDto sessionCreationDto) {
+    public ResponseEntity<SessionResponseDto> createSession(@Valid @RequestBody SessionCreationDto sessionCreationDto) {
         SessionResponseDto sessionResponseDto = sessionService.createSession(sessionCreationDto);
         return ResponseEntity.ok(sessionResponseDto);
     }
@@ -52,7 +53,7 @@ public class SessionController {
 
 
     @PutMapping("/{sessionId}")
-    public ResponseEntity<SessionResponseDto> updateSession(@PathVariable UUID sessionId, @RequestBody SessionCreationDto sessionCreationDto) {
+    public ResponseEntity<SessionResponseDto> updateSession(@PathVariable UUID sessionId, @Valid @RequestBody SessionCreationDto sessionCreationDto) {
         var session = sessionService.updateSession(sessionId, sessionCreationDto);
         return session.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
