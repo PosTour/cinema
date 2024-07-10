@@ -23,7 +23,10 @@ import ru.croc.team4.cinema.testObjects;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -48,24 +51,7 @@ public class HallControllerTest {
         hallRepository.deleteAllInBatch();
     }
 
-    @Test
-    @DisplayName("Test get hall")
-    public void getHallTest() throws Exception {
 
-        String id = "07c9903b-f2ba-42de-84ba-21896e514f83";
-//                """
-//                {
-//                	"serialVersionUID": "",
-//                	"mostSigBits": "",
-//                	"leastSigBits": "",
-//                	"jla": {},
-//                	"NIBBLES": ""
-//                }""";
-
-        mockMvc.perform(get("/api/hall/{id}", id))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 
     @Test
     @DisplayName("Test update hall")
@@ -87,6 +73,14 @@ public class HallControllerTest {
         mockMvc.perform(put("/api/hall/{id}", id)
                         .content(hallDto)
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Test get halls")
+    public void getHallsTest() throws Exception {
+        mockMvc.perform(get("/api/hall/all"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
