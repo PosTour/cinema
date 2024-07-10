@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
+@Table(name = "user", schema = "cinema")
 public class User {
     /*
     * Идентификатор
