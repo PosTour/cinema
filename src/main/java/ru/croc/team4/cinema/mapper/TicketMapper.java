@@ -9,5 +9,7 @@ import java.util.List;
 public interface TicketMapper {
     TicketDto ticketToTicketDto(Ticket ticket);
 
+    Ticket ticketDtoToTicket(TicketDto ticketDto);
+
     List<TicketDto> ticketsToTicketDtos(List<Ticket> tickets);
 }

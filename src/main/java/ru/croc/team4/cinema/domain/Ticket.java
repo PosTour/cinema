@@ -25,6 +25,9 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
+    private String bookingCode;
+
     @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;

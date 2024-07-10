@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Row;
 import ru.croc.team4.cinema.dto.PlaceDto;
 import ru.croc.team4.cinema.mapper.PlaceMapper;
@@ -41,9 +42,10 @@ public class PlaceController {
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> updatePlace(@PathVariable UUID id) {
-        return ResponseEntity.ok(placeServiceImpl.updatePlace(id));
+    @PutMapping("/{id}/{status}")
+    public ResponseEntity<Boolean> updatePlace(@PathVariable UUID id, @PathVariable Place.Status status) {
+
+        return ResponseEntity.ok(placeServiceImpl.updatePlace(id, status));
     }
 
     @GetMapping()

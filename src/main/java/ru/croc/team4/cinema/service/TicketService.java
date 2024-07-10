@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.service;
 
+import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.dto.TicketDto;
 
 import java.util.List;
@@ -9,6 +10,8 @@ public interface TicketService {
     void deleteTicket(TicketDto ticketDto);
 
     TicketDto createTicket(TicketDto ticketDto);
+
+    TicketDto updateTicket(String bCode, Place.Status status);
 
     List<TicketDto> getTicketsByUserId(UUID userId);
 

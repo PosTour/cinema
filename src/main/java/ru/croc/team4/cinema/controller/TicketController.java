@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
 import ru.croc.team4.cinema.mapper.TicketMapperImpl;
@@ -39,6 +40,12 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<TicketDto> createTicket(@RequestBody TicketDto ticketDto) {
         return ResponseEntity.ok(ticketService.createTicket(ticketDto));
+    }
+
+    @PutMapping("/{bCode}/{status}")
+    public ResponseEntity<TicketDto> updateTicket(@PathVariable String bCode, @PathVariable Place.Status status) {
+        TicketDto ticketDto = ticketService.updateTicket(bCode, status);
+        return ResponseEntity.ok(ticketDto);
     }
 
     @DeleteMapping

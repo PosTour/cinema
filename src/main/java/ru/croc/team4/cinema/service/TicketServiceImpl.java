@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Ticket;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
@@ -30,6 +31,13 @@ public class TicketServiceImpl implements TicketService {
     public TicketDto createTicket(TicketDto ticketDto) {
         Ticket ticketSaved = ticketRepository.save(new Ticket(ticketDto.user(), ticketDto.session(), ticketDto.place()));
         return ticketMapper.ticketToTicketDto(ticketSaved);
+    }
+
+    @Override
+    public TicketDto updateTicket(String bCode, Place.Status status) {
+        Ticket ticket = ticketRepository.getTicketByBookingCode(bCode);
+        ticket.getPlace().setStatus(status);
+        return ticketMapper.ticketToTicketDto(ticketRepository.save(ticket));
     }
 
     @Override
