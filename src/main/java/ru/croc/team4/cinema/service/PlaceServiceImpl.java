@@ -29,13 +29,13 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public boolean updatePlace(UUID id) {
+    public boolean updatePlace(UUID id, Place.Status status) {
         var placeExists = placeRepository.findById(id);
         if (placeExists.isEmpty()) {
             return false;
         }
         var place = placeExists.get();
-        place.setOccupied(true);
+        place.setStatus(status);
         placeRepository.save(place);
         return true;
     }
@@ -46,7 +46,7 @@ public class PlaceServiceImpl implements PlaceService {
         var row = rowRepository.findById(id).get();
         List<Place> places = placeRepository.findAllByRow(row);
         for (Place place : places) {
-            if (!place.isOccupied()) counter++;
+            if (place.getStatus() == Place.Status.FREE) counter++;
         }
         return counter;
     }

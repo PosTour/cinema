@@ -6,10 +6,15 @@ import org.springframework.data.repository.query.Param;
 import ru.croc.team4.cinema.domain.Ticket;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> getTicketsByUserId(UUID userId);
+
+    Optional<Ticket> getTicketByTicketId(UUID ticketId);
+
+    Ticket getTicketByBookingCode(String bookingCode);
 
     @Query("DELETE FROM Ticket t WHERE t.user.id = :user_id and t.session.id = :session_id and t.place.id = :place_id")
     void deleteTicket(

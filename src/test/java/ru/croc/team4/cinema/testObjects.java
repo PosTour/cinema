@@ -60,7 +60,7 @@ public class testObjects {
         Place place = Place.builder()
                 .id(UUID.randomUUID())
                 .placeNumber("12a")
-                .isOccupied(true)
+                .status(Place.Status.PAID)
                 .row(getRow())
                 .build();
         return place;
