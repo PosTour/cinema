@@ -14,11 +14,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.MovieDto;
+import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.mapper.MovieMapper;
 import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.HallRepository;
 import ru.croc.team4.cinema.repository.MovieRepository;
 import ru.croc.team4.cinema.testObjects;
+
+import java.time.Duration;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -60,11 +64,20 @@ public class MovieControllerTest {
         String json = oMapper.writeValueAsString(movieDto);
         System.out.print(json);
 
+        // нужно сделать MovieResponseDto
+        MovieResponseDto movie = MovieResponseDto.builder()
+                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .title("It")
+                .durationInMinutes(122)
+                .description("gret film")
+                .build();
+
+        String result = oMapper.writeValueAsString(movie);
 
         mockMvc.perform(post("/api/movie")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(content().json(result))
                 .andDo(print());
     }
 
