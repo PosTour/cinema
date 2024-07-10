@@ -40,8 +40,8 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
         movieRepository.save(movie);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
-        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
-        kafkaSenderService.sendToAudit(auditDto);
+//        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
+//        kafkaSenderService.sendToAudit(auditDto);
         return response;
     }
 
