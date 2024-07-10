@@ -3,33 +3,39 @@ package ru.croc.team4.cinema.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.croc.team4.cinema.domain.Session;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
-import ru.croc.team4.cinema.dto.SessionDto;
+import ru.croc.team4.cinema.dto.SessionResponseDto;
+import ru.croc.team4.cinema.mapper.SessionMapper;
+import ru.croc.team4.cinema.mapper.SessionMapperImpl;
 import ru.croc.team4.cinema.service.SessionServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/session")
 public class SessionController {
 
-    private final SessionServiceImpl sessionServiceImpl;
+    private final SessionServiceImpl sessionService;
+    private final SessionMapper sessionMapper;
 
     @Autowired
     public SessionController(SessionServiceImpl sessionServiceImpl) {
-        this.sessionServiceImpl = sessionServiceImpl;
+        this.sessionService = sessionServiceImpl;
+        this.sessionMapper = new SessionMapperImpl();
     }
 
     @PostMapping
-    public ResponseEntity<SessionCreationDto> createSession(@RequestBody SessionCreationDto sessionCreationDto) {
-        SessionCreationDto sessionDto = sessionServiceImpl.createSession(sessionCreationDto);
-        return ResponseEntity.ok(sessionDto);
+    public ResponseEntity<SessionResponseDto> createSession(@RequestBody SessionCreationDto sessionCreationDto) {
+        SessionResponseDto sessionResponseDto = sessionService.createSession(sessionCreationDto);
+        return ResponseEntity.ok(sessionResponseDto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<SessionDto>> getSessionsBy(@RequestParam(value = "getId", required = false) UUID movieId) {
-        var sessionDtos = sessionServiceImpl.getSessions(movieId);
+    @GetMapping("/{movieId}")
+    public ResponseEntity<List<SessionResponseDto>> getSessionsByMovie(@PathVariable UUID movieId) {
+        var sessionDtos = sessionService.getSessions(movieId);
 
         if (sessionDtos == null) {
             return ResponseEntity.notFound().build();
@@ -38,19 +44,16 @@ public class SessionController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<SessionDto> updateSession(@RequestBody SessionDto sessionDto) {
-        var session = sessionServiceImpl.updateSession(sessionDto);
-
-        return session.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{sessionId}")
+    public ResponseEntity<SessionResponseDto> getSessionById(@PathVariable UUID sessionId) {
+        Optional<Session> session = sessionService.findSession(sessionId);
+        return session.map(value -> ResponseEntity.ok(sessionMapper.sessionToSessionResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @DeleteMapping
-//    public ResponseEntity<SessionDto> deleteSession(@RequestParam(value = "deleteId", required = false) UUID id) {
-//        if (sessionServiceImpl.deleteSession(id)) {
-//            return ResponseEntity.ok().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+
+    @PutMapping("/{sessionId}")
+    public ResponseEntity<SessionResponseDto> updateSession(@PathVariable UUID sessionId, @RequestBody SessionCreationDto sessionCreationDto) {
+        var session = sessionService.updateSession(sessionId, sessionCreationDto);
+        return session.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

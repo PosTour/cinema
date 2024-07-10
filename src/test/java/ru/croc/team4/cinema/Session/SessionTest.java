@@ -2,19 +2,14 @@ package ru.croc.team4.cinema.Session;
 
 import com.google.gson.Gson;
 import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.ActiveProfiles;
 import ru.croc.team4.cinema.domain.*;
-import ru.croc.team4.cinema.dto.SessionDto;
+import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.repository.HallRepository;
 import ru.croc.team4.cinema.repository.MovieRepository;
 import ru.croc.team4.cinema.repository.PlaceRepository;
@@ -45,7 +40,7 @@ public class SessionTest {
 //    @LocalServerPort
     private Integer port;
 
-    private final List<SessionDto> resultSessions = new ArrayList<>();
+    private final List<SessionResponseDto> resultSessions = new ArrayList<>();
 
 //    @BeforeEach
     public void setup() {
@@ -81,7 +76,7 @@ public class SessionTest {
         session.setStartTime(new Time(15, 20, 0));
         session.setEndTime(new Time(17, 0, 0));
 
-        SessionDto sessionDto = new SessionDto(session.getId(), session.getMovie(),
+        SessionResponseDto sessionResponseDto = new SessionResponseDto(session.getId(), session.getMovie(),
                 session.getHall(), session.getStartTime(), session.getPrice());
 
         UUID uuid1 = UUID.randomUUID();
@@ -93,7 +88,7 @@ public class SessionTest {
         session1.setStartTime(new Time(18, 40, 0));
         session1.setEndTime(new Time(20, 54, 0));
 
-        SessionDto sessionDto2 = new SessionDto(session1.getId(), session1.getMovie(),
+        SessionResponseDto sessionResponseDto2 = new SessionResponseDto(session1.getId(), session1.getMovie(),
                 session1.getHall(), session1.getStartTime(), session1.getPrice());
 
         // создание мест
@@ -118,8 +113,8 @@ public class SessionTest {
         sessionRepository.save(session);
         sessionRepository.save(session1);
 
-        resultSessions.add(sessionDto);
-        resultSessions.add(sessionDto2);
+        resultSessions.add(sessionResponseDto);
+        resultSessions.add(sessionResponseDto2);
     }
 
     @Description("Проверка sessionRepostiroy, отвечающего за расчет свободных мест")
@@ -142,7 +137,7 @@ public class SessionTest {
                 .then()
                 .extract().response();
 
-        List<SessionDto> sessions = Collections.singletonList(new Gson().fromJson(r.getBody().asString(), SessionDto.class));
+        List<SessionResponseDto> sessions = Collections.singletonList(new Gson().fromJson(r.getBody().asString(), SessionResponseDto.class));
 
         assertAll(
                 () -> assertEquals(resultSessions, sessions)
