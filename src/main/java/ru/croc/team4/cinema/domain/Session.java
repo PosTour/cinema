@@ -12,6 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Session {
     @Id
     @UuidGenerator
