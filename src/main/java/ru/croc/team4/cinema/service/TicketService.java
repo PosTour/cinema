@@ -16,4 +16,6 @@ public interface TicketService {
     List<TicketDto> getTicketsByUserId(UUID userId);
 
     List<TicketDto> getAllTickets();
+
+    void deleteTicketByCode(String bCode);
 }
