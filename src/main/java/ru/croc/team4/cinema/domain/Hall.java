@@ -1,9 +1,6 @@
 package ru.croc.team4.cinema.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +19,7 @@ import java.util.UUID;
 @FieldNameConstants
 @Builder
 @AllArgsConstructor
+@Table(name = "hall")
 public class Hall {
 
     @Id

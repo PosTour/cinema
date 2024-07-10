@@ -1,6 +1,12 @@
 spring:
   application:
-    name: administration
+    name:
+
+  Kafka:
+    bootstrapServers: kafka:9092
+    producer:
+      topic: administration
+
   jpa:
     properties:
       hibernate:

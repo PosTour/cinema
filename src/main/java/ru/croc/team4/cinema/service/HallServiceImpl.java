@@ -1,8 +1,16 @@
 package ru.croc.team4.cinema.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Hall;
+import ru.croc.team4.cinema.dto.HallDto;
+import ru.croc.team4.cinema.dto.HallResponseDto;
+import ru.croc.team4.cinema.dto.MovieResponseDto;
+import ru.croc.team4.cinema.mapper.HallMapper;
+import ru.croc.team4.cinema.mapper.HallMapperImpl;
+import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.HallRepository;
+import ru.croc.team4.cinema.repository.MovieRepository;
 
 
 import java.util.Map;
@@ -14,9 +22,18 @@ import java.util.UUID;
 public class HallServiceImpl implements HallService {
 
     private final HallRepository hallRepository;
+    private final HallMapper hallMapper;
 
+    @Autowired
     public HallServiceImpl(HallRepository hallRepository) {
         this.hallRepository = hallRepository;
+        this.hallMapper = new HallMapperImpl();
+    }
+
+
+    @Override
+    public Iterable<HallResponseDto> findAllHalls() {
+        return hallMapper.hallListToHallResponseDto(hallRepository.findAll());
     }
 
     @Override

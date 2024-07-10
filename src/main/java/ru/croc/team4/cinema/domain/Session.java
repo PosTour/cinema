@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Table(name = "session")
 public class Session {
     @Id
     @UuidGenerator
