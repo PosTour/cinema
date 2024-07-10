@@ -1,10 +1,7 @@
 package ru.croc.team4.cinema.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.UuidGenerator;
 import ru.croc.team4.cinema.domain.converter.HashMapConverter;
@@ -19,6 +16,7 @@ import java.util.UUID;
 @FieldNameConstants
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "hall")
 public class Hall {
 
@@ -31,9 +29,5 @@ public class Hall {
 
     @Column(nullable = false)
     @Convert(converter = HashMapConverter.class)
-    private Map<String, String> seats = new HashMap<>();
-
-    public Hall() {
-
-    }
+    private Map<Integer, Integer> seats = new HashMap<>();
 }

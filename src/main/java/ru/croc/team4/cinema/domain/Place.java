@@ -19,8 +19,8 @@ public class Place {
 
     private UUID id;
 
-    @Column(nullable = false, length = 32)
-    private String placeNumber;
+    @Column(nullable = false)
+    private Integer placeNumber;
 
     @Column()
     private boolean isOccupied;

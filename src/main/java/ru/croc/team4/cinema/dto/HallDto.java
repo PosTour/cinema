@@ -12,5 +12,5 @@ public record HallDto (
         String name,
         @NotEmpty
         @Size(min = 1)
-        Map<String, String> seats){
+        Map<Integer, Integer> seats){
 }
