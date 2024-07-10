@@ -7,9 +7,9 @@ import ru.croc.team4.cinema.domain.Movie;
 import java.sql.Time;
 
 public record SessionCreationDto(
-        @NotNull
+        @NotNull(message = "Фильм не может быть пустым")
         Movie movie,
-        @NotNull
+        @NotNull(message = "Зал не может быть пустым")
         Hall hall,
         Time startTime,
         Integer price) {
