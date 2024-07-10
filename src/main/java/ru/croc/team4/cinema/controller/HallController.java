@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class HallController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateHall(@PathVariable UUID id, @RequestBody HallDto hallDto) {
+    public ResponseEntity<Void> updateHall(@PathVariable UUID id, @Valid @RequestBody HallDto hallDto) {
         hallService.UpdateHall(id, hallDto.name(), hallDto.seats());
         return ResponseEntity.noContent().build();
     }
