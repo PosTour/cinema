@@ -27,13 +27,23 @@ public class testObjects {
         return movie;
     }
 
+    public static Movie getMovie2() {
+        Movie movie = Movie.builder()
+                .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
+                .duration(Duration.ofMinutes(136))
+                .title("Пираты карибского моря")
+                .description("Тут описание фильм, которое нам нужно")
+                .build();
+        return movie;
+    }
+
 
     public static Hall getHall() {
 
-        Map<String, String> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        map.put("1", "3");
-        map.put("2", "2");
+        map.put(1, 3);
+        map.put(2, 2);
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -59,7 +69,7 @@ public class testObjects {
     public static Place getPlace() {
         Place place = Place.builder()
                 .id(UUID.randomUUID())
-                .placeNumber("12a")
+                .placeNumber(12)
                 .isOccupied(true)
                 .row(getRow())
                 .build();
@@ -69,7 +79,7 @@ public class testObjects {
     public static Row getRow() {
         Row row = Row.builder()
                 .id(UUID.randomUUID())
-                .rowNumber("3c")
+                .rowNumber(3)
                 .session(getSession())
                 .build();
         return row;
@@ -89,7 +99,7 @@ public class testObjects {
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .phone("789456123")
-                .chatId("12345678")
+                .chatId(12345678)
                 .build();
         return user;
     }

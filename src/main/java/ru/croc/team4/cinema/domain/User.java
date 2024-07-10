@@ -33,7 +33,7 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
-    private String chatId;
+    private long chatId;
 
     public User(String phone) {
         this.phone = phone;

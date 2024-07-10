@@ -33,3 +33,5 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/db/changelog/v15_init_db.sql
+src/main/resources/db/changelog/v16_init_db.sql
