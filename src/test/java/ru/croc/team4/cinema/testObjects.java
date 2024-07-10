@@ -69,7 +69,7 @@ public class testObjects {
     public static Place getPlace() {
         Place place = Place.builder()
                 .id(UUID.randomUUID())
-                .placeNumber("12a")
+                .placeNumber(12)
                 .status(Place.Status.PAID)
                 .row(getRow())
                 .build();
