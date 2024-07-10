@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/movie/{id}")//TODO check regex for UUID
+@RequestMapping("/api/movie")//TODO check regex for UUID
 public class MovieController {
     private final MovieService movieService;
     private final MovieMapper movieMapper;
@@ -25,7 +25,7 @@ public class MovieController {
         this.movieMapper = new MovieMapperImpl();
     }
 
-    @GetMapping()
+    @GetMapping("/{id}")
     public ResponseEntity<MovieResponseDto> getMovie(@PathVariable UUID id) {
         Optional<Movie> movie = movieService.findMovie(id);
         return movie.map(value -> ResponseEntity.ok(movieMapper.movieToResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
@@ -36,13 +36,13 @@ public class MovieController {
         return ResponseEntity.ok(movieService.createMovie(movieDto));
     }
 
-    @PutMapping()
+    @PutMapping("/{id}")
     public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable UUID id, @RequestBody MovieDto movieDto) {
         Optional<MovieResponseDto> movie = movieService.updateMovie(id, movieDto);
         return movie.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable UUID id) {
         movieService.deleteMovie(id);
         return ResponseEntity.noContent().build();

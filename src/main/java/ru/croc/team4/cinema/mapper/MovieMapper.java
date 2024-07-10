@@ -10,7 +10,7 @@ import ru.croc.team4.cinema.dto.MovieResponseDto;
 
 import java.time.Duration;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface MovieMapper {
     MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
 

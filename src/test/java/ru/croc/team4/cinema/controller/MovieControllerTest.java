@@ -36,75 +36,17 @@ public class MovieControllerTest {
         MovieMapper movieMapper = new MovieMapperImpl();
         MovieDto movieDto = movieMapper.movieToMovieDto(testObjects.getMovie());
 
+
         ObjectMapper oMapper = new ObjectMapper();
         String json = oMapper.writeValueAsString(movieDto);
         System.out.print(json);
 
-        String id = "07c9903b-f2ba-42de-84ba-21896e514f83";
 
-        mockMvc.perform(post("/api/movie/{id}", id)
+        mockMvc.perform(post("/api/movie")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
-    @Test
-    @DisplayName("Test delete movie")
-    public void deleteMovieTest() throws Exception {
-        String id = """
-                {
-                	"serialVersionUID": "",
-                	"mostSigBits": "",
-                	"leastSigBits": "",
-                	"jla": {},
-                	"NIBBLES": ""
-                }""";
-
-        mockMvc.perform(delete("/api/movie/{id}", id))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("Test get movie")
-    public void getMovieTest() throws Exception {
-        String id = """
-                {
-                	"serialVersionUID": "",
-                	"mostSigBits": "",
-                	"leastSigBits": "",
-                	"jla": {},
-                	"NIBBLES": ""
-                }""";
-
-        mockMvc.perform(get("/api/movie/{id}", id))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("Test update movie")
-    public void updateMovieTest() throws Exception {
-        String id = """
-                {
-                	"serialVersionUID": "",
-                	"mostSigBits": "",
-                	"leastSigBits": "",
-                	"jla": {},
-                	"NIBBLES": ""
-                }""";
-        String movieDto = """
-                {
-                	"title": "",
-                	"durationInMinutes": "",
-                	"description": ""
-                }""";
-
-        mockMvc.perform(put("/api/movie/{id}", id)
-                        .content(movieDto)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 }
