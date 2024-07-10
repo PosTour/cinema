@@ -40,8 +40,8 @@ public class PlaceController {
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping
-    public ResponseEntity<Boolean> updatePlace(@RequestParam UUID id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> updatePlace(@PathVariable UUID id) {
         return ResponseEntity.ok(placeServiceImpl.updatePlace(id));
     }
 
