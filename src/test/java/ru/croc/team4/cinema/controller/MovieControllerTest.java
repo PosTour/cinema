@@ -2,6 +2,8 @@ package ru.croc.team4.cinema.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -50,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Feature("Тест для MovieController")
 public class MovieControllerTest {
     @LocalServerPort
     private Integer port;
@@ -65,8 +68,12 @@ public class MovieControllerTest {
 
     @BeforeEach
     public void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
+        RestAssured.useRelaxedHTTPSValidation();
+
         Movie movie = testObjects.getMovie();
-        Movie movie2 = testObjects.getMovie();
+        Movie movie2 = testObjects.getMovie2();
         movieRepository.save(movie);
         movieRepository.save(movie2);
     }
@@ -77,7 +84,7 @@ public class MovieControllerTest {
     }
 
     @Test
-    @DisplayName("Test create movie")
+    @Description("Тест на создание фильма в бд")
     public void createMovieTest() throws Exception {
 
         MovieMapper movieMapper = new MovieMapperImpl();
@@ -104,10 +111,8 @@ public class MovieControllerTest {
     }
 
     @Test
+    @Description("Тест на получение корректного фильма из бд")
     public void getMovieTest() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
-        RestAssured.useRelaxedHTTPSValidation();
 
         if(Boolean.valueOf(String.valueOf(ReadProperties.propertiesRead().get("extended.log")))) RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
