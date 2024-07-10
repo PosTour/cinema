@@ -47,4 +47,9 @@ public class HallController {
         hallService.UpdateHall(id, hallDto.name(), hallDto.seats());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping
+    public ResponseEntity<HallResponseDto> createHall(@Valid @RequestBody HallDto hallDto) {
+        return ResponseEntity.ok(hallService.createHall(hallDto));
+    }
 }
