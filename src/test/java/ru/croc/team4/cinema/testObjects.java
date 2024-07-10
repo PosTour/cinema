@@ -22,7 +22,7 @@ public class testObjects {
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
                 .duration(Duration.ofMinutes(122))
                 .title("It")
-                .description("gret film")
+                .description("great film")
                 .build();
         return movie;
     }
