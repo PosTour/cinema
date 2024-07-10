@@ -23,12 +23,12 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
-    private final AuditSenderService auditSenderService;
+    //private final AuditSenderService auditSenderService;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, AuditSenderService auditSenderService) {
+    public MovieServiceImpl(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        this.auditSenderService = auditSenderService;
+        //this.auditSenderService = auditSenderService;
         this.movieMapper = new MovieMapperImpl();
     }
 
@@ -41,8 +41,8 @@ public class MovieServiceImpl implements MovieService {
     public MovieResponseDto createMovie(MovieDto movieDto) {
         Movie movie = movieMapper.movieDtoToMovie(movieDto);
         MovieResponseDto response = movieMapper.movieToResponseDto(movie);
-        AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
-        auditSenderService.sendToAudit(auditDto);
+        //AuditDto auditDto = new AuditDto( response.id(), "create", "movie", new Date(), movie.toString());
+        //auditSenderService.sendToAudit(auditDto);
         return response;
     }
 
