@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Ticket;
 import ru.croc.team4.cinema.dto.TicketDto;
+import ru.croc.team4.cinema.dto.TicketUpdateDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
 import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.repository.TicketRepository;
@@ -36,7 +37,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketDto updateTicket(String bCode, Place.Status status) {
         Ticket ticket = ticketRepository.getTicketByBookingCode(bCode);
+        TicketUpdateDto ticketUpdateDto = new TicketUpdateDto(bCode, ticket.getUser().getChatId(), "deleted");
+        kafkaSenderService.sendToBot(ticketUpdateDto);
         ticket.getPlace().setStatus(status);
+
         return ticketMapper.ticketToTicketDto(ticketRepository.save(ticket));
     }
 
@@ -53,8 +57,16 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void deleteTicket(TicketDto ticketDto) {
+    public void deleteTicketByCode(String bCode) {
+//        ticketRepository.getTicketByBookingCode(bCode);
+//        kafkaSenderService.sendToBot();
+//        ticketRepository.deleteTicketByBookingCode(bCode);
+    }
 
+    @Override
+    public void deleteTicket(TicketDto ticketDto) {
+        TicketUpdateDto ticketUpdateDto = new TicketUpdateDto(ticketDto.bookingCode(), ticketDto.user().getChatId(), "deleted");
+        kafkaSenderService.sendToBot(ticketUpdateDto);
         ticketRepository.deleteTicket(ticketDto.user().getId(), ticketDto.session().getId(), ticketDto.place().getId());
     }
 }
