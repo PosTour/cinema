@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.MovieDto;
@@ -29,7 +30,11 @@ import ru.croc.team4.cinema.repository.MovieRepository;
 import ru.croc.team4.cinema.testObjects;
 import utils.ReadProperties;
 
+import java.lang.reflect.Type;
 import java.time.Duration;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -61,7 +66,9 @@ public class MovieControllerTest {
     @BeforeEach
     public void setup() {
         Movie movie = testObjects.getMovie();
+        Movie movie2 = testObjects.getMovie();
         movieRepository.save(movie);
+        movieRepository.save(movie2);
     }
 
     @AfterEach
@@ -106,27 +113,21 @@ public class MovieControllerTest {
 
         Response r = given()
                 .when()
-                .get("/api/movie/c51fcae5-76d2-46bf-a760-3ec382b94989")
+                .get("/api/movie/all")
                 .then()
                 .extract().response();
 
-        MovieResponseDto movie = new Gson().fromJson(r.getBody().asString(), MovieResponseDto.class);
+        Type MovieResponseDtoListType = new TypeToken<List<MovieResponseDto>>() {}.getType();
+
+        List<MovieResponseDto> movies = new Gson().fromJson(r.getBody().asString(), MovieResponseDtoListType);
+
+        // ищем необходимый фильм из всех
+        MovieResponseDto movie = movies.stream().filter(value -> value.title().equals("It")).findFirst().get();
 
         assertAll(
-                () -> assertEquals("Пираты карибского моря", movie.title(), "Неверное название фильма")
+                () -> assertEquals("It", movie.title(), "Неверное название фильма"),
+                () -> assertEquals(122, movie.durationInMinutes(), "Неверная длительность фильма"),
+                () -> assertEquals("great film", movie.description(), "Неверное описание фильма")
         );
-
-//        MovieResponseDto movieResponseDto = MovieResponseDto.builder()
-//                .id(UUID.fromString("c51fcae5-76d2-46bf-a760-3ec382b94989"))
-//                .title("Пираты карибского моря")
-//                .description("Тут какое-то описание")
-//                .durationInMinutes(124)
-//                .build();
-//
-//        String result = oMapper.writeValueAsString(movieResponseDto);
-//        mockMvc.perform(get("/api/movie/c51fcae5-76d2-46bf-a760-3ec382b94989")
-//                        .content(result).contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isOk());
     }
 }
