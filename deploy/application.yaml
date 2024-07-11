@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service
+  name: service-cinema
   labels:
     app.kubernetes.io/name: cinema
 spec:
@@ -51,6 +51,13 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: SPRING_KAFKA_BOOTSTRAPSERVERS
               value: "kafka-headless:9092"
+            - name: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+              value: "SASL_PLAINTEXT"
+            - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+              value: "SCRAM-SHA-512"
+            - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+              value: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="user" password="${USER_PASSWORD}";'
+
 ---
 apiVersion: v1
 kind: Service
