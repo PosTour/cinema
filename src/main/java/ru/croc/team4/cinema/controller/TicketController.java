@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
+import ru.croc.team4.cinema.dto.TicketOutputDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
 import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.service.TicketService;
@@ -35,6 +36,12 @@ public class TicketController {
     @GetMapping("/{chatId}")
     public ResponseEntity<List<TicketDto>> getTicketsId(@PathVariable Long chatId) {
         List<TicketDto> tickets = ticketService.getTicketsByChatId(chatId);
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("findByChatId/{id}")
+    public ResponseEntity<List<TicketOutputDto>> getTicketByChatId(@PathVariable Long chatId) {
+        List<TicketOutputDto> tickets = ticketService.getTicketsByChatId(chatId);
         return ResponseEntity.ok(tickets);
     }
 

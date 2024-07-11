@@ -7,6 +7,7 @@ import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Ticket;
 import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
+import ru.croc.team4.cinema.dto.TicketOutputDto;
 import ru.croc.team4.cinema.dto.TicketUpdateDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
 import ru.croc.team4.cinema.mapper.TicketMapperImpl;
@@ -55,16 +56,15 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketDto> getAllTickets() {
-        List<Ticket> tickets = ticketRepository.findAll();
-        return ticketMapper.ticketsToTicketDtos(tickets);
+    public List<TicketOutputDto> getTicketsByChatId(Long chatId) {
+        List<Ticket> tickets = ticketRepository.getTicketsByChatId(chatId).stream().toList();
+        return ticketMapper.ticketsToTicketOutputDtos(tickets);
     }
 
     @Override
-    public void deleteTicketByCode(String bCode) {
-//        ticketRepository.getTicketByBookingCode(bCode);
-//        kafkaSenderService.sendToBot();
-//        ticketRepository.deleteTicketByBookingCode(bCode);
+    public List<TicketDto> getAllTickets() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        return ticketMapper.ticketsToTicketDtos(tickets);
     }
 
     @Override

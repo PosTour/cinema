@@ -11,6 +11,8 @@ import java.util.UUID;
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     List<Ticket> getTicketsByUser_ChatId(Long chatId);
 
+    List<Ticket> getTicketsByChatId(Long chatId);
+
     Ticket getTicketByBookingCode(String bookingCode);
 
 

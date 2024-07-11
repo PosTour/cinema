@@ -3,6 +3,7 @@ package ru.croc.team4.cinema.service;
 import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
+import ru.croc.team4.cinema.dto.TicketOutputDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public interface TicketService {
 
     List<TicketDto> getTicketsByChatId(Long chatId);
 
-    List<TicketDto> getAllTickets();
+    List<TicketOutputDto> getTicketsByChatId(Long chatId);
 
-    void deleteTicketByCode(String bCode);
+    List<TicketDto> getAllTickets();
 }
