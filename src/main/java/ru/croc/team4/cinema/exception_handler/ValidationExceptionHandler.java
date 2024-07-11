@@ -19,6 +19,6 @@ public class ValidationExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.badRequest().body(new ValidationErrorResponse("Validation Error", errors));
+        return ResponseEntity.badRequest().body(new ValidationErrorResponse("Ошибка валидации данных", errors));
     }
 }
