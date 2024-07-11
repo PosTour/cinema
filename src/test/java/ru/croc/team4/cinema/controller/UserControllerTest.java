@@ -27,6 +27,7 @@ import utils.ReadProperties;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,6 +77,14 @@ public class UserControllerTest {
         List<UserDto> users = getAllUsers();
 
         assertEquals(2, users.size(), "Неверное количество фильмов в бд");
+    }
+
+    @Test
+    @Description("Тест по проверке получения пользователя по номеру телефона")
+    public void GetUserbyPhone() {
+        List<UserDto> users = getAllUsers();
+
+        long id = users.get(0).chatId();
     }
 
     private List<UserDto> getAllUsers() {

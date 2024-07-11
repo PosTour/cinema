@@ -42,4 +42,10 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/chatid/{chatId}")
+    public ResponseEntity<UserDto> getUserByChatId(@PathVariable("chatId") long chatId) {
+        Optional<User> user = userService.getUserByChatId(chatId);
+        return user.map(value -> ResponseEntity.ok(userMapper.userToUserDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
