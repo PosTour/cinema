@@ -107,9 +107,16 @@ public class testObjects {
 
     public static User getUser() {
         User user = User.builder()
-                .id(UUID.randomUUID())
                 .phone("789456123")
                 .chatId(12345678)
+                .build();
+        return user;
+    }
+
+    public static User getUser2() {
+        User user = User.builder()
+                .phone("79947653248")
+                .chatId(7265432)
                 .build();
         return user;
     }
