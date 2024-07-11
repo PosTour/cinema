@@ -91,4 +91,14 @@ public class SessionServiceImpl implements SessionService {
         session.setPrice(sessionCreationDto.price());
         return Optional.ofNullable(sessionMapper.sessionToSessionResponseDto(sessionRepository.save(session)));
     }
+
+    @Override
+    public void deleteSession(UUID sessionId) {
+        Optional<Session> sessionOptional  = sessionRepository.findById(sessionId);
+        if (sessionOptional.isPresent()) {
+            Session session = sessionOptional.get();
+            session.setIsDeleted(true);
+            sessionRepository.save(session);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package ru.croc.team4.cinema.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.sql.Time;
@@ -30,6 +31,9 @@ public class Session {
     private Time endTime;
     @Column(nullable = false)
     private Integer price;
+    @Column(nullable = false)
+    @ColumnDefault("false")
+    private Boolean isDeleted;
 
     public Session(Movie movie, Hall hall, Time startTime, Time endTime, Integer price) {
         this.movie = movie;

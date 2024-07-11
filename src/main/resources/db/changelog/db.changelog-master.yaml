@@ -1,4 +1,4 @@
 databaseChangeLog:
   - include:
-      file: v19_init_db.sql
+      file: v20_init_db.sql
       relativeToChangelogFile: true
