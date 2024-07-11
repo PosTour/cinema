@@ -85,7 +85,7 @@ public class SessionControllerTest {
         assertAll(
                 () -> assertEquals(sessionCreationDto.movieId(), sessionResponseDto.movieId(), "Не совпадают фильмы"),
                 () -> assertEquals(sessionCreationDto.startTime(), sessionResponseDto.startTime(), "Не совпадает время начало фильма"),
-                () -> assertEquals(sessionCreationDto.price(), sessionResponseDto.price(), "Не совпадает цена за билет")
+                () -> assertEquals(sessionCreationDto.prices(), sessionResponseDto.prices(), "Не совпадает цена за билет")
         );
     }
 

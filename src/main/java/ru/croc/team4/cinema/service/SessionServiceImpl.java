@@ -57,7 +57,7 @@ public class SessionServiceImpl implements SessionService {
                 .plus(movieDuration));
 
         var session = new Session(
-                movie.get(), hall.get(), Time.valueOf(sessionDto.startTime()), endTime, Date.valueOf(sessionDto.startDate()), sessionDto.price(), false);
+                movie.get(), hall.get(), Time.valueOf(sessionDto.startTime()), endTime, Date.valueOf(sessionDto.startDate()), sessionDto.prices(), false);
 
         sessionRepository.save(session);
         return sessionMapper.sessionToSessionResponseDto(session);
@@ -106,7 +106,7 @@ public class SessionServiceImpl implements SessionService {
         session.setMovie(movie.get());
         session.setHall(hall.get());
         session.setStartTime(Time.valueOf(sessionCreationDto.startTime()));
-        session.setPrice(sessionCreationDto.price());
+        session.setPrices(sessionCreationDto.prices());
         return Optional.ofNullable(sessionMapper.sessionToSessionResponseDto(sessionRepository.save(session)));
     }
 

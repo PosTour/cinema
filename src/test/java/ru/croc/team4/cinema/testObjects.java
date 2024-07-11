@@ -60,10 +60,12 @@ public class testObjects {
 
     public static Hall getHall() {
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Integer, Integer> map1 = new HashMap<>(1,1);
+        Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(1, 3);
-        map.put(2, 2);
+        map.put(map1, "g");
+        map.put(map2, "b");
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
@@ -77,10 +79,12 @@ public class testObjects {
 
     public static Hall getHall2() {
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Integer, Integer> map1 = new HashMap<>(1,1);
+        Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(1, 5);
-        map.put(2, 3);
+        map.put(map1, "g");
+        map.put(map2, "b");
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -94,10 +98,12 @@ public class testObjects {
 
     public static Hall getHallUpdate() {
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Integer, Integer> map1 = new HashMap<>(1,1);
+        Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(1, 5);
-        map.put(2, 5);
+        map.put(map1, "g");
+        map.put(map2, "b");
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -110,25 +116,33 @@ public class testObjects {
     }
 
     public static Session getSession() {
+        Map<Category, Integer> map = new HashMap<>();
+        map.put(Category.BAD, 87);
+        map.put(Category.EXCELLENT, 87);
+        map.put(Category.GOOD, 87);
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie())
                 .hall(getHall())
                 .startTime(new Time(12,12,12))
                 .endTime(new Time(14,35,3))
-                .price(2000)
+                .prices(map)
                 .build();
         return session;
     }
 
     public static Session getSession2() {
+        Map<Category, Integer> map = new HashMap<>();
+        map.put(Category.BAD, 87);
+        map.put(Category.EXCELLENT, 87);
+        map.put(Category.GOOD, 87);
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie2())
                 .hall(getHallUpdate())
                 .startTime(new Time(12,12,12))
                 .endTime(new Time(14,35,3))
-                .price(2000)
+                .prices(map)
                 .build();
         return session;
     }

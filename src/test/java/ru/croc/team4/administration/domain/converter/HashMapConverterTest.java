@@ -29,13 +29,13 @@ public class HashMapConverterTest {
     public void testConvertJsonToMap() {
         String json = "{\"1\":3,\"2\":2}";
 
-        Map<Integer,Integer> myMap = new HashMap<>();
+        Map<Map<Integer, Integer>, String> myMap = new HashMap<>();
 
-        myMap.put(1, 3);
-        myMap.put(2, 2);
+        myMap.put(new HashMap<>(1,1), "ex");
+        myMap.put(new HashMap<>(1,2), "po");
 
         HashMapConverter converter = new HashMapConverter();
-        Map<Integer,Integer> map = converter.convertToEntityAttribute(json);
+        Map<Map<Integer, Integer>, String> map = converter.convertToEntityAttribute(json);
         Assertions.assertEquals(map, myMap);
     }
 }
