@@ -18,7 +18,7 @@ spec:
       containers:
         - name: service
           image: localhost:32000/cinema:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           readinessProbe:
             httpGet:
               path: actuator/health/readiness
@@ -49,7 +49,6 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
-
             - name: SPRING_KAFKA_BOOTSTRAPSERVERS
               value: "kafka-headless:9092"
 ---
