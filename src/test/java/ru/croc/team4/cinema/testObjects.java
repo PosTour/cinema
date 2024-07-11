@@ -254,7 +254,7 @@ public class testObjects {
 
     public static User getUser() {
         User user = User.builder()
-                .phone("789456123")
+                .phone("79647620719")
                 .chatId(12345678)
                 .build();
         return user;
