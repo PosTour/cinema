@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Feature("Тесты для HallController")
+@Feature("Тесты для HallController (создание, получение одного, получение всех, обновление)")
 public class HallControllerTest {
     @LocalServerPort
     private Integer port;
@@ -139,10 +139,32 @@ public class HallControllerTest {
     }
 
     @Test
+    @Description("Тест на создание зала")
+    public void createHallTest() {
+        HallDto hallDto = hallMapper.hallToHallDto(testObjects.getHallUpdate());
+        String hallJson = gson.toJson(hallDto);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(hallJson)
+                .post("/api/hall")
+                .then()
+                .extract().response();
+
+        HallResponseDto hallResponseDto = gson.fromJson(r.getBody().asString(), HallResponseDto.class);
+
+        assertAll(
+                () -> assertEquals("Еще больше зал 2", hallResponseDto.name(), "Неверное название фильма"),
+                () -> assertEquals(hallDto.seats(), hallResponseDto.seats(), "Неверное количество и расположение мест")
+        );
+    }
+
+    @Test
     @Description("Тест на получение всех залов")
     public void getAllHallsTest() {
         List<HallResponseDto> hallResponseDtos = getAllHalls();
 
+        // проверяем на количество залов
         assertEquals(1, hallResponseDtos.size(), "Неверное количество залов");
     }
 
