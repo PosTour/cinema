@@ -21,6 +21,8 @@ import ru.croc.team4.cinema.mapper.PlaceMapperImpl;
 import ru.croc.team4.cinema.repository.*;
 import ru.croc.team4.cinema.testObjects;
 
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -48,6 +50,7 @@ public class PlaceControllerTest {
     public void setup() {
         Hall hall = testObjects.getHall();
         hallRepository.save(hall);
+        UUID hallId = hallRepository.g
 
         Movie movie = testObjects.getMovie();
         movieRepository.save(movie);
