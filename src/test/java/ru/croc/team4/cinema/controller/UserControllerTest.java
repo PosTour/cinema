@@ -100,7 +100,6 @@ public class UserControllerTest {
         );
     }
 
-    public void
 
     private List<UserDto> getAllUsers() {
         // запрос по пути: localhost:8080/api/users/all
