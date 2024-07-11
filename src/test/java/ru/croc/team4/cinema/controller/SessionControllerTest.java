@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.domain.Session;
+import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionResponseDto;
@@ -29,6 +30,7 @@ import ru.croc.team4.cinema.testObjects;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -92,7 +94,20 @@ public class SessionControllerTest {
     @Test
     @Description("Тест на удаление сеанса")
     public void deleteSessionTest() {
+        List<SessionResponseDto> sessionResponseDtos = getAllSessions();
 
+        UUID id = sessionResponseDtos.get(0).id();
+        // необходимое кол-во фильмов после удаления одного фильма
+        int checkSessionCount = sessionResponseDtos.size() - 1;
+
+        Response r = given()
+                .delete("/api/hall/" + id)
+                .then()
+                .extract().response();
+
+        int resultSessionCount = getAllSessions().size();
+
+        assertEquals(checkSessionCount, resultSessionCount, "Не совпадает количество сеансов в бд");
     }
 
     @Test
@@ -118,7 +133,26 @@ public class SessionControllerTest {
     @Test
     @Description("Тест на обновления сеанса")
     public void updateSessionTest() {
+        SessionCreationDto sessionCreationDto = sessionMapper
+                .sessionToSessionCreationDto(testObjects.getSessionUpdate(), hallServiceImpl);
 
+        List<SessionResponseDto> sessionResponseDtos = getAllSessions();
+        UUID id = sessionResponseDtos.get(0).id();
+
+        String sessionJson = gson.toJson(sessionCreationDto);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(sessionJson)
+                .put("/api/movie/" + id)
+                .then()
+                .extract().response();
+
+        SessionResponseDto sessionResponseDto = gson.fromJson(r.asString(), SessionResponseDto.class);
+
+        assertAll(
+                () -> assertEquals(sessionCreationDto.price(), sessionResponseDto.price(), "Не совпадает цена фильмов")
+        );
     }
 
     private List<SessionResponseDto> getAllSessions() {
