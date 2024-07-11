@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface UserService {
 
-    UserDto createUser(UserDto userDto);
+    void createUser(UserDto userDto);
 
     Optional<User> getUserByPhone(String phone);
 
     Iterable<UserDto> getAllUsers();
+
+    Optional<User> getUserByChatId(Long chatId);
 }

@@ -39,7 +39,7 @@ public class RowController {
             return ResponseEntity.ok(rowMapper.rowToDto(row));
     }
 
-    @GetMapping()
+    @GetMapping("/{sessionId}")
     public ResponseEntity<List<Row>> getAllRowsInSession(UUID sessionId) {
         var rows = rowService.getRowsBy(sessionId);
         return !rows.isEmpty()
