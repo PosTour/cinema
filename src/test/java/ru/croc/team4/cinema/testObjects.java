@@ -14,9 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Service
 public class testObjects {
-
 
     Map<String, String> map = new HashMap<>(){{put("1","1");}};
     {
@@ -230,7 +228,7 @@ public class testObjects {
 
     public static User getUser() {
         User user = User.builder()
-                .phone("789456123")
+                .phone("79647620719")
                 .chatId(12345678)
                 .build();
         return user;

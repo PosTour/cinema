@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-cinema
+  name: cinema
   labels:
     app.kubernetes.io/name: cinema
 spec:
@@ -57,7 +57,9 @@ spec:
               value: "SCRAM-SHA-512"
             - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
               value: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="user" password="${USER_PASSWORD}";'
-
+          envFrom:
+            - secretRef:
+                name: kafka-ui-secret
 ---
 apiVersion: v1
 kind: Service
