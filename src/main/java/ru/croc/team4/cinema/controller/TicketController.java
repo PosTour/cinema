@@ -34,7 +34,7 @@ public class TicketController {
     }
 
     @GetMapping("findByChatId/{chatId}")
-    public ResponseEntity<List<TicketOutputDto>> getTicketByChatId(@PathVariable Long chatId) {
+    public ResponseEntity<List<TicketOutputDto>> getTicketByChatId(@PathVariable ("chatId") long chatId) {
         Optional<User> user = userServiceImpl.getUserByChatId(chatId);
         if (user.isPresent()) {
             List<TicketOutputDto> tickets = ticketService.getTicketsByUserId(user.get().getId());
