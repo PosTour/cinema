@@ -14,35 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Service
 public class testObjects {
-
-    @Autowired
-    private HallRepository hallRepository;
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private SessionRepository sessionRepository;
-    @Autowired
-    private RowRepository rowRepository;
-    @Autowired
-    private PlaceRepository placeRepository;
-
-    @BeforeEach
-    public void setup() {
-        Hall hall = testObjects.getHall();
-        hallRepository.save(hall);
-
-
-        Movie movie = testObjects.getMovie();
-        movieRepository.save(movie);
-
-        Session session = testObjects.getSession();
-        sessionRepository.save(session);
-
-        Row row = testObjects.getRow();
-        rowRepository.save(row);
-    }
 
     Map<String, String> map = new HashMap<>(){{put("1","1");}};
     {
