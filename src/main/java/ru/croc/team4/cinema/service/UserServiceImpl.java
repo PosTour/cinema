@@ -25,10 +25,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public void createUser(UserDto userDto) {
         User user = userMapper.userDtoToUser(userDto);
         userRepository.save(user);
-        return userMapper.userToUserDto(user);
     }
 
     @Override
@@ -39,5 +38,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Iterable<UserDto> getAllUsers() {
         return userMapper.userToUserDtoIterable(userRepository.findAll());
+    }
+    @Override
+    public Optional<User> getUserByChatId(Long chatId) {
+        return userRepository.findByChatId(chatId);
     }
 }
