@@ -89,7 +89,7 @@ public class HallControllerTest {
         UUID id = hallResponseDtos.get(1).id();
 
         Response r = given()
-                .get("/api/halls/" + id)
+                .get("/api/hall/" + id)
                 .then()
                 .extract().response();
 
@@ -97,8 +97,8 @@ public class HallControllerTest {
 
         Map<Integer, Integer> map = new HashMap<>();
 
-        map.put(1, 3);
-        map.put(2, 2);
+        map.put(1, 5);
+        map.put(2, 3);
 
         assertAll(
                 () -> assertEquals("Еще больше зал", hallResponseDto.name(), "Неверное название зала"),
@@ -165,11 +165,11 @@ public class HallControllerTest {
         List<HallResponseDto> hallResponseDtos = getAllHalls();
 
         // проверяем на количество залов
-        assertEquals(1, hallResponseDtos.size(), "Неверное количество залов");
+        assertEquals(2, hallResponseDtos.size(), "Неверное количество залов");
     }
 
     private List<HallResponseDto> getAllHalls() {
-        // запрос по пути: localhost:8080/api/movie/all
+        // запрос по пути: localhost:8080/api/hall/all
         Response r = given()
                 .when()
                 .get("/api/hall/all")
