@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "row")
 public class Row {
     @Id
-    @UuidGenerator
+    //@UuidGenerator
     private UUID id;
     @Column(nullable = false, length = 32)
     private Integer rowNumber;
