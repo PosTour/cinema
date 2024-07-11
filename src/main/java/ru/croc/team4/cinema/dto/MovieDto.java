@@ -5,7 +5,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record MovieDto(
+        UUID id,
         @NotBlank(message = "Название фильма не может быть пустым или содержать только пробелы")
         @Size(min = 1, max = 32, message = "Название фильма должно быть от 1 до 32 символов")
         String title,

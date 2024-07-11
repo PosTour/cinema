@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.cinema.domain.Place;
+import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.dto.TicketOutputDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
@@ -32,9 +33,9 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-    @GetMapping("findByTicketId/{id}")
-    public ResponseEntity<List<TicketDto>> getTicketsId(@PathVariable UUID id) {
-        List<TicketDto> tickets = ticketService.getTicketsByUserId(id);
+    @GetMapping("/{chatId}")
+    public ResponseEntity<List<TicketDto>> getTicketsId(@PathVariable Long chatId) {
+        List<TicketDto> tickets = ticketService.getTicketsByChatId(chatId);
         return ResponseEntity.ok(tickets);
     }
 
@@ -56,8 +57,8 @@ public class TicketController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteTicket(@RequestBody TicketDto ticketDto) {
-        ticketService.deleteTicket(ticketDto);
+    public ResponseEntity<Void> deleteTicket(@RequestBody TicketClientDto ticketClientDto) {
+        ticketService.deleteTicket(ticketClientDto);
         return ResponseEntity.noContent().build();
     }
 }

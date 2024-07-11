@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
-    List<Ticket> getTicketsByUserId(UUID userId);
+    List<Ticket> getTicketsByUser_ChatId(Long chatId);
 
     List<Ticket> getTicketsByChatId(Long chatId);
 
     Ticket getTicketByBookingCode(String bookingCode);
 
-    @Query("DELETE FROM Ticket t WHERE t.user.id = :user_id and t.session.id = :session_id and t.place.id = :place_id")
+
+    @Query("DELETE FROM Ticket t WHERE t.user.chatId = :chat_id and t.session.id = :session_id and t.place.id = :place_id")
     void deleteTicket(
-            @Param("user_id") UUID user_id,
+            @Param("chat_id") Long chat_id,
             @Param("session_id") UUID session_id,
             @Param("place_id") UUID place_id);
 }
