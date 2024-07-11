@@ -20,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
+import ru.croc.team4.cinema.domain.Category;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.dto.HallDto;
 import ru.croc.team4.cinema.dto.HallResponseDto;
@@ -95,11 +96,14 @@ public class HallControllerTest {
 
         HallResponseDto hallResponseDto = gson.fromJson(r.getBody().asString(), HallResponseDto.class);
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        map.put(1, 5);
-        map.put(2, 3);
-
+        Map<Integer, Category> map1 = new HashMap<>();
+        Map<Integer, Category> map2 = new HashMap<>();
+        map1.put(1,Category.BAD);
+        map2.put(2,Category.GOOD);
+        map.put(1, map1);
+        map.put(1, map2);
         assertAll(
                 () -> assertEquals("Еще больше зал", hallResponseDto.name(), "Неверное название зала"),
                 () -> assertEquals(map, hallResponseDto.seats(), "Неверное количество и расположение мест")
@@ -127,10 +131,14 @@ public class HallControllerTest {
         hallResponseDtos = getAllHalls();
         HallResponseDto hallResponseDto = hallResponseDtos.get(1);
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        map.put(1, 5);
-        map.put(2, 5);
+        Map<Integer, Category> map1 = new HashMap<>();
+        Map<Integer, Category> map2 = new HashMap<>();
+        map1.put(1,Category.BAD);
+        map2.put(2,Category.GOOD);
+        map.put(1, map1);
+        map.put(1, map2);
 
         assertAll(
                 () -> assertEquals("Еще больше зал 2", hallResponseDto.name(), "Неверно указано название зала"),
