@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-
 @Getter
 @Setter
-public class ErrorResponse {
+public class ValidationErrorResponse {
     private String message;
-    private String error;
+    private List<String> errors;
 
-    public ErrorResponse(String message, String error) {
+    public ValidationErrorResponse(String message, List<String> errors) {
         this.message = message;
-        this.error = error;
+        this.errors = errors;
     }
 }

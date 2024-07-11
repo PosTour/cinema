@@ -2,15 +2,12 @@ package ru.croc.team4.cinema.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import ru.croc.team4.cinema.dto.AuditDto;
 import ru.croc.team4.cinema.dto.TicketUpdateDto;
 
-@Service
+@Component
 public class KafkaSenderServiceImpl implements KafkaSenderService {
 
     private final KafkaTemplate<String,String> kafkaTemplate;
@@ -25,7 +22,7 @@ public class KafkaSenderServiceImpl implements KafkaSenderService {
     public void sendToAudit(AuditDto auditDto) {
         try {
         String msg = objectMapper.writeValueAsString(auditDto);
-        kafkaTemplate.send("${spring.kafka.producer.topic}", msg);
+        kafkaTemplate.send("administration}", msg);
     } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }

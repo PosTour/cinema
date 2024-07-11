@@ -7,10 +7,12 @@ import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.mapper.SessionMapper;
 import ru.croc.team4.cinema.mapper.SessionMapperImpl;
+import ru.croc.team4.cinema.repository.HallRepository;
 import ru.croc.team4.cinema.repository.MovieRepository;
 import ru.croc.team4.cinema.repository.SessionRepository;
 import ru.croc.team4.cinema.utils.SessionUtils;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
@@ -23,32 +25,39 @@ public class SessionServiceImpl implements SessionService {
     private final MovieRepository movieRepository;
     private final SessionMapper sessionMapper;
     private final SessionUtils sessionUtils;
+    private final HallRepository hallRepository;
 
     @Autowired
-    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils) {
+    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils, HallRepository hallRepository) {
         this.sessionRepository = sessionRepository;
         this.movieRepository = movieRepository;
         this.sessionMapper = new SessionMapperImpl();
         this.sessionUtils = sessionUtils;
+        this.hallRepository = hallRepository;
+    }
+
+    @Override
+    public Iterable<SessionResponseDto> findAllSessions() {
+        return sessionMapper.sessionsToSessionDto(sessionRepository.findAll());
     }
 
     @Override
     public SessionResponseDto createSession(SessionCreationDto sessionDto) {
-        var movie = movieRepository.findById(sessionDto.movie().getId());
+        var movie = movieRepository.findById(sessionDto.movieId());
+        var hall = hallRepository.findById(sessionDto.hallId());
         if (movie.isEmpty()) {
-            throw new IllegalArgumentException("Movie not found"); //TODO пересмотеть
+            throw new IllegalArgumentException("Данного фильма не существует");
+        }
+        if (hall.isEmpty()) {
+            throw new IllegalArgumentException("Данного зала не существует");
         }
         var movieDuration = movie.get().getDuration();
         var endTime = Time.valueOf(sessionDto
                 .startTime()
-                .toLocalTime()
                 .plus(movieDuration));
+
         var session = new Session(
-                sessionDto.movie()
-                , sessionDto.hall()
-                , sessionDto.startTime()
-                , endTime
-                , sessionDto.price());
+                movie.get(), hall.get(), Time.valueOf(sessionDto.startTime()), endTime, Date.valueOf(sessionDto.startDate()), sessionDto.price(), false);
 
         sessionRepository.save(session);
         return sessionMapper.sessionToSessionResponseDto(session);
@@ -69,7 +78,7 @@ public class SessionServiceImpl implements SessionService {
         if (sessions.isEmpty()) {
             return Collections.emptyList();
         } else {
-            return sessionMapper.sessionsToSessionDtos(sessions);
+            return sessionMapper.sessionsToSessionDto(sessions);
         }
     }
 
@@ -80,15 +89,34 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Optional<SessionResponseDto> updateSession(UUID sessionId, SessionCreationDto sessionCreationDto) {
+
         var sessionExistence = sessionRepository.findById(sessionId);
         if (sessionExistence.isEmpty()) {
             return Optional.empty();
         }
+        var movie = movieRepository.findById(sessionCreationDto.movieId());
+        var hall = hallRepository.findById(sessionCreationDto.hallId());
+        if (movie.isEmpty()) {
+            throw new IllegalArgumentException("Данного фильма не существует");
+        }
+        if (hall.isEmpty()) {
+            throw new IllegalArgumentException("Данного зала не существует");
+        }
         var session = sessionExistence.get();
-        session.setMovie(sessionCreationDto.movie());
-        session.setHall(sessionCreationDto.hall());
-        session.setStartTime(sessionCreationDto.startTime());
+        session.setMovie(movie.get());
+        session.setHall(hall.get());
+        session.setStartTime(Time.valueOf(sessionCreationDto.startTime()));
         session.setPrice(sessionCreationDto.price());
         return Optional.ofNullable(sessionMapper.sessionToSessionResponseDto(sessionRepository.save(session)));
+    }
+
+    @Override
+    public void deleteSession(UUID sessionId) {
+        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        if (sessionOptional.isPresent()) {
+            Session session = sessionOptional.get();
+            session.setIsDeleted(true);
+            sessionRepository.save(session);
+        }
     }
 }

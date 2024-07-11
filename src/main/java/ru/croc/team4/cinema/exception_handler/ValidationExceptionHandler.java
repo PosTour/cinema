@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 public class ValidationExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.badRequest().body(new ErrorResponse("Validation Error", errors));
+        return ResponseEntity.badRequest().body(new ValidationErrorResponse("Ошибка валидации данных", errors));
     }
 }

@@ -1,11 +1,8 @@
 package ru.croc.team4.cinema.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Row;
-import ru.croc.team4.cinema.mapper.RowMapperImpl;
 import ru.croc.team4.cinema.repository.RowRepository;
 
 import java.util.List;

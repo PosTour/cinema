@@ -47,6 +47,16 @@ public class testObjects {
         return movie;
     }
 
+    public static Movie getMovieUpdateNegative() {
+        Movie movie = Movie.builder()
+                .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
+                .duration(Duration.ofMinutes(-10))
+                .title("")
+                .description("Тут описание фильма, которое нам нужно")
+                .build();
+        return movie;
+    }
+
 
     public static Hall getHall() {
 
@@ -61,6 +71,41 @@ public class testObjects {
                 .seats(map)
                 .build();
 
+        System.out.println(hall.getId() + " " + hall.getName() + " " + hall.getSeats());
+        return hall;
+    }
+
+    public static Hall getHall2() {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        map.put(1, 5);
+        map.put(2, 3);
+
+        Hall hall = Hall.builder()
+                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .name("Еще больше зал")
+                .seats(map)
+                .build();
+
+        System.out.println(hall.getId() + " " + hall.getName() + " " + hall.getSeats());
+        return hall;
+    }
+
+    public static Hall getHallUpdate() {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        map.put(1, 5);
+        map.put(2, 5);
+
+        Hall hall = Hall.builder()
+                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .name("Еще больше зал 2")
+                .seats(map)
+                .build();
+
+        System.out.println(hall.getId() + " " + hall.getName() + " " + hall.getSeats());
         return hall;
     }
 
@@ -107,9 +152,16 @@ public class testObjects {
 
     public static User getUser() {
         User user = User.builder()
-                .id(UUID.randomUUID())
                 .phone("789456123")
                 .chatId(12345678)
+                .build();
+        return user;
+    }
+
+    public static User getUser2() {
+        User user = User.builder()
+                .phone("79947653248")
+                .chatId(7265432)
                 .build();
         return user;
     }

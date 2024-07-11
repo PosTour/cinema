@@ -2,10 +2,10 @@ spring:
   application:
     name:
 
-#  Kafka:
-#    bootstrapServers: kafka:9092
-#    producer:
-#      topic: administration
+  Kafka:
+    bootstrapServers: kafka:9092
+    producer:
+     topic: administration
 
   jpa:
     properties:

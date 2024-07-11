@@ -1,15 +1,15 @@
 package ru.croc.team4.cinema.dto;
 
-import ru.croc.team4.cinema.domain.Hall;
-import ru.croc.team4.cinema.domain.Movie;
-
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public record SessionResponseDto(
         UUID id
         , UUID movieId
         , String hallName
-        , Time startTime
-        , Integer price) {
+        , LocalDate startDate
+        , LocalTime startTime
+        , Integer price,
+        Boolean isDeleted) {
 }

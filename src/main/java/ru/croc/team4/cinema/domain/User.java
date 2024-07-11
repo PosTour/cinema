@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "user_table")
 public class User {
     /*
     * Идентификатор
