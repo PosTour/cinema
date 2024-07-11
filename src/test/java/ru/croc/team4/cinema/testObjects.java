@@ -62,8 +62,11 @@ public class testObjects {
 
         Map<Map<Integer, Integer>, Category> map = new HashMap<>();
 
-        Map<Integer, Integer> map1 = new HashMap<>(1,1);
-        Map<Integer, Integer> map2 = new HashMap<>(1,2);
+        Map<Integer, Integer> map1 = new HashMap<>();
+        Map<Integer, Integer> map2 = new HashMap<>();
+        map1.put(1,1);
+        map2.put(1,2);
+
 
         map.put(map1, Category.GOOD);
         map.put(map2, Category.BAD);
@@ -81,8 +84,10 @@ public class testObjects {
     public static Hall getHall2() {
 
         Map<Map<Integer, Integer>, Category> map = new HashMap<>();
-        Map<Integer, Integer> map1 = new HashMap<>(1,1);
-        Map<Integer, Integer> map2 = new HashMap<>(1,2);
+        Map<Integer, Integer> map1 = new HashMap<>();
+        Map<Integer, Integer> map2 = new HashMap<>();
+        map1.put(1,1);
+        map2.put(1,2);
 
         map.put(map1, Category.BAD);
         map.put(map2, Category.GOOD);
@@ -100,8 +105,10 @@ public class testObjects {
     public static Hall getHallUpdate() {
 
         Map<Map<Integer, Integer>, Category> map = new HashMap<>();
-        Map<Integer, Integer> map1 = new HashMap<>(1,1);
-        Map<Integer, Integer> map2 = new HashMap<>(1,2);
+        Map<Integer, Integer> map1 = new HashMap<>();
+        Map<Integer, Integer> map2 = new HashMap<>();
+        map1.put(1,1);
+        map2.put(1,2);
 
         map.put(map1, Category.BAD);
         map.put(map2, Category.GOOD);

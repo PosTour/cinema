@@ -41,7 +41,6 @@ public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Int
 
         Map<Map<Integer, Integer>, Category> map = new HashMap<>();
 
-
         String[] temp;
         String temp2;
         String temp3;
@@ -56,7 +55,7 @@ public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Int
 
                 temp = list[i].split(":");
                 temp2 = temp[1].substring(1, temp[1].length() - 1);
-                customerInfo2 = Category.getStatusByString(temp2);
+                customerInfo2 = Category.valueOf(temp2);
 
                 temp3 = temp[0].substring(2, temp[0].length() - 2);
                 temp4 = temp3.split("=");
