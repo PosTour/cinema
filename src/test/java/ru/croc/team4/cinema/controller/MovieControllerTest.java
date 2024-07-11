@@ -21,6 +21,7 @@ import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.exception_handler.ErrorResponse;
+import ru.croc.team4.cinema.exception_handler.ValidationErrorResponse;
 import ru.croc.team4.cinema.mapper.MovieMapper;
 import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.MovieRepository;
@@ -196,7 +197,7 @@ public class MovieControllerTest {
                 .extract().response();
 
         // Не выбрасываем ошибку, а возвращаем объект ErrorResponse
-        ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
+        ValidationErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ValidationErrorResponse.class);
 
         assertAll(
                 () -> assertTrue(errorResponse.getErrors().contains("Название фильма должно быть от 1 до 32 символов"),
@@ -236,7 +237,7 @@ public class MovieControllerTest {
         ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
 
         assertAll(
-                () -> assertEquals("Данного фильма не существует", errorResponse.getErrors().get(0),
+                () -> assertEquals("Данного фильма не существует", errorResponse.getMessage(),
                         "Неверно указана ошибка при обращении к несуществующему фильму")
         );
     }
