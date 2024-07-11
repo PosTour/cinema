@@ -46,10 +46,10 @@ public class SessionServiceImpl implements SessionService {
         var movie = movieRepository.findById(sessionDto.movieId());
         var hall = hallRepository.findById(sessionDto.hallId());
         if (movie.isEmpty()) {
-            throw new IllegalArgumentException("Movie not found"); //TODO пересмотеть
+            throw new IllegalArgumentException("Данного фильма не существует");
         }
         if (hall.isEmpty()) {
-            throw new IllegalArgumentException("Hall not found"); //TODO пересмотеть
+            throw new IllegalArgumentException("Данного зала не существует");
         }
         var movieDuration = movie.get().getDuration();
         var endTime = Time.valueOf(sessionDto
@@ -97,10 +97,10 @@ public class SessionServiceImpl implements SessionService {
         var movie = movieRepository.findById(sessionCreationDto.movieId());
         var hall = hallRepository.findById(sessionCreationDto.hallId());
         if (movie.isEmpty()) {
-            throw new IllegalArgumentException("Movie not found"); //TODO пересмотеть
+            throw new IllegalArgumentException("Данного фильма не существует");
         }
         if (hall.isEmpty()) {
-            throw new IllegalArgumentException("Hall not found"); //TODO пересмотеть
+            throw new IllegalArgumentException("Данного зала не существует");
         }
         var session = sessionExistence.get();
         session.setMovie(movie.get());
