@@ -2,6 +2,7 @@ package ru.croc.team4.cinema.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croc.team4.cinema.domain.Category;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.dto.AuditDto;
 import ru.croc.team4.cinema.dto.HallDto;
@@ -49,7 +50,7 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public void UpdateHall(UUID id, String name, Map<Map<Integer, Integer>, String> seats) {
+    public void UpdateHall(UUID id, String name, Map<Map<Integer, Integer>, Category> seats) {
         var hall = hallRepository.findById(id);
         if (hall.isPresent()) {
             hall.get().setName(name);

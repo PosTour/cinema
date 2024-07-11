@@ -29,5 +29,5 @@ public class Hall {
 
     @Column(nullable = false)
     @Convert(converter = HashMapConverter.class)
-    private Map<Map<Integer, Integer>, String> seats = new HashMap<>();
+    private Map<Map<Integer, Integer>, Category> seats = new HashMap<>();
 }

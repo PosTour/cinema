@@ -151,7 +151,7 @@ public class SessionControllerTest {
         SessionResponseDto sessionResponseDto = gson.fromJson(r.asString(), SessionResponseDto.class);
 
         assertAll(
-                () -> assertEquals(sessionCreationDto.price(), sessionResponseDto.price(), "Не совпадает цена фильмов")
+                () -> assertEquals(sessionCreationDto.prices(), sessionResponseDto.prices(), "Не совпадает цена фильмов")
         );
     }
 

@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.service;
 
+import ru.croc.team4.cinema.domain.Category;
 import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.dto.HallDto;
 import ru.croc.team4.cinema.dto.HallResponseDto;
@@ -17,5 +18,5 @@ public interface HallService {
 
     HallResponseDto createHall(HallDto hallDto);
 
-    void UpdateHall(UUID id, String name, Map<Map<Integer, Integer>, String> seats);
+    void UpdateHall(UUID id, String name, Map<Map<Integer, Integer>, Category> seats);
 }
