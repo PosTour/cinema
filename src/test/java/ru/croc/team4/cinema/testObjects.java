@@ -147,6 +147,18 @@ public class testObjects {
         return session;
     }
 
+    public static Session getSessionUpdate() {
+        Session session = Session.builder()
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
+                .movie(getMovie2())
+                .hall(getHallUpdate())
+                .startTime(new Time(13,0,12))
+                .endTime(new Time(14,35,3))
+                .price(1500)
+                .build();
+        return session;
+    }
+
     public static Place getPlace() {
         Place place = Place.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
