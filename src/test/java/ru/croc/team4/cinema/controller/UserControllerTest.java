@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -84,8 +85,22 @@ public class UserControllerTest {
     public void GetUserbyPhone() {
         List<UserDto> users = getAllUsers();
 
-        long id = users.get(0).chatId();
+        String phone = users.get(0).phone();
+
+        Response r = given()
+                .get("/api/users/" + phone)
+                .then()
+                .extract().response();
+
+        UserDto userDto = gson.fromJson(r.asString(), UserDto.class);
+
+        assertAll(
+                () -> assertEquals(phone, userDto.phone(), "Неверный номер телефона"),
+                () -> assertEquals(users.get(0).chatId(), userDto.chatId(), "Неверный chatId")
+        );
     }
+
+    public void
 
     private List<UserDto> getAllUsers() {
         // запрос по пути: localhost:8080/api/users/all
