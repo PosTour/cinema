@@ -51,7 +51,7 @@ public class testObjects {
         Movie movie = Movie.builder()
                 .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
                 .duration(Duration.ofMinutes(-10))
-                .title("Пираты карибского моря 2")
+                .title("")
                 .description("Тут описание фильма, которое нам нужно")
                 .build();
         return movie;
