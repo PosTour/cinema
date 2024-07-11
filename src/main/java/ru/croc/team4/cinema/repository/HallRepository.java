@@ -6,4 +6,5 @@ import ru.croc.team4.cinema.domain.Hall;
 import java.util.UUID;
 
 public interface HallRepository extends JpaRepository<Hall, UUID> {
+    Hall findByName(String name);
 }
