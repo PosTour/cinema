@@ -1,6 +1,6 @@
 spring:
   application:
-    name:
+    name: administration
 
   Kafka:
     bootstrapServers: kafka:9092
