@@ -20,22 +20,19 @@ import java.util.UUID;
 @Table(name = "user_table")
 public class User {
     /*
-    * Идентификатор
-    * */
+     * Идентификатор
+     * */
     @Id
     @UuidGenerator
     private UUID id;
     /*
      * номер телефона (79991128537)
      * */
-    @Column(unique=true, nullable = false, length = 11)
+    @Column(unique = true, nullable = false, length = 11)
     private String phone;
 
     @Column(nullable = false)
     private long chatId;
-
-
-
 
     public User(String phone) {
         this.phone = phone;
