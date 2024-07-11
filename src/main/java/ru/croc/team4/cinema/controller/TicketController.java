@@ -51,7 +51,7 @@ public class TicketController {
 
     // через кафку
     @PutMapping("/{bCode}/{status}")
-    public ResponseEntity<Void> updateTicket(@PathVariable String bCode, @PathVariable Place.Status status) {
+    public ResponseEntity<Void> updateTicket(@PathVariable("bCode") String bCode, @PathVariable ("status")Place.Status status) {
         ticketService.updateTicket(bCode, status);
         return ResponseEntity.ok().build();
     }

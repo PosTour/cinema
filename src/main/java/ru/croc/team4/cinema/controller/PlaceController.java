@@ -49,7 +49,7 @@ public class PlaceController {
     }
 
     @PutMapping("/{id}/{status}")
-    public ResponseEntity<Boolean> updatePlace(@PathVariable UUID id, @PathVariable Place.Status status) {
+    public ResponseEntity<Boolean> updatePlace(@PathVariable("id") UUID id, @PathVariable("status") Place.Status status) {
 
         return ResponseEntity.ok(placeServiceImpl.updatePlace(id, status));
     }

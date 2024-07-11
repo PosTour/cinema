@@ -27,7 +27,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieResponseDto> getMovie(@PathVariable UUID id) {
+    public ResponseEntity<MovieResponseDto> getMovie(@PathVariable("id") UUID id) {
         Optional<Movie> movie = movieService.findMovie(id);
         return movie.map(value -> ResponseEntity.ok(movieMapper.movieToResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -44,13 +44,13 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable UUID id, @Valid @RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieResponseDto> updateMovie(@PathVariable("id") UUID id, @Valid @RequestBody MovieDto movieDto) {
         Optional<MovieResponseDto> movie = movieService.updateMovie(id, movieDto);
         return movie.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteMovie(@PathVariable("id") UUID id) {
         movieService.deleteMovie(id);
         return ResponseEntity.noContent().build();
     }

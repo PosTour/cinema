@@ -31,7 +31,7 @@ public class HallController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HallDto> getHall(@PathVariable UUID id) {
+    public ResponseEntity<HallDto> getHall(@PathVariable("id") UUID id) {
         Optional<Hall> hall = hallService.findHallById(id);
         return hall.map(value -> ResponseEntity.ok(hallMapper.hallToHallDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -43,7 +43,7 @@ public class HallController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateHall(@PathVariable UUID id, @Valid @RequestBody HallDto hallDto) {
+    public ResponseEntity<Void> updateHall(@PathVariable("id") UUID id, @Valid @RequestBody HallDto hallDto) {
         hallService.UpdateHall(id, hallDto.name(), hallDto.seats());
         return ResponseEntity.noContent().build();
     }
