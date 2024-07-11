@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class BaseExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ErrorResponse validationErrorResponse = new ErrorResponse(ex.getMessage());
+        ErrorResponse validationErrorResponse = new ErrorResponse("Ошибка переданных параметров", ex.getMessage());
         return new ResponseEntity<>(validationErrorResponse, HttpStatus.BAD_REQUEST);
     }
 }
