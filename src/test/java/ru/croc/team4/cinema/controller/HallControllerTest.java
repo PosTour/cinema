@@ -110,12 +110,6 @@ public class HallControllerTest {
         map.put(1, map2);
         map.put(2, map3);
 
-        Map<Integer, Category> map1 = new HashMap<>();
-        Map<Integer, Category> map2 = new HashMap<>();
-        map1.put(1,Category.BAD);
-        map2.put(2,Category.GOOD);
-        map.put(1, map1);
-        map.put(1, map2);
         assertAll(
                 () -> assertEquals("Еще больше зал", hallResponseDto.name(), "Неверное название зала"),
                 () -> assertEquals(map, hallResponseDto.seats(), "Неверное количество и расположение мест")
