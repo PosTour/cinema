@@ -1,0 +1,41 @@
+stages:
+  - build
+
+include:
+  - project: 'CROC.DRPO_RnD/jxfw/sandbox/school2024/team4/environment'
+    ref: main
+    file: 'build.yml'
+
+variables:
+  MAVEN_REPO_LOCAL: .m2/repository
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/$MAVEN_REPO_LOCAL"
+  GIT_STRATEGY: clone
+
+.build:
+  stage: build
+  image: "openjdk:21"
+  cache:
+    key: ${CI_PROJECT_NAME}
+    paths:
+      - $MAVEN_REPO_LOCAL
+  tags:
+    - school2024_team4
+
+build:
+  extends: .build
+  script:
+    - ./mvnw spring-boot:build-image
+  only:
+    refs:
+      - main
+
+build_mr:
+  extends: .build
+  script:
+    - ./mvnw install
+  artifacts:
+    when: always
+    paths:
+      - target/*.jar
+  only:
+    - merge_requests
