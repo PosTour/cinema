@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UuidGenerator;
+import ru.croc.team4.cinema.domain.converter.HashMapConverter;
+import ru.croc.team4.cinema.domain.converter.PricesConverter;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -33,21 +37,22 @@ public class Session {
     @Column(nullable = false)
     private Date startDate;
     @Column(nullable = false)
-    private Integer price;
+    @Convert(converter = PricesConverter.class)
+    private Map<Category, Integer> prices = new HashMap<>();
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isDeleted;
 
-
-    public Session(Movie movie, Hall hall, Time startTime, Time endTime, Date startDate, Integer price, Boolean isDeleted) {
+    public Session(Movie movie, Hall hall, Time startTime, Time endTime, Date startDate, Map<Category, Integer> prices, Boolean isDeleted) {
         this.movie = movie;
         this.hall = hall;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startDate = startDate;
-        this.price = price;
+        this.prices = prices;
         this.isDeleted = isDeleted;
     }
+
 
     public Time getEndTime() {
         return endTime;
