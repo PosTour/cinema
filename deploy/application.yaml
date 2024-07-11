@@ -21,14 +21,14 @@ spec:
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
-              path: actuator/health/readiness
+              path: actuator/health
               port: 8080
             initialDelaySeconds: 15
             periodSeconds: 30
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: actuator/health/liveness
+              path: actuator/health
               port: 8080
             periodSeconds: 10
             failureThreshold: 60
