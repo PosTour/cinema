@@ -67,6 +67,7 @@ public class testObjects {
         map1.put(1,1);
         map2.put(1,2);
 
+
         map.put(map1, Category.GOOD);
         map.put(map2, Category.BAD);
 
