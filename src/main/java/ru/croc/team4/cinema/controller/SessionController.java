@@ -59,13 +59,13 @@ public class SessionController {
 
 
     @PutMapping("/{sessionId}")
-    public ResponseEntity<SessionResponseDto> updateSession(@PathVariable UUID sessionId, @Valid @RequestBody SessionCreationDto sessionCreationDto) {
+    public ResponseEntity<SessionResponseDto> updateSession(@PathVariable("sessionId") UUID sessionId, @Valid @RequestBody SessionCreationDto sessionCreationDto) {
         var session = sessionService.updateSession(sessionId, sessionCreationDto);
         return session.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSession(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteSession(@PathVariable("id") UUID id) {
         sessionService.deleteSession(id);
         return ResponseEntity.noContent().build();
     }
