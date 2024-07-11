@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/hall")
+@RequestMapping(value = "api/hall")
 public class HallController {
 
     private final HallService hallService;

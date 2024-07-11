@@ -13,5 +13,5 @@ public record HallDto(
         String name,
         @NotEmpty(message = "Информация о местах в зале не может быть пустой")
         //@Size(min = 1, message = "В зале должно быть хотя бы одно место")
-        Map<Map<Integer, Integer>, Category> seats) {
+        Map<Integer, Map<Integer, Category>> seats) {
 }
