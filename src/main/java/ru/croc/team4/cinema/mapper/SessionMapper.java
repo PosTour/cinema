@@ -2,6 +2,7 @@ package ru.croc.team4.cinema.mapper;
 
 import org.mapstruct.*;
 import ru.croc.team4.cinema.domain.Session;
+import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.service.HallServiceImpl;
 import ru.croc.team4.cinema.service.SessionService;
@@ -28,12 +29,12 @@ public interface SessionMapper {
 
     @Mappings({
             @Mapping(target = "movieId", source = "movie.id"),
-            @Mapping(target = "hallName", expression = "java(hallServiceImpl.findByName(session.getHall().id())"), // TODO: нужно вытащить hall.id имея hallName
+            @Mapping(target = "hallId", expression = "java(hallServiceImpl.findByName(session.getHall().getName()).getId())"), // TODO: нужно вытащить hall.id имея hallName
             @Mapping(target = "startDate", source = "startDate", qualifiedByName = "toLocalDate"),
             @Mapping(target = "startTime", source = "startTime", qualifiedByName = "toLocalTime"),
             @Mapping(target = "price", source = "price"),
     })
-    SessionResponseDto sessionToSessionCreationDto(Session session, @Context HallServiceImpl hallServiceImpl);
+    SessionCreationDto sessionToSessionCreationDto(Session session, @Context HallServiceImpl hallServiceImpl);
 
     @Named("toLocalDate")
     default LocalDate toLocalDate(Date date) {

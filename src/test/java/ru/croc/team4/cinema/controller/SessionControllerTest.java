@@ -14,6 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
+import ru.croc.team4.cinema.domain.Hall;
 import ru.croc.team4.cinema.domain.Session;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
@@ -21,6 +22,9 @@ import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.mapper.SessionMapper;
 import ru.croc.team4.cinema.mapper.SessionMapperImpl;
 import ru.croc.team4.cinema.repository.SessionRepository;
+import ru.croc.team4.cinema.service.HallServiceImpl;
+import ru.croc.team4.cinema.service.SessionService;
+import ru.croc.team4.cinema.service.SessionServiceImpl;
 import ru.croc.team4.cinema.testObjects;
 
 import java.lang.reflect.Type;
@@ -43,7 +47,10 @@ public class SessionControllerTest {
 
     private final SessionMapper sessionMapper;
 
-    public SessionControllerTest() {
+    private final HallServiceImpl hallServiceImpl;
+
+    public SessionControllerTest(HallServiceImpl hallServiceImpl) {
+        this.hallServiceImpl = hallServiceImpl;
         this.sessionMapper = new SessionMapperImpl();
     }
 
@@ -61,7 +68,7 @@ public class SessionControllerTest {
     @Test
     @Description("Тест на создание сеанса")
     public void createSessionTest() {
-        SessionCreationDto sessionCreationDto = sessionMapper.sessionToSessionCreationDto(testObjects.getSession2())
+        SessionCreationDto sessionCreationDto = sessionMapper.sessionToSessionCreationDto(testObjects.getSession2(), hallServiceImpl);
     }
 
     @Test
