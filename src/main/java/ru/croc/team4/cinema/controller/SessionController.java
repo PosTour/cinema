@@ -41,7 +41,7 @@ public class SessionController {
     }
 
     @GetMapping("/findByMovieId/{movieId}")
-    public ResponseEntity<List<SessionResponseDto>> getSessionsByMovie(@PathVariable UUID movieId) {
+    public ResponseEntity<List<SessionResponseDto>> getSessionsByMovie(@PathVariable ("movieId") UUID movieId) {
         var sessionDtos = sessionService.getSessions(movieId);
 
         if (sessionDtos == null) {
@@ -52,7 +52,7 @@ public class SessionController {
     }
 
     @GetMapping("/findById/{sessionId}")
-    public ResponseEntity<SessionResponseDto> getSessionById(@PathVariable UUID sessionId) {
+    public ResponseEntity<SessionResponseDto> getSessionById(@PathVariable ("sessionId") UUID sessionId) {
         Optional<Session> session = sessionService.findSession(sessionId);
         return session.map(value -> ResponseEntity.ok(sessionMapper.sessionToSessionResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
