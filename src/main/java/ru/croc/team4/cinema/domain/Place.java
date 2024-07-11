@@ -38,6 +38,27 @@ public class Place {
         }
     }
 
+    public enum Type {
+        BAD("Боковушка"), GOOD("Не до поцелуев"), EXCELLENT("Полное погружение");
+        public final String lable;
+
+        Type(String lable) {
+            this.lable = lable;
+        }
+
+        private static final Map<String, Type> LOOKUP_MAP2 = new HashMap<>();
+
+        static {
+            for (Type type : values()) {
+                LOOKUP_MAP2.put(type.lable, type);
+            }
+        }
+
+        public static Type getStatusByString(String type) {
+            return LOOKUP_MAP2.get(type);
+        }
+    }
+
 
     @Id
     @UuidGenerator
@@ -51,10 +72,17 @@ public class Place {
     public void setPlaceNumber(Integer placeNumber) {this.placeNumber = placeNumber; }
     public Integer getPlaceNumber() {return this.placeNumber; }
 
+    @Column
     @Enumerated(EnumType.ORDINAL)
     @Setter
     @Getter
     private Status status;
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    @Setter
+    @Getter
+    private Type type;
 
     @ManyToOne
     @Setter

@@ -42,6 +42,7 @@ public class Ticket {
     public void setPlace(Place place) {this.place = place;}
     public Place getPlace() {return this.place;}
 
+
     public Ticket() {}
 
     public Ticket(User user, Session session, Place place) {
