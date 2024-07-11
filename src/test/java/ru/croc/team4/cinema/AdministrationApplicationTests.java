@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-class AdministrationApplicationTests {
+class AdministrationApplicationTests extends BaseIntegrationTest {
 
 
     @Test

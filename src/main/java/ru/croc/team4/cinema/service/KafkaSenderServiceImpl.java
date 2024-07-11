@@ -2,12 +2,8 @@ package ru.croc.team4.cinema.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.dto.AuditDto;
 import ru.croc.team4.cinema.dto.TicketUpdateDto;
 
