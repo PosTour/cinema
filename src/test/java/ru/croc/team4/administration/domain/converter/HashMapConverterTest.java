@@ -26,7 +26,7 @@ public class HashMapConverterTest {
 
         HashMapConverter converter = new HashMapConverter();
         String text = converter.convertToDatabaseColumn(map);
-        Assertions.assertEquals(text, "{\"{1=1}\":\"BAD\",\"{1=2}\":\"GOOD\"}");
+        Assertions.assertEquals(text, "{\"1\":{\"2\":\"GOOD\"}}");
 
 
     }

@@ -39,7 +39,7 @@ public class HashMapConverter implements AttributeConverter<Map<Integer, Map<Int
 
         Category customerInfo2 = null;
 
-        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
         String[] temp;
         String temp2;
@@ -61,7 +61,7 @@ public class HashMapConverter implements AttributeConverter<Map<Integer, Map<Int
                 temp4 = temp3.split("=");
                 customerInfo.put(Integer.valueOf(temp4[0]), Integer.valueOf(temp4[1]));
 
-                map.put(customerInfo, customerInfo2);
+//                map.put(customerInfo, customerInfo2);
 
             } catch (final Exception e) {
                 // Добавим логирование ошибки
