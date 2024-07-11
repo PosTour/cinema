@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @Converter
-public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Integer>, Category>, String> {
+public class HashMapConverter implements AttributeConverter<Map<Integer, Map<Integer, Category>>, String> {
 
     @Override
-    public String convertToDatabaseColumn(Map<Map<Integer, Integer>, Category> customerInfo) {
+    public String convertToDatabaseColumn(Map<Integer, Map<Integer, Category>> customerInfo) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String customerInfoJson = null;
@@ -33,7 +33,7 @@ public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Int
 
 
     @Override
-    public Map<Map<Integer, Integer>, Category> convertToEntityAttribute(String customerInfoJSON) {
+    public Map<Integer, Map<Integer, Category>> convertToEntityAttribute(String customerInfoJSON) {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
