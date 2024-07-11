@@ -5,5 +5,5 @@ import ru.croc.team4.cinema.domain.Row;
 
 import java.util.UUID;
 
-public record PlaceDto(UUID id, Place.Status status, String placeNumber, boolean occupied, Row row) {
+public record PlaceDto(UUID id, String status, String type, Integer placeNumber, UUID rowId) {
 }

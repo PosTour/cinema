@@ -12,5 +12,5 @@ public record RowDto(
         @Max(value = 512, message = "Номер ряда не может быть больше 512")
         Integer rowNumber,
         @NotNull(message = "Информация о сеансе не может быть пустой")
-        Session session) {
+        UUID sessionId) {
 }

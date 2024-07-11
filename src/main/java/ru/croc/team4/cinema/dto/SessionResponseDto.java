@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public record SessionResponseDto(
         UUID id
-        , Movie movie
-        , Hall hall
+        , UUID movieId
+        , String hallName
         , Time startTime
         , Integer price) {
 }

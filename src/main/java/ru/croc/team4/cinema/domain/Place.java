@@ -8,31 +8,48 @@ import ru.croc.team4.cinema.domain.converter.HashMapConverter;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "place")
 public class Place {
 
+
+
     public enum Status {
-        FREE, PAID, BOOKING;
+        FREE("свободно"), PAID("оплачено"), BOOKING("забронировано");
+        public final String lable;
+
+        Status(String lable) {
+            this.lable = lable;
+        }
     }
+
 
     @Id
     @UuidGenerator
 
     private UUID id;
+    public void setId(UUID id) {this.id = id; }
+    public UUID getId() {return this.id; }
 
     @Column(nullable = false)
+
     private Integer placeNumber;
+    public void setPlaceNumber(Integer placeNumber) {this.placeNumber = placeNumber; }
+    public Integer getPlaceNumber() {return this.placeNumber; }
 
     @Enumerated(EnumType.ORDINAL)
+    @Setter
+    @Getter
     private Status status;
 
 
+
     @ManyToOne
+    @Setter
+    @Getter
     @JoinColumn(name = "rowId", nullable = false)
     private Row row;
+
 }
