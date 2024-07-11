@@ -48,7 +48,6 @@ public class HashMapConverterTest {
         Map<Integer, Map<Integer, Category>> myMap = new HashMap<>();
         Map<Integer, Category> map1 = new HashMap<>();
         map1.put(1,Category.BAD);
-        Map<Integer, Category> map2 = new HashMap<>();
         map1.put(2,Category.GOOD);
 
         myMap.put(1, map1);

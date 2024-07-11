@@ -53,6 +53,7 @@ public class HallServiceImpl implements HallService {
     public void UpdateHall(UUID id, String name, Map<Integer, Map<Integer, Category>> seats) {
         var hall = hallRepository.findById(id);
         if (hall.isPresent()) {
+            hall.get().setId(id);
             hall.get().setName(name);
             hall.get().setSeats(seats);
             hallRepository.save(hall.get());

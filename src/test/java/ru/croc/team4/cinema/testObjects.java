@@ -83,7 +83,7 @@ public class testObjects {
                 .name("Big hall")
                 .seats(map)
                 .build();
-
+        System.out.println("Hall");
         System.out.println(hall.getId() + " " + hall.getName() + " " + hall.getSeats());
         return hall;
     }
@@ -140,22 +140,22 @@ public class testObjects {
         return hall;
     }
 
-    public static Session getSession() {
+    public static Session getSession(Hall hall, Movie movie) {
         Map<Category, Integer> map = new HashMap<>();
         map.put(Category.BAD, 87);
         map.put(Category.EXCELLENT, 87);
         map.put(Category.GOOD, 87);
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
-                .movie(getMovie())
-                .hall(getHall())
+                .movie(movie)
+                .hall(hall)
                 .startTime(new Time(12,12,12))
                 .endTime(new Time(14,35,3))
                 .startDate(new Date(1222))
                 .isDeleted(false)
                 .prices(map)
                 .build();
-        System.out.println(session.getHall().getId());
+        System.out.println("Session");
         return session;
     }
 
@@ -165,7 +165,7 @@ public class testObjects {
         map.put(Category.EXCELLENT, 87);
         map.put(Category.GOOD, 87);
         Session session = Session.builder()
-                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
+                .id(UUID.fromString("49d8c2f9-05cb-4c85-9d10-89ea28c32deb"))
                 .movie(getMovie2())
                 .hall(getHallUpdate())
                 .startTime(new Time(12,12,12))
@@ -185,7 +185,7 @@ public class testObjects {
 
 
         Session session = Session.builder()
-                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
+                .id(UUID.fromString("49d8c2f9-05cb-4c85-9d10-89ea28c32deb"))
                 .movie(getMovie2())
                 .hall(getHallUpdate())
                 .startTime(new Time(13,0,12))
@@ -195,34 +195,36 @@ public class testObjects {
         return session;
     }
 
-    public static Place getPlace() {
+    public static Place getPlace(Hall hall, Movie movie) {
         Place place = Place.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .placeNumber(12)
                 .status(Place.Status.PAID)
-                .row(getRow())
+                .row(getRow(hall, movie))
                 .build();
+        System.out.println("Place");
         return place;
     }
 
-    public static Row getRow() {
+    public static Row getRow(Hall hall, Movie movie) {
         Row row = Row.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .rowNumber(3)
-                .session(getSession())
+                .session(getSession(hall, movie))
                 .build();
+        System.out.println("Row");
         return row;
     }
-
-    public static Ticket getTicket() {
-        Ticket ticket = Ticket.builder()
-                .id(UUID.randomUUID())
-                .place(getPlace())
-                .session(getSession())
-                .user(getUser())
-                .build();
-        return ticket;
-    }
+//
+//    public static Ticket getTicket() {
+//        Ticket ticket = Ticket.builder()
+//                .id(UUID.randomUUID())
+//                .place(getPlace())
+//                .session(getSession())
+//                .user(getUser())
+//                .build();
+//        return ticket;
+//    }
 
     public static User getUser() {
         User user = User.builder()
