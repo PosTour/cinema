@@ -85,7 +85,14 @@ public class HallControllerTest {
     public void getHallTest() {
         List<HallResponseDto> hallResponseDtos = getAllHalls();
 
-        HallResponseDto hallResponseDto = hallResponseDtos.get(1);
+        UUID id = hallResponseDtos.get(1).id();
+
+        Response r = given()
+                .get("/api/halls/" + id)
+                .then()
+                .extract().response();
+
+        HallResponseDto hallResponseDto = new Gson().fromJson(r.getBody().asString(), HallResponseDto.class);
 
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -97,7 +104,6 @@ public class HallControllerTest {
                 () -> assertEquals(map, hallResponseDto.seats(), "Неверное количество и расположение мест")
         );
     }
-
 
     @Test
     @Description("Тест на получение всех залов")
