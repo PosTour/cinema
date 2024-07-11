@@ -1,7 +1,12 @@
 package ru.croc.team4.administration.domain.converter;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import ru.croc.team4.cinema.domain.Category;
 import ru.croc.team4.cinema.domain.converter.HashMapConverter;
 import scala.Int;
@@ -9,9 +14,13 @@ import scala.Int;
 import java.util.HashMap;
 import java.util.Map;
 
+@ActiveProfiles("test")
+@Epic("MapToJson and JsonTOMap test")
+@Feature("Integrate tests")
 public class HashMapConverterTest {
 
     @Test
+    @Description("Check ConvertMapToJson")
     public void testConvertMapToJson() {
         Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
@@ -31,9 +40,8 @@ public class HashMapConverterTest {
 
     }
 
-
-
     @Test
+    @Description("Check ConvertJsonToMap")
     public void testConvertJsonToMap() {
         String json = "{\"1\":{\"1\":\"BAD\",\"2\":\"GOOD\"}}";
 
