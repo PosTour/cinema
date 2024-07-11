@@ -4,5 +4,5 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public record HallResponseDto(UUID id, String name, Map<Integer, Integer> seats) {
+public record HallResponseDto(UUID id, String name, Map<Map<Integer, Integer>, String> seats) {
 }

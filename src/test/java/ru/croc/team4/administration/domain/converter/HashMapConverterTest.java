@@ -11,10 +11,10 @@ public class HashMapConverterTest {
 
     @Test
     public void testConvertMapToJson() {
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Map<Integer, Integer>, String> map = new HashMap<>();
 
-        map.put(1, 3);
-        map.put(2, 2);
+        map.put(new HashMap<>(1,1), "ex");
+        map.put(new HashMap<>(1,2), "po");
 
         HashMapConverter converter = new HashMapConverter();
         String text = converter.convertToDatabaseColumn(map);

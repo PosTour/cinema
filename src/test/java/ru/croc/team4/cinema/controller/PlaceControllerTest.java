@@ -50,7 +50,7 @@ public class PlaceControllerTest {
     public void setup() {
         Hall hall = testObjects.getHall();
         hallRepository.save(hall);
-        UUID hallId = hallRepository.g
+
 
         Movie movie = testObjects.getMovie();
         movieRepository.save(movie);
