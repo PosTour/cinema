@@ -148,17 +148,13 @@ public class testObjects {
     }
 
     public static Session getSessionUpdate() {
-<<<<<<< HEAD
+
         Map<Category, Integer> map = new HashMap<>();
         map.put(Category.BAD, 87);
         map.put(Category.EXCELLENT, 87);
         map.put(Category.GOOD, 87);
-=======
-            Map<Category, Integer> map = new HashMap<>();
-            map.put(Category.BAD, 87);
-            map.put(Category.EXCELLENT, 87);
-            map.put(Category.GOOD, 87);
->>>>>>> eaec45ebb9092801ba411ad25d77643511767995
+
+
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie2())

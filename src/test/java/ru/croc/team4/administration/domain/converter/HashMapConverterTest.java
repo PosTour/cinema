@@ -35,7 +35,7 @@ public class HashMapConverterTest {
 
     @Test
     public void testConvertJsonToMap() {
-        String json = "{\"{1=1}\":\"BAD\",\"{1=2}\":\"GOOD\"}";
+        String json = "{\"{1=1}\":\"Боковушка\",\"{1=2}\":\"Не до поцелуев\"}";
 
         Map<Map<Integer, Integer>, Category> myMap = new HashMap<>();
         Map<Integer, Integer> map1 = new HashMap<>();
@@ -48,6 +48,6 @@ public class HashMapConverterTest {
 
         HashMapConverter converter = new HashMapConverter();
         Map<Map<Integer, Integer>, Category> map = converter.convertToEntityAttribute(json);
-        Assertions.assertEquals(map, myMap);
+        Assertions.assertEquals(myMap, map);
     }
 }
