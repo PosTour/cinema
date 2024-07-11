@@ -9,4 +9,5 @@ import java.util.UUID;
 @Service
 public interface RowService {
     List<Row> getRowsBy(UUID sessionID);
+    Row getRowById(UUID rowId);
 }

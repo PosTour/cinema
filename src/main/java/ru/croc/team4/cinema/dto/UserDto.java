@@ -1,6 +1,7 @@
 package ru.croc.team4.cinema.dto;
 
 public record UserDto(
-        String phone,
-        Long chatId) {
+        Long chatId
+        , String phone
+        ) {
 }

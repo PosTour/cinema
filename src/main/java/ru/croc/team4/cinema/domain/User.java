@@ -25,7 +25,6 @@ public class User {
     @Id
     @UuidGenerator
     private UUID id;
-
     /*
      * номер телефона (79991128537)
      * */
@@ -34,6 +33,9 @@ public class User {
 
     @Column(nullable = false)
     private long chatId;
+
+
+
 
     public User(String phone) {
         this.phone = phone;

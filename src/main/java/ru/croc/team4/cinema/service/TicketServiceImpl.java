@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Ticket;
+import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.dto.TicketUpdateDto;
 import ru.croc.team4.cinema.mapper.TicketMapper;
 import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.repository.TicketRepository;
+import ru.croc.team4.cinema.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,17 +22,20 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
     private final KafkaSenderService kafkaSenderService;
+    private final UserService userService;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository, KafkaSenderService kafkaSenderService) {
+    public TicketServiceImpl(TicketRepository ticketRepository, KafkaSenderService kafkaSenderService, UserService userService) {
         this.ticketRepository = ticketRepository;
         this.kafkaSenderService = kafkaSenderService;
+        this.userService = userService;
         this.ticketMapper = new TicketMapperImpl();
     }
 
     @Override
     public TicketDto createTicket(TicketDto ticketDto) {
-        Ticket ticketSaved = ticketRepository.save(new Ticket(ticketDto.user(), ticketDto.session(), ticketDto.place()));
+        Ticket ticket = ticketMapper.ticketDtoToTicket(ticketDto);
+        Ticket ticketSaved = ticketRepository.save(ticket);
         return ticketMapper.ticketToTicketDto(ticketSaved);
     }
 
@@ -44,8 +49,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketDto> getTicketsByUserId(UUID userId) {
-        List<Ticket> tickets = ticketRepository.getTicketsByUserId(userId).stream().toList();
+    public List<TicketDto> getTicketsByChatId(Long chatId) {
+        List<Ticket> tickets = ticketRepository.getTicketsByUser_ChatId(chatId).stream().toList();
         return ticketMapper.ticketsToTicketDtos(tickets);
     }
 
