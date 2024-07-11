@@ -60,15 +60,16 @@ public class testObjects {
 
     public static Hall getHall() {
 
-        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
+
         Map<Integer, Integer> map1 = new HashMap<>(1,1);
         Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(map1, "g");
-        map.put(map2, "b");
+        map.put(map1, Category.GOOD);
+        map.put(map2, Category.BAD);
 
         Hall hall = Hall.builder()
-                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
+                .id(UUID.randomUUID())
                 .name("Big hall")
                 .seats(map)
                 .build();
@@ -79,12 +80,12 @@ public class testObjects {
 
     public static Hall getHall2() {
 
-        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
         Map<Integer, Integer> map1 = new HashMap<>(1,1);
         Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(map1, "g");
-        map.put(map2, "b");
+        map.put(map1, Category.BAD);
+        map.put(map2, Category.GOOD);
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -98,12 +99,12 @@ public class testObjects {
 
     public static Hall getHallUpdate() {
 
-        Map<Map<Integer, Integer>, String> map = new HashMap<>();
+        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
         Map<Integer, Integer> map1 = new HashMap<>(1,1);
         Map<Integer, Integer> map2 = new HashMap<>(1,2);
 
-        map.put(map1, "g");
-        map.put(map2, "b");
+        map.put(map1, Category.BAD);
+        map.put(map2, Category.GOOD);
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -148,10 +149,14 @@ public class testObjects {
     }
 
     public static Session getSessionUpdate() {
-            Map<Category, Integer> map = new HashMap<>();
-            map.put(Category.BAD, 87);
-            map.put(Category.EXCELLENT, 87);
-            map.put(Category.GOOD, 87);
+
+        Map<Category, Integer> map = new HashMap<>();
+        map.put(Category.BAD, 87);
+        map.put(Category.EXCELLENT, 87);
+        map.put(Category.GOOD, 87);
+
+
+
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie2())
