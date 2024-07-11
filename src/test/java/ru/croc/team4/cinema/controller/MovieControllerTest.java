@@ -20,6 +20,7 @@ import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
+import ru.croc.team4.cinema.exception_handler.ErrorResponse;
 import ru.croc.team4.cinema.mapper.MovieMapper;
 import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.MovieRepository;
@@ -31,8 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -178,5 +178,31 @@ public class MovieControllerTest {
         Type MovieResponseDtoListType = new TypeToken<List<MovieResponseDto>>() {}.getType();
 
         return new Gson().fromJson(r.getBody().asString(), MovieResponseDtoListType);
+    }
+
+    @Test
+    @Description("Тест на обновление фильма с невалидными данными")
+    public void NegativeUpdateMovieTest() {
+        MovieDto movieDtoNegative = movieMapper.movieToMovieDto(testObjects.getMovieUpdateNegative());
+        // получение всех фильмов
+        List<MovieResponseDto> movies = getAllMovies();
+        // достаем нужный фильм (будто был запрос по id)
+        UUID id = movies.get(1).id();
+
+        String movieJson = gson.toJson(movieDtoNegative);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(movieJson)
+                .put("/api/movie/" + id)
+                .then()
+                .extract().response();
+
+        ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
+
+        assertAll(
+                () -> assertEquals("Продолжительность фильма должна быть не менее 1 минуты", errorResponse.getErrors().get(0),
+                        "Неверно указано название")
+        );
     }
 }
