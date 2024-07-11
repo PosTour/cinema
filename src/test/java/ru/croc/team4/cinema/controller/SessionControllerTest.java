@@ -68,7 +68,25 @@ public class SessionControllerTest {
     @Test
     @Description("Тест на создание сеанса")
     public void createSessionTest() {
-        SessionCreationDto sessionCreationDto = sessionMapper.sessionToSessionCreationDto(testObjects.getSession2(), hallServiceImpl);
+        SessionCreationDto sessionCreationDto = sessionMapper
+                .sessionToSessionCreationDto(testObjects.getSession2(), hallServiceImpl);
+
+        String sessionJson = gson.toJson(sessionCreationDto);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(sessionJson)
+                .post("/api/session")
+                .then()
+                .extract().response();
+
+        SessionResponseDto sessionResponseDto = gson.fromJson(r.asString(), SessionResponseDto.class);
+
+        assertAll(
+                () -> assertEquals(sessionCreationDto.movieId(), sessionResponseDto.movieId(), "Не совпадают фильмы"),
+                () -> assertEquals(sessionCreationDto.startTime(), sessionResponseDto.startTime(), "Не совпадает время начало фильма"),
+                () -> assertEquals(sessionCreationDto.price(), sessionResponseDto.price(), "Не совпадает цена за билет")
+        );
     }
 
     @Test
