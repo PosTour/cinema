@@ -34,7 +34,13 @@ public class SessionController {
         return ResponseEntity.ok(sessionResponseDto);
     }
 
-    @GetMapping("/{movieId}")
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<SessionResponseDto>> getMovies() {
+        Iterable<SessionResponseDto> sessions = sessionService.findAllSessions();
+        return ResponseEntity.ok(sessions);
+    }
+
+    @GetMapping("/findByMovieId/{movieId}")
     public ResponseEntity<List<SessionResponseDto>> getSessionsByMovie(@PathVariable UUID movieId) {
         var sessionDtos = sessionService.getSessions(movieId);
 
@@ -45,7 +51,7 @@ public class SessionController {
         }
     }
 
-    @GetMapping("/{sessionId}")
+    @GetMapping("/findById/{sessionId}")
     public ResponseEntity<SessionResponseDto> getSessionById(@PathVariable UUID sessionId) {
         Optional<Session> session = sessionService.findSession(sessionId);
         return session.map(value -> ResponseEntity.ok(sessionMapper.sessionToSessionResponseDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
