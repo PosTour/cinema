@@ -60,16 +60,16 @@ public class testObjects {
 
     public static Hall getHall() {
 
-        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        Map<Integer, Integer> map1 = new HashMap<>();
-        Map<Integer, Integer> map2 = new HashMap<>();
-        map1.put(1,1);
-        map2.put(1,2);
+        Map<Integer, Category> map1 = new HashMap<>();
+        Map<Integer, Category> map2 = new HashMap<>();
+        map1.put(1,Category.BAD);
+        map2.put(2,Category.GOOD);
 
 
-        map.put(map1, Category.GOOD);
-        map.put(map2, Category.BAD);
+        map.put(1, map1);
+        map.put(1, map2);
 
         Hall hall = Hall.builder()
                 .id(UUID.randomUUID())
@@ -83,14 +83,16 @@ public class testObjects {
 
     public static Hall getHall2() {
 
-        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
-        Map<Integer, Integer> map1 = new HashMap<>();
-        Map<Integer, Integer> map2 = new HashMap<>();
-        map1.put(1,1);
-        map2.put(1,2);
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        map.put(map1, Category.BAD);
-        map.put(map2, Category.GOOD);
+        Map<Integer, Category> map1 = new HashMap<>();
+        Map<Integer, Category> map2 = new HashMap<>();
+        map1.put(1,Category.BAD);
+        map2.put(2,Category.GOOD);
+
+
+        map.put(1, map1);
+        map.put(1, map2);
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
@@ -104,14 +106,16 @@ public class testObjects {
 
     public static Hall getHallUpdate() {
 
-        Map<Map<Integer, Integer>, Category> map = new HashMap<>();
-        Map<Integer, Integer> map1 = new HashMap<>();
-        Map<Integer, Integer> map2 = new HashMap<>();
-        map1.put(1,1);
-        map2.put(1,2);
+        Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        map.put(map1, Category.BAD);
-        map.put(map2, Category.GOOD);
+        Map<Integer, Category> map1 = new HashMap<>();
+        Map<Integer, Category> map2 = new HashMap<>();
+        map1.put(1,Category.BAD);
+        map2.put(2,Category.GOOD);
+
+
+        map.put(1, map1);
+        map.put(1, map2);
 
         Hall hall = Hall.builder()
                 .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
