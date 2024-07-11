@@ -23,17 +23,15 @@ public class PlaceController {
     private final PlaceRepository placeRepository;
     private final PlaceMapper placeMapper;
     private final PlaceServiceImpl placeServiceImpl;
-    private final RowRepository rowRepository;
 
     private final RowServiceImpl rowServiceImpl;
 
     @Autowired
-    public PlaceController(PlaceRepository placeRepository, PlaceServiceImpl placeServiceImpl, RowRepository rowRepository,
+    public PlaceController(PlaceRepository placeRepository, PlaceServiceImpl placeServiceImpl,
                            RowServiceImpl rowServiceImpl) {
         this.placeRepository = placeRepository;
         this.placeMapper = new PlaceMapperImpl();
         this.placeServiceImpl = placeServiceImpl;
-        this.rowRepository = rowRepository;
         this.rowServiceImpl = rowServiceImpl;
     }
 
@@ -45,7 +43,7 @@ public class PlaceController {
     }
 
     @GetMapping("/{rowId}")
-    public ResponseEntity<List<PlaceDto>> getPlacesByRowId(@PathVariable UUID rowId) {
+    public ResponseEntity<List<PlaceDto>> getPlacesByRowId(@PathVariable ("rowId") UUID rowId) {
         var result = placeMapper.placeListToPlaceDtoList(placeServiceImpl.findAllByRowId(rowId));
         return ResponseEntity.ok(result);
     }

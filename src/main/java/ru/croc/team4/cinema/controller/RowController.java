@@ -40,7 +40,7 @@ public class RowController {
     }
 
     @GetMapping("/{sessionId}")
-    public ResponseEntity<List<Row>> getAllRowsInSession(UUID sessionId) {
+    public ResponseEntity<List<Row>> getAllRowsInSession(@PathVariable ("sessionId") UUID sessionId) {
         var rows = rowService.getRowsBy(sessionId);
         return !rows.isEmpty()
                 ? new ResponseEntity<>(rows, HttpStatus.OK)

@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("{phone}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable String phone) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable ("phone") String phone) {
         Optional<User> user = userService.getUserByPhone(phone);
         return user.map(value -> ResponseEntity.ok(userMapper.userToUserDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
