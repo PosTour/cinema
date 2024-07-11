@@ -6,11 +6,12 @@ import org.springframework.data.repository.query.Param;
 import ru.croc.team4.cinema.domain.Ticket;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     List<Ticket> getTicketsByUserId(UUID userId);
+
+    List<Ticket> getTicketsByChatId(Long chatId);
 
     Ticket getTicketByBookingCode(String bookingCode);
 
