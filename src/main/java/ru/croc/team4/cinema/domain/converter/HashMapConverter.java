@@ -36,36 +36,38 @@ public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Int
     public Map<Map<Integer, Integer>, Category> convertToEntityAttribute(String customerInfoJSON) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<Integer, Integer> customerInfo = null;
+
         Category customerInfo2 = null;
 
         Map<Map<Integer, Integer>, Category> map = new HashMap<>();
 
 
-        String temp;
+        String[] temp;
         String temp2;
         String temp3;
+        String[] temp4;
 
         String[] list = customerInfoJSON.split(",");
         list[0] = list[0].substring(1);
         list[list.length - 1] = list[list.length - 1].substring(0, list[list.length - 1].length() - 1);
         for (int i = 0; i < list.length; ++i) {
-            //try {
+            Map<Integer, Integer> customerInfo = new HashMap<>();
+            try {
 
-                //temp = list[i].split(":")[1].substring(1, list[i].split(":")[1].length() - 1);
-                //customerInfo2 = Category.getStatusByString(temp);
+                temp = list[i].split(":");
+                temp2 = temp[1].substring(1, temp[1].length() - 1);
+                customerInfo2 = Category.getStatusByString(temp2);
 
+                temp3 = temp[0].substring(2, temp[0].length() - 2);
+                temp4 = temp3.split("=");
+                customerInfo.put(Integer.valueOf(temp4[0]), Integer.valueOf(temp4[1]));
 
-                //temp2 = list[i].split(":")[0];
-                //temp3 = list[i].split(":")[0].substring(1, list[i].split(":")[1].length() - 1);
-                //System.out.print("a");
-                //customerInfo2 = Category.getStatusByString(temp);
+                map.put(customerInfo, customerInfo2);
 
-                //map.put(customerInfo, customerInfo2);
-            //} catch (final Exception e) {
+            } catch (final Exception e) {
                 // Добавим логирование ошибки
                 //logger.error("JSON reading error: {}", e.getMessage(), e);
-            //}
+            }
 
         }
 
