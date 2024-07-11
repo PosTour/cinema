@@ -4,14 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.croc.team4.cinema.domain.Ticket;
+import ru.croc.team4.cinema.domain.User;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
-    List<Ticket> getTicketsByUser_ChatId(Long chatId);
 
-    List<Ticket> getTicketsByChatId(Long chatId);
+    List<Ticket> getTicketsByUser(User user);
 
     Ticket getTicketByBookingCode(String bookingCode);
 

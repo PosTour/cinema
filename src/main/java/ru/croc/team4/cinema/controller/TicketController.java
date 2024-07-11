@@ -4,27 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.croc.team4.cinema.domain.Place;
+import ru.croc.team4.cinema.domain.User;
 import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.dto.TicketOutputDto;
-import ru.croc.team4.cinema.mapper.TicketMapper;
-import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.service.TicketService;
+import ru.croc.team4.cinema.service.UserServiceImpl;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/ticket")
 public class TicketController {
 
     private final TicketService ticketService;
-    private final TicketMapper ticketMapper;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, UserServiceImpl userServiceImpl) {
         this.ticketService = ticketService;
-        this.ticketMapper = new TicketMapperImpl();
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/all")
@@ -33,32 +33,33 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-    @GetMapping("/{chatId}")
-    public ResponseEntity<List<TicketDto>> getTicketsId(@PathVariable Long chatId) {
-        List<TicketDto> tickets = ticketService.getTicketsByChatId(chatId);
-        return ResponseEntity.ok(tickets);
-    }
-
-    @GetMapping("findByChatId/{id}")
+    @GetMapping("findByChatId/{chatId}")
     public ResponseEntity<List<TicketOutputDto>> getTicketByChatId(@PathVariable Long chatId) {
-        List<TicketOutputDto> tickets = ticketService.getTicketsByChatId(chatId);
-        return ResponseEntity.ok(tickets);
+        Optional<User> user = userServiceImpl.getUserByChatId(chatId);
+        if (user.isPresent()) {
+            List<TicketOutputDto> tickets = ticketService.getTicketsByUserId(user.get().getId());
+            return ResponseEntity.ok(tickets);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<TicketDto> createTicket(@RequestBody TicketDto ticketDto) {
-        return ResponseEntity.ok(ticketService.createTicket(ticketDto));
+    public ResponseEntity<Void> createTicket(@RequestBody TicketClientDto ticketClientDto) {
+        ticketService.createTicket(ticketClientDto);
+        return ResponseEntity.ok().build();
     }
 
+    // через кафку
     @PutMapping("/{bCode}/{status}")
-    public ResponseEntity<TicketDto> updateTicket(@PathVariable String bCode, @PathVariable Place.Status status) {
-        TicketDto ticketDto = ticketService.updateTicket(bCode, status);
-        return ResponseEntity.ok(ticketDto);
+    public ResponseEntity<Void> updateTicket(@PathVariable String bCode, @PathVariable Place.Status status) {
+        ticketService.updateTicket(bCode, status);
+        return ResponseEntity.ok().build();
     }
 
+    // через кафку
     @DeleteMapping
-    public ResponseEntity<Void> deleteTicket(@RequestBody TicketClientDto ticketClientDto) {
-        ticketService.deleteTicket(ticketClientDto);
+    public ResponseEntity<Void> deleteTicket(@RequestBody TicketDto ticketDto) {
+        ticketService.deleteTicket(ticketDto);
         return ResponseEntity.noContent().build();
     }
 }

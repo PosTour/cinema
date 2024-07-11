@@ -9,15 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TicketService {
-    void deleteTicket(TicketClientDto ticketClientDto);
+    void deleteTicket(TicketDto ticketClientDto);
 
-    TicketDto createTicket(TicketDto ticketDto);
+    void createTicket(TicketClientDto ticketClientDto);
 
-    TicketDto updateTicket(String bCode, Place.Status status);
-
-    List<TicketDto> getTicketsByChatId(Long chatId);
-
-    List<TicketOutputDto> getTicketsByChatId(Long chatId);
+    void updateTicket(String bCode, Place.Status status);
 
     List<TicketDto> getAllTickets();
+
+    List<TicketOutputDto> getTicketsByUserId(UUID userId);
 }
