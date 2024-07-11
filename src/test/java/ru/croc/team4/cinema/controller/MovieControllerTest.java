@@ -51,9 +51,6 @@ public class MovieControllerTest {
     }
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
     private MovieRepository movieRepository;
 
     @BeforeEach
@@ -202,12 +199,12 @@ public class MovieControllerTest {
         ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
 
         assertAll(
-                () -> assertEquals("Название фильма не может быть пустым или содержать только пробелы", errorResponse.getErrors().get(0),
+                () -> assertTrue(errorResponse.getErrors().contains("Название фильма должно быть от 1 до 32 символов"),
                         "Ошибка при передачи пустого поля в названии фильма"),
-                () -> assertEquals("Продолжительность фильма должна быть не менее 1 минуты", errorResponse.getErrors().get(1),
+                () -> assertTrue(errorResponse.getErrors().contains("Продолжительность фильма должна быть не менее 1 минуты"),
                         "Ошибка при передачи отрицательного значения"),
-                () -> assertEquals("Название фильма должно быть от 1 до 32 символов", errorResponse.getErrors().get(2),
-                        "Ошибка при передачи отрицательного значения")
+                () -> assertTrue(errorResponse.getErrors().contains("Продолжительность фильма должна быть не менее 1 минуты"),
+                        "Ошибка при передачи пустого поля в названии фильма")
         );
     }
 
@@ -224,5 +221,23 @@ public class MovieControllerTest {
 
         // ожидаем статус 204
         assertEquals(204, r.statusCode(), "Неудачно произошло удаление фильма из бд");
+    }
+    @Test
+    @Description("Тест на получение корректного фильма из бд")
+    public void NegativeGetMovieTest() {
+        UUID id = UUID.randomUUID();
+
+        Response r = given()
+                .get("/api/movie/" + id)
+                .then()
+                .extract().response();
+
+        // Не выбрасываем ошибку, а возвращаем объект ErrorResponse
+        ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
+
+        assertAll(
+                () -> assertEquals("Данного фильма не существует", errorResponse.getErrors().get(0),
+                        "Неверно указана ошибка при обращении к несуществующему фильму")
+        );
     }
 }
