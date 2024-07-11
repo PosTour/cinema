@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.Place;
 import ru.croc.team4.cinema.domain.Ticket;
+import ru.croc.team4.cinema.domain.User;
 import ru.croc.team4.cinema.dto.TicketClientDto;
 import ru.croc.team4.cinema.dto.TicketDto;
 import ru.croc.team4.cinema.dto.TicketOutputDto;
@@ -14,7 +15,9 @@ import ru.croc.team4.cinema.mapper.TicketMapperImpl;
 import ru.croc.team4.cinema.repository.TicketRepository;
 import ru.croc.team4.cinema.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -23,42 +26,38 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
     private final KafkaSenderService kafkaSenderService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository, KafkaSenderService kafkaSenderService, UserService userService) {
+    public TicketServiceImpl(TicketRepository ticketRepository, KafkaSenderService kafkaSenderService, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.kafkaSenderService = kafkaSenderService;
-        this.userService = userService;
         this.ticketMapper = new TicketMapperImpl();
+        this.userRepository = userRepository;
     }
 
     @Override
-    public TicketDto createTicket(TicketDto ticketDto) {
-        Ticket ticket = ticketMapper.ticketDtoToTicket(ticketDto);
-        Ticket ticketSaved = ticketRepository.save(ticket);
-        return ticketMapper.ticketToTicketDto(ticketSaved);
+    public void createTicket(TicketClientDto ticketClientDto) {
+        Ticket ticket = ticketMapper.ticketClientToTicket(ticketClientDto);
+        ticketRepository.save(ticket);
     }
 
     @Override
-    public TicketDto updateTicket(String bCode, Place.Status status) {
+    public void updateTicket(String bCode, Place.Status status) {
         Ticket ticket = ticketRepository.getTicketByBookingCode(bCode);
         TicketUpdateDto ticketUpdateDto = new TicketUpdateDto(bCode, ticket.getUser().getChatId(), "PAID");
         kafkaSenderService.sendToBot(ticketUpdateDto);
         ticket.getPlace().setStatus(status);
-        return ticketMapper.ticketToTicketDto(ticketRepository.save(ticket));
+        ticketMapper.ticketToTicketDto(ticketRepository.save(ticket));
     }
 
-    @Override
-    public List<TicketDto> getTicketsByChatId(Long chatId) {
-        List<Ticket> tickets = ticketRepository.getTicketsByUser_ChatId(chatId).stream().toList();
-        return ticketMapper.ticketsToTicketDtos(tickets);
-    }
-
-    @Override
-    public List<TicketOutputDto> getTicketsByChatId(Long chatId) {
-        List<Ticket> tickets = ticketRepository.getTicketsByChatId(chatId).stream().toList();
-        return ticketMapper.ticketsToTicketOutputDtos(tickets);
+    public List<TicketOutputDto> getTicketsByUserId(UUID userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            List<Ticket> tickets = ticketRepository.getTicketsByUser(user.get()).stream().toList();
+            return ticketMapper.ticketsToTicketOutputDtos(tickets);
+        }
+        return Collections.emptyList();
     }
 
     @Override
@@ -69,9 +68,10 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void deleteTicket(TicketDto ticketDto) {
-        TicketUpdateDto ticketUpdateDto = new TicketUpdateDto(ticketDto.bookingCode(), ticketDto.user().getChatId(), "FREE");
+        Ticket ticket = ticketRepository.getTicketByBookingCode(ticketDto.bookingCode());
+        TicketUpdateDto ticketUpdateDto = new TicketUpdateDto(ticketDto.bookingCode(), ticket.getUser().getChatId(), "FREE");
         kafkaSenderService.sendToBot(ticketUpdateDto);
-        ticketDto.place().setStatus(Place.Status.FREE);
-        ticketRepository.deleteTicket(ticketDto.user().getId(), ticketDto.session().getId(), ticketDto.place().getId());
+        ticket.getPlace().setStatus(Place.Status.FREE);
+        ticketRepository.deleteTicket(ticket.getUser().getChatId(), ticket.getSession().getId(), ticket.getPlace().getId());
     }
 }
