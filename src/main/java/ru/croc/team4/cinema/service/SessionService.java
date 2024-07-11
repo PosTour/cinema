@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionService {
+
+    Iterable<SessionResponseDto> findAllSessions();
+
     SessionResponseDto createSession(SessionCreationDto sessionDto);
 
     List<SessionResponseDto> getSessions(UUID movieId);

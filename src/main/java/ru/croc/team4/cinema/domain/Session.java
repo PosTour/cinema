@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.UUID;
 
@@ -26,21 +27,50 @@ public class Session {
     @OneToOne
     private Hall hall;
     @Column(nullable = false)
-    private Time startTime; //либо используем другой формат даты
+    private Time startTime;
     @Column(nullable = false)
     private Time endTime;
+    @Column(nullable = false)
+    private Date startDate;
     @Column(nullable = false)
     private Integer price;
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isDeleted;
 
-    public Session(Movie movie, Hall hall, Time startTime, Time endTime, Integer price) {
+
+    public Session(Movie movie, Hall hall, Time startTime, Time endTime, Date startDate, Integer price, Boolean isDeleted) {
         this.movie = movie;
         this.hall = hall;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.startDate = startDate;
         this.price = price;
+        this.isDeleted = isDeleted;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 }
 
