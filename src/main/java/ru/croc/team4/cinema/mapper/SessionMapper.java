@@ -5,8 +5,6 @@ import ru.croc.team4.cinema.domain.Session;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionResponseDto;
 import ru.croc.team4.cinema.service.HallServiceImpl;
-import ru.croc.team4.cinema.service.SessionService;
-import ru.croc.team4.cinema.service.SessionServiceImpl;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -22,7 +20,7 @@ public interface SessionMapper {
             @Mapping(target = "hallName", source = "hall.name"),
             @Mapping(target = "startDate", source = "startDate", qualifiedByName = "toLocalDate"),
             @Mapping(target = "startTime", source = "startTime", qualifiedByName = "toLocalTime"),
-            @Mapping(target = "price", source = "price"),
+            @Mapping(target = "prices", source = "prices"),
             @Mapping(target = "isDeleted", source = "isDeleted")
     })
     SessionResponseDto sessionToSessionResponseDto(Session session);
@@ -32,7 +30,7 @@ public interface SessionMapper {
             @Mapping(target = "hallId", expression = "java(hallServiceImpl.findByName(session.getHall().getName()).getId())"), // TODO: нужно вытащить hall.id имея hallName
             @Mapping(target = "startDate", source = "startDate", qualifiedByName = "toLocalDate"),
             @Mapping(target = "startTime", source = "startTime", qualifiedByName = "toLocalTime"),
-            @Mapping(target = "price", source = "price"),
+            @Mapping(target = "prices", source = "prices"),
     })
     SessionCreationDto sessionToSessionCreationDto(Session session, @Context HallServiceImpl hallServiceImpl);
 
