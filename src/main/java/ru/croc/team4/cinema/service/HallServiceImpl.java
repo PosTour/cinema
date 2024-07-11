@@ -57,4 +57,8 @@ public class HallServiceImpl implements HallService {
             hallRepository.save(hall.get());
         } else throw new NoSuchElementException("Hall isn't in db");
     }
+
+    public Hall getHallByName(String name) {
+        return hallRepository.findByName(name);
+    }
 }
