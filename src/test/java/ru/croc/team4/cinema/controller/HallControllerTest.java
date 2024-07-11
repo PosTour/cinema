@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 import ru.croc.team4.cinema.domain.Hall;
+import ru.croc.team4.cinema.dto.HallDto;
 import ru.croc.team4.cinema.dto.HallResponseDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
 import ru.croc.team4.cinema.mapper.HallMapper;
@@ -92,7 +93,7 @@ public class HallControllerTest {
                 .then()
                 .extract().response();
 
-        HallResponseDto hallResponseDto = new Gson().fromJson(r.getBody().asString(), HallResponseDto.class);
+        HallResponseDto hallResponseDto = gson.fromJson(r.getBody().asString(), HallResponseDto.class);
 
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -102,6 +103,38 @@ public class HallControllerTest {
         assertAll(
                 () -> assertEquals("Еще больше зал", hallResponseDto.name(), "Неверное название зала"),
                 () -> assertEquals(map, hallResponseDto.seats(), "Неверное количество и расположение мест")
+        );
+    }
+
+    @Test
+    @Description("Тест на обновление зала")
+    public void UpdateHallTest() {
+        HallDto hallDto = hallMapper.hallToHallDto(testObjects.getHallUpdate());
+
+        List<HallResponseDto> hallResponseDtos = getAllHalls();
+
+        UUID id = hallResponseDtos.get(1).id();
+
+        String hallJson = gson.toJson(hallDto);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(hallJson)
+                .put("/api/hall/" + id)
+                .then()
+                .extract().response();
+
+        hallResponseDtos = getAllHalls();
+        HallResponseDto hallResponseDto = hallResponseDtos.get(1);
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        map.put(1, 5);
+        map.put(2, 5);
+
+        assertAll(
+                () -> assertEquals("Еще больше зал 2", hallResponseDto.name(), "Неверно указано название зала"),
+                () -> assertEquals(map, hallResponseDto.seats(), "Неверное количество и расположение мест ")
         );
     }
 

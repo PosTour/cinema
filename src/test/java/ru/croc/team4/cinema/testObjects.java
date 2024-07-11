@@ -82,6 +82,23 @@ public class testObjects {
         return hall;
     }
 
+    public static Hall getHallUpdate() {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        map.put(1, 5);
+        map.put(2, 5);
+
+        Hall hall = Hall.builder()
+                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .name("Еще больше зал 2")
+                .seats(map)
+                .build();
+
+        System.out.println(hall.getId() + " " + hall.getName() + " " + hall.getSeats());
+        return hall;
+    }
+
     public static Session getSession() {
         Session session = Session.builder()
                 .id(UUID.randomUUID())
