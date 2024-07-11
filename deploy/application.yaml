@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service
+  name: service-cinema
   labels:
     app.kubernetes.io/name: cinema
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: cinemadeploy
+      app.kubernetes.io/name: cinema
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: cinemadeploy
+        app.kubernetes.io/name: cinema
     spec:
       restartPolicy: Always
       containers:
         - name: service
           image: localhost:32000/cinema:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           readinessProbe:
             httpGet:
               path: actuator/health/readiness
@@ -49,6 +49,15 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
+            - name: SPRING_KAFKA_BOOTSTRAPSERVERS
+              value: "kafka-headless:9092"
+            - name: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+              value: "SASL_PLAINTEXT"
+            - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+              value: "SCRAM-SHA-512"
+            - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+              value: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="user" password="${USER_PASSWORD}";'
+
 ---
 apiVersion: v1
 kind: Service
@@ -64,4 +73,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: cinemadeploy
+    app.kubernetes.io/name: cinema
