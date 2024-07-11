@@ -2,10 +2,11 @@ package ru.croc.team4.cinema.dto;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import ru.croc.team4.cinema.domain.Category;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.UUID;
 
 public record SessionCreationDto(
@@ -18,6 +19,6 @@ public record SessionCreationDto(
         LocalDate startDate,
         @NotNull(message = "Время начала сеанса не может быть пустым")
         LocalTime startTime,
-        @Positive(message = "Цена должна быть положительной")
-        Integer price) {
+        @NotNull(message = "Цены должны быть установлены")
+        Map<Category,Integer> prices) {
 }

@@ -5,16 +5,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import ru.croc.team4.cinema.domain.Category;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Converter
-public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Integer>, String>, String> {
+public class PricesConverter implements AttributeConverter<Map<Category, Integer>, String> {
 
     @Override
-    public String convertToDatabaseColumn(Map<Map<Integer, Integer>, String> customerInfo) {
+    public String convertToDatabaseColumn(Map<Category, Integer> customerInfo) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String customerInfoJson = null;
@@ -27,16 +28,14 @@ public class HashMapConverter implements AttributeConverter<Map<Map<Integer, Int
         return customerInfoJson;
     }
 
-
-
     @Override
-    public Map<Map<Integer, Integer>, String> convertToEntityAttribute(String customerInfoJSON) {
+    public Map<Category, Integer> convertToEntityAttribute(String customerInfoJSON) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<Map<Integer, Integer>, String> customerInfo = null;
+        Map<Category, Integer> customerInfo = null;
         try {
             customerInfo = objectMapper.readValue(customerInfoJSON,
-                    new TypeReference<Map<Map<Integer, Integer>, String>>() {});
+                    new TypeReference<HashMap<Category, Integer>>() {});
         } catch (final IOException e) {
             //logger.error("JSON reading error", e);
             // You should add logger
