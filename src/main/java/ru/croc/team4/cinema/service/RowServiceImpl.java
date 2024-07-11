@@ -25,4 +25,11 @@ public class RowServiceImpl implements RowService {
     public List<Row> getRowsBy(UUID sessionId) {
         return rowRepository.findAllBySession_id(sessionId);
     }
+
+    @Override
+    public Row getRowById(UUID rowId) {
+        return rowRepository.getRowById(rowId);
+    }
+
+
 }

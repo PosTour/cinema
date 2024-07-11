@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface RowRepository extends JpaRepository<Row, UUID> {
     List<Row> findAllBySession_id(UUID cinemaId);
+    Row getRowById(UUID id);
 }

@@ -51,7 +51,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDto> getTicketsByChatId(Long chatId) {
-        List<Ticket> tickets = ticketRepository.getTicketsByChatId(chatId).stream().toList();
+        List<Ticket> tickets = ticketRepository.getTicketsByUser_ChatId(chatId).stream().toList();
         return ticketMapper.ticketsToTicketDtos(tickets);
     }
 

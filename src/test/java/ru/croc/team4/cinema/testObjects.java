@@ -19,7 +19,7 @@ public class testObjects {
 
     public static Movie getMovie() {
         Movie movie = Movie.builder()
-                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .duration(Duration.ofMinutes(122))
                 .title("It")
                 .description("great film")
@@ -56,7 +56,7 @@ public class testObjects {
         map.put(2, 2);
 
         Hall hall = Hall.builder()
-                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .name("Big hall")
                 .seats(map)
                 .build();
@@ -66,7 +66,7 @@ public class testObjects {
 
     public static Session getSession() {
         Session session = Session.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie())
                 .hall(getHall())
                 .startTime(new Time(12,12,12))
@@ -78,7 +78,7 @@ public class testObjects {
 
     public static Place getPlace() {
         Place place = Place.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .placeNumber(12)
                 .status(Place.Status.PAID)
                 .row(getRow())
@@ -88,7 +88,7 @@ public class testObjects {
 
     public static Row getRow() {
         Row row = Row.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .rowNumber(3)
                 .session(getSession())
                 .build();

@@ -10,7 +10,9 @@ import ru.croc.team4.cinema.dto.PlaceDto;
 import ru.croc.team4.cinema.mapper.PlaceMapper;
 import ru.croc.team4.cinema.mapper.PlaceMapperImpl;
 import ru.croc.team4.cinema.repository.PlaceRepository;
+import ru.croc.team4.cinema.repository.RowRepository;
 import ru.croc.team4.cinema.service.PlaceServiceImpl;
+import ru.croc.team4.cinema.service.RowServiceImpl;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,17 +23,23 @@ public class PlaceController {
     private final PlaceRepository placeRepository;
     private final PlaceMapper placeMapper;
     private final PlaceServiceImpl placeServiceImpl;
+    private final RowRepository rowRepository;
+
+    private final RowServiceImpl rowServiceImpl;
 
     @Autowired
-    public PlaceController(PlaceRepository placeRepository, PlaceServiceImpl placeServiceImpl) {
+    public PlaceController(PlaceRepository placeRepository, PlaceServiceImpl placeServiceImpl, RowRepository rowRepository,
+                           RowServiceImpl rowServiceImpl) {
         this.placeRepository = placeRepository;
         this.placeMapper = new PlaceMapperImpl();
         this.placeServiceImpl = placeServiceImpl;
+        this.rowRepository = rowRepository;
+        this.rowServiceImpl = rowServiceImpl;
     }
 
     @PostMapping
     public ResponseEntity<PlaceDto> createPlace(@RequestBody PlaceDto placeDto) {
-        var place = placeMapper.placeDtoToPlace(placeDto);
+        var place = placeMapper.placeDtoToPlace(placeDto, rowServiceImpl);
         place = placeRepository.save(place);
         return ResponseEntity.ok(placeMapper.placeToPlaceDto(place));
     }
