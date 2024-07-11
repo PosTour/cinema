@@ -148,13 +148,17 @@ public class testObjects {
     }
 
     public static Session getSessionUpdate() {
+            Map<Category, Integer> map = new HashMap<>();
+            map.put(Category.BAD, 87);
+            map.put(Category.EXCELLENT, 87);
+            map.put(Category.GOOD, 87);
         Session session = Session.builder()
                 .id(UUID.fromString("07f251f4-23da-47ce-a4a0-683613601029"))
                 .movie(getMovie2())
                 .hall(getHallUpdate())
                 .startTime(new Time(13,0,12))
                 .endTime(new Time(14,35,3))
-                .price(1500)
+                .prices(map)
                 .build();
         return session;
     }
