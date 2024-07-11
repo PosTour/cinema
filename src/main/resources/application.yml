@@ -5,7 +5,7 @@ spring:
 #  Kafka:
 #    bootstrapServers: kafka:9092
 #    producer:
-#      topic: administration
+#     topic: administration
 
   jpa:
     properties:

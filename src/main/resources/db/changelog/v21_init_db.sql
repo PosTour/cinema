@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset Admin:1720689130065-1
+-- changeset Admin:1720686496238-1
 CREATE TABLE hall
 (
     id    UUID         NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE hall
     CONSTRAINT pk_hall PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-2
+-- changeset Admin:1720686496238-2
 CREATE TABLE movie
 (
     id          UUID        NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE movie
     CONSTRAINT pk_movie PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-3
+-- changeset Admin:1720686496238-3
 CREATE TABLE place
 (
     id           UUID    NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE place
     CONSTRAINT pk_place PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-4
+-- changeset Admin:1720686496238-4
 CREATE TABLE row
 (
     id         UUID    NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE row
     CONSTRAINT pk_row PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-5
+-- changeset Admin:1720686496238-5
 CREATE TABLE session
 (
     id         UUID    NOT NULL,
@@ -46,13 +46,12 @@ CREATE TABLE session
     hall_id    UUID    NOT NULL,
     start_time time WITHOUT TIME ZONE NOT NULL,
     end_time   time WITHOUT TIME ZONE NOT NULL,
-    start_date date    NOT NULL,
     price      INTEGER NOT NULL,
     is_deleted BOOLEAN NOT NULL,
     CONSTRAINT pk_session PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-6
+-- changeset Admin:1720686496238-6
 CREATE TABLE ticket
 (
     id           UUID         NOT NULL,
@@ -63,44 +62,44 @@ CREATE TABLE ticket
     CONSTRAINT pk_ticket PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-7
-CREATE TABLE "user"
+-- changeset Admin:1720686496238-7
+CREATE TABLE user_table
 (
     id      UUID        NOT NULL,
     phone   VARCHAR(11) NOT NULL,
     chat_id BIGINT      NOT NULL,
-    CONSTRAINT pk_user PRIMARY KEY (id)
+    CONSTRAINT pk_user_table PRIMARY KEY (id)
 );
 
--- changeset Admin:1720689130065-8
-ALTER TABLE "user"
-    ADD CONSTRAINT uc_user_phone UNIQUE (phone);
+-- changeset Admin:1720686496238-8
+ALTER TABLE user_table
+    ADD CONSTRAINT uc_user_table_phone UNIQUE (phone);
 
--- changeset Admin:1720689130065-9
+-- changeset Admin:1720686496238-9
 ALTER TABLE place
     ADD CONSTRAINT FK_PLACE_ON_ROWID FOREIGN KEY (row_id) REFERENCES row (id);
 
--- changeset Admin:1720689130065-10
+-- changeset Admin:1720686496238-10
 ALTER TABLE row
     ADD CONSTRAINT FK_ROW_ON_SESSION FOREIGN KEY (session_id) REFERENCES session (id);
 
--- changeset Admin:1720689130065-11
+-- changeset Admin:1720686496238-11
 ALTER TABLE session
     ADD CONSTRAINT FK_SESSION_ON_HALL FOREIGN KEY (hall_id) REFERENCES hall (id);
 
--- changeset Admin:1720689130065-12
+-- changeset Admin:1720686496238-12
 ALTER TABLE session
     ADD CONSTRAINT FK_SESSION_ON_MOVIE FOREIGN KEY (movie_id) REFERENCES movie (id);
 
--- changeset Admin:1720689130065-13
+-- changeset Admin:1720686496238-13
 ALTER TABLE ticket
     ADD CONSTRAINT FK_TICKET_ON_PLACE FOREIGN KEY (place_id) REFERENCES place (id);
 
--- changeset Admin:1720689130065-14
+-- changeset Admin:1720686496238-14
 ALTER TABLE ticket
     ADD CONSTRAINT FK_TICKET_ON_SESSION FOREIGN KEY (session_id) REFERENCES session (id);
 
--- changeset Admin:1720689130065-15
+-- changeset Admin:1720686496238-15
 ALTER TABLE ticket
-    ADD CONSTRAINT FK_TICKET_ON_USER FOREIGN KEY (user_id) REFERENCES "user" (id);
+    ADD CONSTRAINT FK_TICKET_ON_USER FOREIGN KEY (user_id) REFERENCES user_table (id);
 

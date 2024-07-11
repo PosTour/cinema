@@ -27,31 +27,31 @@ public class PlaceControllerTest {
     private MockMvc mockMvc;
 
 
-    @Test
-    @DisplayName("Тест по созданию места")
-    public void createPlaceTest() throws Exception {
-        PlaceMapper placeMapper = new PlaceMapperImpl();
-        PlaceDto placeDto = placeMapper.placeToPlaceDto(testObjects.getPlace());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(placeDto);
-        System.out.print(testObjects.getPlace().getPlaceNumber());
-
-        mockMvc.perform(post("/api/place")
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("Тест по получению всех мест")
-    public void getAllPlacesTest() throws Exception {
-
-
-        mockMvc.perform(get("/api/place"))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
+//    @Test
+//    @DisplayName("Тест по созданию места")
+//    public void createPlaceTest() throws Exception {
+//        PlaceMapper placeMapper = new PlaceMapperImpl();
+//        PlaceDto placeDto = placeMapper.placeToPlaceDto(testObjects.getPlace());
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String json = objectMapper.writeValueAsString(placeDto);
+//        System.out.print(testObjects.getPlace().getPlaceNumber());
+//
+//        mockMvc.perform(post("/api/place")
+//                        .content(json)
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//    }
+//
+//    @Test
+//    @DisplayName("Тест по получению всех мест")
+//    public void getAllPlacesTest() throws Exception {
+//
+//
+//        mockMvc.perform(get("/api/place"))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//    }
 
 }

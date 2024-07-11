@@ -29,11 +29,6 @@ public class UserController {
         return user.map(value -> ResponseEntity.ok(userMapper.userToUserDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.createUser(userDto));
-    }
-
     @GetMapping("/all")
     public ResponseEntity<Iterable<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());

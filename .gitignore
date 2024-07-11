@@ -35,3 +35,6 @@ build/
 .vscode/
 src/main/resources/db/changelog/v15_init_db.sql
 src/main/resources/db/changelog/v16_init_db.sql
+src/main/resources/db/changelog/v18_init_db.sql
+src/main/resources/db/changelog/v19_init_db.sql
+src/main/resources/db/changelog/v20_init_db.sql
