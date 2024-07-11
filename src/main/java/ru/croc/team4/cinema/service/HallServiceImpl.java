@@ -50,7 +50,7 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public void UpdateHall(UUID id, String name, Map<Map<Integer, Integer>, Category> seats) {
+    public void UpdateHall(UUID id, String name, Map<Integer, Map<Integer, Category>> seats) {
         var hall = hallRepository.findById(id);
         if (hall.isPresent()) {
             hall.get().setName(name);
