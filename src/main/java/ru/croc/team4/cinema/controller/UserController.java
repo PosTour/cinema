@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity<Void> signUp(@RequestBody UserDto userDto) {
         Optional<User> user = userService.getUserByPhone(userDto.phone());
         if (user.isEmpty()) {
-            userService.createUser(userDto);
+            userServiceImpl.createUser(userDto);
         }
         return ResponseEntity.ok().build();
     }
