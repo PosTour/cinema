@@ -1,7 +1,12 @@
 package ru.croc.team4.cinema;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.croc.team4.cinema.domain.*;
+import ru.croc.team4.cinema.repository.*;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.Duration;
 import java.util.HashMap;
@@ -9,7 +14,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class testObjects {
+
+    @Autowired
+    private HallRepository hallRepository;
+    @Autowired
+    private MovieRepository movieRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
+    @Autowired
+    private RowRepository rowRepository;
+    @Autowired
+    private PlaceRepository placeRepository;
+
+    @BeforeEach
+    public void setup() {
+        Hall hall = testObjects.getHall();
+        hallRepository.save(hall);
+
+
+        Movie movie = testObjects.getMovie();
+        movieRepository.save(movie);
+
+        Session session = testObjects.getSession();
+        sessionRepository.save(session);
+
+        Row row = testObjects.getRow();
+        rowRepository.save(row);
+    }
 
     Map<String, String> map = new HashMap<>(){{put("1","1");}};
     {
@@ -59,20 +92,22 @@ public class testObjects {
 
 
     public static Hall getHall() {
-
         Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        Map<Integer, Category> map1 = new HashMap<>();
         Map<Integer, Category> map2 = new HashMap<>();
-        map1.put(1,Category.BAD);
-        map2.put(2,Category.GOOD);
+        Map<Integer, Category> map3 = new HashMap<>();
 
+        map2.put(1, Category.BAD);
+        map2.put(2, Category.GOOD);
 
-        map.put(1, map1);
+        map3.put(1, Category.BAD);
+        map3.put(2, Category.BAD);
+        map3.put(3, Category.EXCELLENT);
         map.put(1, map2);
+        map.put(2, map3);
 
         Hall hall = Hall.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
                 .name("Big hall")
                 .seats(map)
                 .build();
@@ -85,17 +120,20 @@ public class testObjects {
 
         Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        Map<Integer, Category> map1 = new HashMap<>();
         Map<Integer, Category> map2 = new HashMap<>();
-        map1.put(1,Category.BAD);
-        map2.put(2,Category.GOOD);
+        Map<Integer, Category> map3 = new HashMap<>();
 
+        map2.put(1, Category.BAD);
+        map2.put(2, Category.GOOD);
 
-        map.put(1, map1);
+        map3.put(1, Category.BAD);
+        map3.put(2, Category.BAD);
+        map3.put(3, Category.EXCELLENT);
         map.put(1, map2);
+        map.put(2, map3);
 
         Hall hall = Hall.builder()
-                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .id(UUID.fromString("d38ce817-3964-4c06-983c-8a92df5b1a3f"))
                 .name("Еще больше зал")
                 .seats(map)
                 .build();
@@ -108,17 +146,20 @@ public class testObjects {
 
         Map<Integer, Map<Integer, Category>> map = new HashMap<>();
 
-        Map<Integer, Category> map1 = new HashMap<>();
         Map<Integer, Category> map2 = new HashMap<>();
-        map1.put(1,Category.BAD);
-        map2.put(2,Category.GOOD);
+        Map<Integer, Category> map3 = new HashMap<>();
 
+        map2.put(1, Category.BAD);
+        map2.put(2, Category.GOOD);
 
-        map.put(1, map1);
+        map3.put(1, Category.BAD);
+        map3.put(2, Category.BAD);
+        map3.put(3, Category.EXCELLENT);
         map.put(1, map2);
+        map.put(2, map3);
 
         Hall hall = Hall.builder()
-                .id(UUID.fromString("07c9903b-f2ba-42de-84ba-21896e514f83"))
+                .id(UUID.fromString("d38ce817-3964-4c06-983c-8a92df5b1a3f"))
                 .name("Еще больше зал 2")
                 .seats(map)
                 .build();
@@ -138,8 +179,11 @@ public class testObjects {
                 .hall(getHall())
                 .startTime(new Time(12,12,12))
                 .endTime(new Time(14,35,3))
+                .startDate(new Date(1222))
+                .isDeleted(false)
                 .prices(map)
                 .build();
+        System.out.println(session.getHall().getId());
         return session;
     }
 

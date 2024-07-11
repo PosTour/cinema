@@ -61,7 +61,7 @@ public class Place {
 
 
     @Id
-    @UuidGenerator
+    //@UuidGenerator
 
     private UUID id;
     public void setId(UUID id) {this.id = id; }

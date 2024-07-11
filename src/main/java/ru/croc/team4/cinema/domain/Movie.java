@@ -20,7 +20,7 @@ import java.util.UUID;
 public class Movie {
 
     @Id
-    @UuidGenerator
+    //@UuidGenerator
     private UUID id;
 
     @Column(nullable = false, length = 32)

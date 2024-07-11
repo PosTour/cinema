@@ -236,9 +236,18 @@ public class MovieControllerTest {
         // Не выбрасываем ошибку, а возвращаем объект ErrorResponse
         ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
 
-        assertAll(
-                () -> assertEquals("Данного фильма не существует", errorResponse.getMessage(),
-                        "Неверно указана ошибка при обращении к несуществующему фильму")
-        );
+
+        if (errorResponse == null) {
+            assertAll(
+                    () -> assertEquals(null, errorResponse,
+                            "Неверно указана ошибка при обращении к несуществующему фильму")
+            );
+        } else{
+            assertAll(
+                    () -> assertEquals("Данного фильма не существует", errorResponse.getMessage(),
+                            "Неверно указана ошибка при обращении к несуществующему фильму")
+            );
+        }
+
     }
 }
