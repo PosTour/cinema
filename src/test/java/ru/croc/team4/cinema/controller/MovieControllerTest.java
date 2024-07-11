@@ -20,6 +20,7 @@ import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 import ru.croc.team4.cinema.domain.Movie;
 import ru.croc.team4.cinema.dto.MovieDto;
 import ru.croc.team4.cinema.dto.MovieResponseDto;
+import ru.croc.team4.cinema.exception_handler.ErrorResponse;
 import ru.croc.team4.cinema.mapper.MovieMapper;
 import ru.croc.team4.cinema.mapper.MovieMapperImpl;
 import ru.croc.team4.cinema.repository.MovieRepository;
@@ -31,8 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -178,5 +178,51 @@ public class MovieControllerTest {
         Type MovieResponseDtoListType = new TypeToken<List<MovieResponseDto>>() {}.getType();
 
         return new Gson().fromJson(r.getBody().asString(), MovieResponseDtoListType);
+    }
+
+    @Test
+    @Description("Тест на обновление фильма с невалидными данными")
+    public void NegativeUpdateMovieTest() {
+        MovieDto movieDtoNegative = movieMapper.movieToMovieDto(testObjects.getMovieUpdateNegative());
+        // получение всех фильмов
+        List<MovieResponseDto> movies = getAllMovies();
+        // достаем нужный фильм (будто был запрос по id)
+        UUID id = movies.get(1).id();
+
+        String movieJson = gson.toJson(movieDtoNegative);
+
+        Response r = given()
+                .header("Content-Type", "application/json")
+                .body(movieJson)
+                .put("/api/movie/" + id)
+                .then()
+                .extract().response();
+
+        // Не выбрасываем ошибку, а возвращаем объект ErrorResponse
+        ErrorResponse errorResponse = gson.fromJson(r.getBody().asString(), ErrorResponse.class);
+
+        assertAll(
+                () -> assertEquals("Название фильма не может быть пустым или содержать только пробелы", errorResponse.getErrors().get(0),
+                        "Ошибка при передачи пустого поля в названии фильма"),
+                () -> assertEquals("Продолжительность фильма должна быть не менее 1 минуты", errorResponse.getErrors().get(1),
+                        "Ошибка при передачи отрицательного значения"),
+                () -> assertEquals("Название фильма должно быть от 1 до 32 символов", errorResponse.getErrors().get(2),
+                        "Ошибка при передачи отрицательного значения")
+        );
+    }
+
+    @Test
+    @Description("Тест на некорректную передачу id для удаление фильма из бд")
+    public void NegativeDeleteMovieTest() {
+        // генерируем случайный id
+        UUID id = UUID.randomUUID();
+
+        Response r = given()
+                .delete("/api/movie/" + id)
+                .then()
+                .extract().response();
+
+        // ожидаем статус 204
+        assertEquals(204, r.statusCode(), "Неудачно произошло удаление фильма из бд");
     }
 }

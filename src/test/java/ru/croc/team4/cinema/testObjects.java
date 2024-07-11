@@ -47,6 +47,16 @@ public class testObjects {
         return movie;
     }
 
+    public static Movie getMovieUpdateNegative() {
+        Movie movie = Movie.builder()
+                .id(UUID.fromString("b6ed398b-c60f-49d9-a476-314cabe8bf5f"))
+                .duration(Duration.ofMinutes(-10))
+                .title("")
+                .description("Тут описание фильма, которое нам нужно")
+                .build();
+        return movie;
+    }
+
 
     public static Hall getHall() {
 
