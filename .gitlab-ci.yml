@@ -1,10 +1,14 @@
 stages:
   - build
+  - deploy
 
 include:
   - project: 'CROC.DRPO_RnD/jxfw/sandbox/school2024/team4/environment'
     ref: main
     file: 'build.yml'
+  - project: 'CROC.DRPO_RnD/jxfw/sandbox/school2024/team4/environment'
+    ref: main
+    file: 'deploy.yml'
 
 variables:
   MAVEN_REPO_LOCAL: .m2/repository
