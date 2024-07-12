@@ -22,7 +22,7 @@ import java.util.UUID;
 @Table(name = "session")
 public class Session {
     @Id
-    //@UuidGenerator
+    @UuidGenerator
     private UUID id;
     @JoinColumn(nullable = false, name = "movie_id")
     @ManyToOne(fetch = FetchType.LAZY)
