@@ -28,4 +28,9 @@ public class Row {
     public Row() {
 
     }
+
+    public Row(Session session, Integer rowNumber) {
+        this.session = session;
+        this.rowNumber = rowNumber;
+    }
 }

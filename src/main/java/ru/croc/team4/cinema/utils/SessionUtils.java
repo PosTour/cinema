@@ -1,5 +1,6 @@
 package ru.croc.team4.cinema.utils;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.croc.team4.cinema.domain.Row;
@@ -11,8 +12,9 @@ import java.util.List;
 
 @Component
 public class SessionUtils {
-
+    @Lazy
     private final RowServiceImpl rowService;
+    @Lazy
     private final PlaceServiceImpl placeService;
 
     @Autowired

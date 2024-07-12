@@ -17,6 +17,13 @@ import java.util.UUID;
 public class Place {
 
 
+    public Place(Row row, Status status, Category type, Integer placeNumber) {
+        this.row = row;
+        this.status = status;
+        this.type = type;
+        this.placeNumber = placeNumber;
+    }
+
     public enum Status {
         FREE("свободно"), PAID("оплачено"), BOOKING("забронировано");
         public final String lable;
@@ -38,30 +45,9 @@ public class Place {
         }
     }
 
-    public enum Type {
-        BAD("Боковушка"), GOOD("Не до поцелуев"), EXCELLENT("Полное погружение");
-        public final String lable;
-
-        Type(String lable) {
-            this.lable = lable;
-        }
-
-        private static final Map<String, Type> LOOKUP_MAP2 = new HashMap<>();
-
-        static {
-            for (Type type : values()) {
-                LOOKUP_MAP2.put(type.lable, type);
-            }
-        }
-
-        public static Type getStatusByString(String type) {
-            return LOOKUP_MAP2.get(type);
-        }
-    }
-
 
     @Id
-    //@UuidGenerator
+    @UuidGenerator
 
     private UUID id;
     public void setId(UUID id) {this.id = id; }
@@ -82,7 +68,7 @@ public class Place {
     @Enumerated(EnumType.ORDINAL)
     @Setter
     @Getter
-    private Type type;
+    private Category type;
 
     @ManyToOne
     @Setter

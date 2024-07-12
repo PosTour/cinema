@@ -2,22 +2,22 @@ package ru.croc.team4.cinema.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.croc.team4.cinema.domain.Place;
+import ru.croc.team4.cinema.domain.Row;
 import ru.croc.team4.cinema.domain.Session;
+import ru.croc.team4.cinema.dto.PlaceDto;
+import ru.croc.team4.cinema.dto.RowDto;
 import ru.croc.team4.cinema.dto.SessionCreationDto;
 import ru.croc.team4.cinema.dto.SessionResponseDto;
+import ru.croc.team4.cinema.mapper.PlaceMapper;
 import ru.croc.team4.cinema.mapper.SessionMapper;
 import ru.croc.team4.cinema.mapper.SessionMapperImpl;
-import ru.croc.team4.cinema.repository.HallRepository;
-import ru.croc.team4.cinema.repository.MovieRepository;
-import ru.croc.team4.cinema.repository.SessionRepository;
+import ru.croc.team4.cinema.repository.*;
 import ru.croc.team4.cinema.utils.SessionUtils;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -26,14 +26,23 @@ public class SessionServiceImpl implements SessionService {
     private final SessionMapper sessionMapper;
     private final SessionUtils sessionUtils;
     private final HallRepository hallRepository;
+    private final RowService rowService;
+    private final PlaceServiceImpl placeService;
+    private final RowRepository rowRepository;
+    private final PlaceRepository placeRepository;
 
     @Autowired
-    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils, HallRepository hallRepository) {
+    public SessionServiceImpl(SessionRepository sessionRepository, MovieRepository movieRepository, SessionUtils sessionUtils, HallRepository hallRepository, RowService rowService, PlaceServiceImpl placeService, RowRepository rowRepository, PlaceRepository placeRepository) {
         this.sessionRepository = sessionRepository;
         this.movieRepository = movieRepository;
+        this.rowService = rowService;
+        this.placeService = placeService;
+        this.rowRepository = rowRepository;
+        this.placeRepository = placeRepository;
         this.sessionMapper = new SessionMapperImpl();
         this.sessionUtils = sessionUtils;
         this.hallRepository = hallRepository;
+
     }
 
     @Override
@@ -58,8 +67,17 @@ public class SessionServiceImpl implements SessionService {
 
         var session = new Session(
                 movie.get(), hall.get(), Time.valueOf(sessionDto.startTime()), endTime, Date.valueOf(sessionDto.startDate()), sessionDto.prices(), false);
-
         sessionRepository.save(session);
+        var seats = session.getHall().getSeats();
+        for ( var row:seats.entrySet()){
+            var thisRow = rowService.createRow(new Row(null, row.getKey(), session));
+            rowRepository.save(thisRow);
+
+            for (var place: row.getValue().entrySet()){
+                var thisPlace = placeService.createPlace(new Place(thisRow, Place.Status.FREE, place.getValue(),place.getKey()));
+                placeRepository.save(thisPlace);
+            }
+        }
         return sessionMapper.sessionToSessionResponseDto(session);
     }
 
