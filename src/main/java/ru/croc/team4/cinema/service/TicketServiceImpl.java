@@ -54,7 +54,7 @@ public class TicketServiceImpl implements TicketService {
     public List<TicketOutputDto> getTicketsByUserId(UUID userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            List<Ticket> tickets = ticketRepository.getTicketsByUser(user.get()).stream().toList();
+            List<Ticket> tickets = ticketRepository.getTicketsByUser(user.get());
             return ticketMapper.ticketsToTicketOutputDtos(tickets);
         }
         return Collections.emptyList();

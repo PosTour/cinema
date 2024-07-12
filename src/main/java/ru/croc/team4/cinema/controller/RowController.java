@@ -13,7 +13,6 @@ import ru.croc.team4.cinema.service.RowServiceImpl;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
