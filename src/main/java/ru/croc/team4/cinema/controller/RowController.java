@@ -13,6 +13,7 @@ import ru.croc.team4.cinema.service.RowServiceImpl;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,10 +33,10 @@ public class RowController {
     }
 
     @GetMapping("/{sessionId}")
-    public ResponseEntity<List<Row>> getAllRowsInSession(@PathVariable("sessionId") UUID sessionId) {
+    public ResponseEntity<List<RowDto>> getAllRowsInSession(@PathVariable("sessionId") UUID sessionId) {
         var rows = rowService.getRowsBy(sessionId);
         return !rows.isEmpty()
-                ? new ResponseEntity<>(rows, HttpStatus.OK)
+                ? new ResponseEntity<>(rows.stream().map(rowMapperMy::rowToDto).toList(), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
