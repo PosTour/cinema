@@ -1,6 +1,8 @@
 package ru.croc.team4.cinema.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/session")
+@Slf4j
 public class SessionController {
 
     private final SessionServiceImpl sessionService;
@@ -43,7 +46,7 @@ public class SessionController {
     @GetMapping("/findByMovieId/{movieId}")
     public ResponseEntity<List<SessionResponseDto>> getSessionsByMovie(@PathVariable ("movieId") UUID movieId) {
         var sessionDtos = sessionService.getSessions(movieId);
-
+        log.info(movieId.toString(), sessionDtos.size());
         if (sessionDtos == null) {
             return ResponseEntity.notFound().build();
         } else {
