@@ -39,6 +39,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void createTicket(TicketClientDto ticketClientDto) {
         Ticket ticket = ticketMapper.ticketClientToTicket(ticketClientDto);
+        ticket.getPlace().setStatus(Place.Status.BOOKING);
         ticketRepository.save(ticket);
     }
 
